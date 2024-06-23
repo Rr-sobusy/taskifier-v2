@@ -1,3 +1,9 @@
+@font-face {
+  font-family: 'CustomFont';
+  font-weight: 400;
+  src: url('/public/fonts/Saira-Medium.ttf');
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

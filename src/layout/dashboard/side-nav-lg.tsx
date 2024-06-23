@@ -16,8 +16,8 @@ const TooltipHelper = ({ children, title, ...rest }: { children: React.ReactNode
     return (<TooltipProvider>
         <Tooltip {...rest}>
             <TooltipTrigger>{children}</TooltipTrigger>
-            <TooltipContent className="text-slate-500">
-                {title}
+            <TooltipContent className="bg-foreground">
+               <p>{title}</p>
             </TooltipContent>
         </Tooltip>
     </TooltipProvider>)

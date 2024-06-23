@@ -10,7 +10,9 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { SideNavSm } from './side-nav-sm'
 
+
 import { Sun, Moon, Menu } from 'lucide-react'
+import Image from 'next/image'
 
 
 const BreadCrumbsHelper = ({ path = [] }: { path: SidenavType["title"][] }) => {
@@ -36,20 +38,17 @@ const BreadCrumbsHelper = ({ path = [] }: { path: SidenavType["title"][] }) => {
 
 
 
-export const Header = ({ breadcrumbsPath, themeToggler }: { breadcrumbsPath: any , themeToggler: ()=>void}) => {
+export const Header = ({ breadcrumbsPath, themeToggler, currentTheme }: { breadcrumbsPath: any, themeToggler: () => void, currentTheme: string | undefined }) => {
     return (
         <header className="h-[75px] items-center flex justify-between">
             <BreadCrumbsHelper path={breadcrumbsPath} />
-            <div className="flex justify-center items-center gap-3">
-                <SideNavSm>
+            <div className="flex justify-center items-center">
+                <SideNavSm >
                     <Menu className="block md:hidden" size={20} />
                 </SideNavSm>
 
-                <Avatar className="w-7 h-7">
-                    <AvatarImage src="/man.svg" />
-                    <AvatarFallback></AvatarFallback>
-                </Avatar>
-                <span onClick={themeToggler}><Moon size={22} /></span>
+                <Image className="px-2 py-2 hover:bg-accent rounded-md" width={37} height={37} alt='' src="/github.svg" />
+                <span className="cursor-pointer py-2 px-2 hover:bg-accent rounded-md" onClick={themeToggler}>{currentTheme === "dark" ? <Sun size={23} /> : <Moon size={23} />}</span>
             </div>
         </header>
     )
