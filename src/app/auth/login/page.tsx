@@ -50,7 +50,7 @@ const page = () => {
           <h5 className="font-sans text-slate-700 text-xl md:text-2xl font-extrabold -ml-3">ask<span className="text-[#6B71F1]">ifier</span></h5>
         </div>
         <form action={formAction}>
-          <Button className="bg-gradient-to-r from-blue-500 to-indigo-400 hover:shadow-md"><Image className="mr-2" alt='' height={20} width={20} src="/google.svg" />Sign In</Button></form>
+          <Button className="bg-gradient-to-r from-blue-500 to-indigo-400 hover:shadow-md brod"><Image className="mr-2" alt='' height={20} width={20} src="/google.svg" />Sign In</Button></form>
       </header>
 
       <div className="flex flex-col md:flex-row relative mt-10 md:mt-0 justify-evenly items-center">
@@ -62,7 +62,7 @@ const page = () => {
       </div>
 
       <h1 className="text-center font-sans text-2xl tracking-tighter font-extrabold text-slate-600 mt-5">Transform the way you manage tasks with us!</h1>
-      <div className="flex flex-col md:flex-row gap-16 md:gap-8 max-w-4xl relative mx-auto py-[5rem]">
+      <div className="flex flex-col md:flex-row gap-16 md:gap-8 max-w-5xl relative mx-auto py-[5rem]">
         {
           subHeaders.map((card) => (<Card cardProps={card} />))
         }
