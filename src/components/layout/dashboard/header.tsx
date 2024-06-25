@@ -7,8 +7,6 @@ import {
     BreadcrumbList,
     BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { SideNavSm } from './side-nav-sm'
 
 
 import { Sun, Moon, Menu } from 'lucide-react'
@@ -43,9 +41,9 @@ export const Header = ({ breadcrumbsPath, themeToggler, currentTheme }: { breadc
         <header className="h-[75px] items-center flex justify-between">
             <BreadCrumbsHelper path={breadcrumbsPath} />
             <div className="flex justify-center items-center">
-                <SideNavSm >
+            
                     <Menu className="block md:hidden" size={20} />
-                </SideNavSm>
+             
 
                 <Image className="px-2 py-2 hover:bg-accent rounded-md" width={37} height={37} alt='' src="/github.svg" />
                 <span className="cursor-pointer py-2 px-2 hover:bg-accent rounded-md" onClick={themeToggler}>{currentTheme === "dark" ? <Sun size={23} /> : <Moon size={23} />}</span>

@@ -1,5 +1,5 @@
 import React from 'react'
-import DashboardLayout from '@/layout/dashboard/layout'
+import DashboardLayout from '@/components/layout/dashboard/layout'
 import TaskCard from '@/sections/tasks/task-card'
 
 import { ListFilter, Plus } from 'lucide-react'

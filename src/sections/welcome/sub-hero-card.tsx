@@ -17,7 +17,7 @@ const Card = ({ cardProps }: CardProps) => {
     const Icon = cardProps.Icon
 
     return (
-        <div className="min-h-[180px] border px-3 border-slate-200 flex flex-col gap-3 items-center relative rounded-md shadow-md md:flex-1">
+        <div className="min-h-[180px] border px-3 border-slate-300 flex flex-col gap-3 items-center relative rounded-md shadow-md md:flex-1">
             <div className={`h-[4rem] w-[4rem] rounded-full flex gap-3 items-center justify-center absolute -top-10  bg-gradient-to-r ${cardProps.gradientColor}`}>
                 <Icon className="text-white" size={30} />
             </div>

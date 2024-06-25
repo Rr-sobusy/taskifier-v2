@@ -1,5 +1,5 @@
 import React from 'react'
-import DashboardLayout from '@/layout/dashboard/layout'
+import DashboardLayout from '@/components/layout/dashboard/layout'
 
 type Props = {}
 
