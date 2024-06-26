@@ -25,8 +25,7 @@ model Account {
   token_type         String?
   scope              String?
   id_token           String? @db.Text
-  session_state      String?
- 
+  session_state      String?            
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
  
   @@unique([provider, providerAccountId])
@@ -51,7 +50,7 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
- 
+  tasks         Tasks[]
   @@map("users")
 }
  
@@ -62,4 +61,37 @@ model VerificationToken {
  
   @@unique([identifier, token])
   @@map("verificationtokens")
+}
+
+model Tasks {
+  tasksId            Int           @id @default(autoincrement())
+  user               User          @relation(fields: [userId], references: [id])
+  userId             String        @unique
+  taskTitle          String
+  taskDescription    String
+  isCompleted        Boolean?
+  createdAt          DateTime      @default(now())
+  updatedAt          DateTime? 
+  completionDate     DateTime 
+  subTasks           SubTasks[]
+  tags               Tags[]
+}
+
+
+model SubTasks {
+  id                Int             @id @default(autoincrement())
+  subTaskTitle      String
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime
+  isCompleted       Boolean?
+  task              Tasks           @relation(fields: [taskId], references: [tasksId])
+  taskId            Int           
+}
+
+
+model Tags {
+  id                Int             @id @default(autoincrement())
+  taskTitle         String
+  task              Tasks           @relation(fields: [taskId], references: [tasksId])
+  taskId            Int
 }

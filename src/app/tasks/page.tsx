@@ -6,10 +6,24 @@ import AuthProvider from '@/provider/AuthProviders'
 import { ListFilter, Plus } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
+import { prisma } from '@/auth'
+
 
 type Props = {}
 
-const page = (props: Props) => {
+export async function testDb() {
+  const tasks = await prisma.tasks.findMany({
+    include: {
+      tags: true,
+      subTasks: true
+    }
+  })
+  return tasks;
+}
+
+const page = async (props: Props) => {
+  const test = await testDb();
+  console.log(test)
   return (
     <AuthProvider>
       <DashboardLayout>

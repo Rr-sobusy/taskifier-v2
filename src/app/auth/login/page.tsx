@@ -44,16 +44,18 @@ const page = () => {
     <section className="min-h-screen min-w-[calc(100vw-13px)] bg-gradient-to-tr from-blue-50 to-indigo-300 px-5 md:px-14">
      
       <header className="h-[90px] flex justify-between items-center">
-        {/* <div className="flex items-center">
-          <Image alt='' src="/icon.svg" width={50} height={50} />
-          <h5 className="font-sans text-slate-700 text-xl md:text-2xl font-extrabold -ml-3">ask<span className="text-[#6B71F1]">ifier</span></h5>
-        </div> */}
+
         <FlexBox alignItems="center" >
           <Image alt='' src="/icon.svg" width={50} height={50} />
-          <h5 className="font-sans text-slate-700 text-xl md:text-2xl font-extrabold -ml-3">ask<span className="text-[#6B71F1]">ifier</span></h5>
+          <h5 className="font-sans text-slate-700 text-xl md:text-2xl font-extrabold -ml-3">ask<span className="text-[#535bf0]">ifier</span></h5>
         </FlexBox>
+
         <form action={formAction}>
-          <Button className="bg-gradient-to-r from-blue-500 to-indigo-400 hover:shadow-md brod"><Image className="mr-2" alt='' height={20} width={20} src="/google.svg" />Sign In</Button></form>
+          <Button className="bg-gradient-to-r from-blue-500 to-indigo-400 hover:shadow-md brod"><Image className="mr-2" alt='' height={20} width={20} src="/google.svg" />
+          Sign In
+          </Button>
+        </form>
+
       </header>
 
       <FlexBox className="mt-10 md:mt-0" display="flex" flexDirection="mdRow" justifyContent="evenly" alignItems="center">
