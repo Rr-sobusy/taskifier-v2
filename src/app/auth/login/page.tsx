@@ -4,10 +4,12 @@ import Image from 'next/image'
 
 import Card from '@/sections/welcome/sub-hero-card'
 import type { HeroCardProps } from '@/sections/welcome/sub-hero-card'
-import { Command } from 'lucide-react'
+import { Command, Divide } from 'lucide-react'
 
 import { signIn } from '@/auth'
 import { FlexBox } from '@/components/common/flex-box'
+
+import { Button as MovingBUtton } from '@/components/ui/moving-border'
 
 const subHeaders: HeroCardProps[] = [
   {
@@ -42,7 +44,7 @@ const page = () => {
 
   return (
     <section className="min-h-screen min-w-[calc(100vw-13px)] bg-gradient-to-tr from-blue-50 to-indigo-300 px-5 md:px-14">
-     
+
       <header className="h-[90px] flex justify-between items-center">
 
         <FlexBox alignItems="center" >
@@ -52,7 +54,7 @@ const page = () => {
 
         <form action={formAction}>
           <Button className="bg-gradient-to-r from-blue-500 to-indigo-400 hover:shadow-md brod"><Image className="mr-2" alt='' height={20} width={20} src="/google.svg" />
-          Sign In
+            Sign In
           </Button>
         </form>
 
@@ -69,7 +71,9 @@ const page = () => {
       <h1 className="text-center font-sans text-2xl tracking-tighter font-extrabold text-slate-600 mt-5">Transform the way you manage tasks with us!</h1>
       <FlexBox className="gap-16 md:gap-8 max-w-5xl relative mx-auto py-[5rem]" display="flex" flexDirection="mdRow">
         {
-          subHeaders.map((card) => (<Card key={card.cardTitle} cardProps={card} />))
+          subHeaders.map((card) => (
+            <Card cardProps={card} key={card.cardTitle} />
+          ))
         }
       </FlexBox>
     </section>

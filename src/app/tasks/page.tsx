@@ -2,11 +2,12 @@ import React from 'react'
 import DashboardLayout from '@/components/layout/dashboard/layout'
 import TaskCard from '@/sections/tasks/task-card'
 import AuthProvider from '@/provider/AuthProviders'
-
+import Link from 'next/link'
 import { ListFilter, Plus } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
 import { prisma } from '@/auth'
+
 
 
 type Props = {}
@@ -37,13 +38,19 @@ const page = async (props: Props) => {
           <Button size="sm" className="rounded-3xl flex gap-1 h-8 px-4 text-[.75rem]"><span><Plus size={20} /></span><span className="hidden md:block rounded-full">Add New</span></Button>
         </div>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5 my-7 ">
-          <TaskCard />
-          <TaskCard />
-          <TaskCard />
-          <TaskCard />
-          <TaskCard />
-          <TaskCard />
-          <TaskCard />
+          {
+            test.map((todo) => (
+              <TaskCard
+                key={todo.tasksId}
+                taskTitle={todo.taskTitle}
+                completionDate={todo.completionDate}
+                createdAt={todo.createdAt}
+                tags={todo.tags}
+                icon={todo.icon}
+                iconBgColor={todo.iconBgColor}
+              />
+            ))
+          }
         </div>
       </DashboardLayout>
     </AuthProvider>
