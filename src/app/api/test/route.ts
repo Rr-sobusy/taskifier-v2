@@ -1,4 +1,4 @@
-import { auth } from "@/auth"
+import { auth, signIn } from "@/auth"
 import { NextResponse } from "next/server"
 import { prisma } from "@/auth"
 
@@ -10,3 +10,8 @@ export const GET = auth(async function GET(req) {
     }
     return NextResponse.json({ message: "Not authenticated" }, { status: 401 })
 })
+
+
+export async function POST(){
+
+}

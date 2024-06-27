@@ -6,24 +6,38 @@ import Link from 'next/link'
 import { ListFilter, Plus } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
-import { prisma } from '@/auth'
+import { auth, prisma } from '@/auth'
 
 
 
 type Props = {}
 
-export async function testDb() {
+export async function fetchTasks(email: string) {
+
+  const user = await prisma.user.findFirst({
+    where: {
+      email: email
+    }
+  })
+
+  if(!user){
+    return [];
+  }
+
   const tasks = await prisma.tasks.findMany({
     include: {
       tags: true,
       subTasks: true
+    }, where : {
+      userId : user.id
     }
   })
   return tasks;
 }
 
 const page = async (props: Props) => {
-  const test = await testDb();
+  const user = await auth()
+  const test = await fetchTasks(user?.user?.email ? user.user.email : "");
   console.log(test)
   return (
     <AuthProvider>
@@ -40,15 +54,17 @@ const page = async (props: Props) => {
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5 my-7 ">
           {
             test.map((todo) => (
-              <TaskCard
-                key={todo.tasksId}
-                taskTitle={todo.taskTitle}
-                completionDate={todo.completionDate}
-                createdAt={todo.createdAt}
-                tags={todo.tags}
-                icon={todo.icon}
-                iconBgColor={todo.iconBgColor}
-              />
+              <Link href={`tasks/management/${user?.user?.name}/${todo.taskTitle}`}>
+                <TaskCard
+                  key={todo.tasksId}
+                  taskTitle={todo.taskTitle}
+                  completionDate={todo.completionDate}
+                  createdAt={todo.createdAt}
+                  tags={todo.tags}
+                  icon={todo.icon}
+                  iconBgColor={todo.iconBgColor}
+                />
+              </Link>
             ))
           }
         </div>
