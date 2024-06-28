@@ -2,15 +2,26 @@ import React from 'react'
 import DashboardLayout from '@/components/layout/dashboard/layout'
 import AuthProvider from '@/provider/AuthProviders'
 
+import { prisma } from '@/app/layout'
+
+const page = async ({ params }: { params: { slug: string[] } }) => {
 
 
-const page = ({ params }: { params: { slug: string[] } }) => {
+  const task = await prisma.tasks.findFirst({
+    where: {
+      tasksId: Number(params.slug[1])
+    }, include: {
+      subTasks: true,
+      tags: true
+    }
+  })
+
   return (
-   <AuthProvider>
-    <DashboardLayout>
-      rex
-    </DashboardLayout>
-   </AuthProvider>
+    <AuthProvider>
+      <DashboardLayout>
+        {JSON.stringify(task)}
+      </DashboardLayout>
+    </AuthProvider>
   )
 }
 

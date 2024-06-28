@@ -21,7 +21,7 @@ const BreadCrumbsHelper = ({ path = [] }: { path: SidenavType["title"][] }) => {
                     path.slice(0,2).map((ctx, index) => <>
                         <BreadcrumbSeparator />
                         <BreadcrumbItem key={index} className="capitalize">
-                            <Link className={`text-[.75rem] ${ctx !== path[0] ? 'text-slate-700 pointer-events-none' : 'text-slate-400'}  tracking-tight font-semibold hover:text-slate-600 dark:text-slate-300`} href={`/${ctx}`}>
+                            <Link className={`text-[.75rem] ${ctx !== path[0]  ? 'text-foreground/95 pointer-events-none' : 'text-foreground/70'}  tracking-tight font-semibold `} href={`/${ctx}`}>
                                 {ctx}
                             </Link>
                         </BreadcrumbItem>

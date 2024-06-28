@@ -25,6 +25,7 @@ const flexBoxVariants = cva('h-full', {
         },
         justifyContent: {
             default:"",
+            center: "justify-center",
             start: "justify-start",
             between: "justify-between",
             end: "justify-end",
