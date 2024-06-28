@@ -5,6 +5,7 @@ import { FlexBox } from '@/components/common/flex-box'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Button } from '@/components/ui/button'
+import { sampleAction } from '@/actions/tasks/sample-action'
 
 
 type Props = {
@@ -13,7 +14,11 @@ type Props = {
 
 const CreateTask = ({ formAction }: Props) => {
     return (
-        <form action={formAction} >
+        <form onSubmit={async (e) => {
+            e.preventDefault()
+      const res =   await sampleAction({ taskTitle: "r"})
+    console.log(res)
+        }} >
             <FlexBox justifyContent="center" className="mt-8">
                 <FlexBox flexDirection="col" className="gap-4 md:w-2/3 lg:w-1/3 w-full">
                     <FlexBox flexDirection="col">
