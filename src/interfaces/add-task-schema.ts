@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-
 export const taskSchema = z.object({
-    taskTitle : z.string().min(3).max(8)
-})
+  taskTitle: z.string({ message: "Task title must not be empty." }),
+  taskDescription: z.string({message : "Task description must not be empty."})
+});

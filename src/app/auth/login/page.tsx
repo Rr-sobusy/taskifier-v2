@@ -53,8 +53,8 @@ const page = () => {
         </FlexBox>
 
         <form action={formAction}>
-          <Button className="bg-gradient-to-r from-blue-500 to-indigo-400 hover:shadow-md brod"><Image className="mr-2" alt='' height={20} width={20} src="/google.svg" />
-            Sign In
+          <Button className="bg-gradient-to-r text-background/65 from-blue-500 to-indigo-400 hover:shadow-md brod"><Image className="mr-2" alt='' height={20} width={20} src="/google.svg" />
+            Sign In with google
           </Button>
         </form>
 

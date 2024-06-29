@@ -35,14 +35,14 @@ const TaskCard = ({ taskTitle = "this is rex randy Hernandez", tags, createdAt =
       </CardHeader>
       <div className="px-6 flex gap-2">
         <div className="flex items-center gap-1">
-          <CalendarCheck2 className="dark:text-slate-200 text-slate-600" size={14} />
-          <p className="text-[.75rem] dark:text-slate-200 text-slate-600">Added:</p>
-          <p className="text-[.75rem] font-semibold dark:text-slate-300 text-slate-800">{createdAt.toLocaleDateString()}</p>
+          <CalendarCheck2 className="text-foreground/80" size={14} />
+          <p className="text-[.75rem] text-foreground/80">Added:</p>
+          <p className="text-[.75rem] font-semibold text-foreground/85">{createdAt.toLocaleDateString()}</p>
         </div>
         <div className="flex items-center gap-1">
-          <CalendarClock className="dark:text-slate-200 text-slate-600" size={14} />
-          <p className="text-[.75rem] dark:text-slate-200 text-slate-600">Deadline:</p>
-          <p className="text-[.75rem] font-semibold dark:text-slate-300 text-slate-800">{completionDate.toLocaleDateString()}</p>
+          <CalendarClock className="text-foreground/80" size={14} />
+          <p className="text-[.75rem] text-foreground/80">Deadline:</p>
+          <p className="text-[.75rem] font-semibold text-foreground/85">{completionDate.toLocaleDateString()}</p>
         </div>
       </div>
       <CardContent className="flex flex-col gap-1">
@@ -53,8 +53,8 @@ const TaskCard = ({ taskTitle = "this is rex randy Hernandez", tags, createdAt =
         </div>
         <p className="text-[.75rem] font-semibold">{tags.length.toString()}</p>
         <div className="flex flex-row items-center gap-2">
-          <p className="text-[.75rem] dark:text-slate-200 text-slate-600">Last updated: </p>
-          <p className="text-[.75rem] font-semibold dark:text-slate-300 text-slate-800">27 May</p>
+          <p className="text-foreground/80">Last updated: </p>
+          <p className="text-[.75rem] font-semibold text-foreground/85">27 May</p>
         </div>
       </CardContent>
     </Card>
