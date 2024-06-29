@@ -8,11 +8,6 @@ import CreateTask from '@/sections/tasks/create-task'
 type Props = {}
 
 const page = (props: Props) => {
-    const formAction = async (e: FormData) => {
-        "use server"
-        const name = e.get("taskTitle")
-        console.log(name)
-    }
 
     return (
         <AuthProvider>
@@ -22,7 +17,7 @@ const page = (props: Props) => {
                         Create new task
                     </h1>
                 </FlexBox>
-                <CreateTask formAction={formAction} />
+                <CreateTask />
             </DashboardLayout>
         </AuthProvider>
     )
