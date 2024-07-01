@@ -14,6 +14,6 @@ const schema = z.object({
 
 export const sampleAction = actionClient
   .schema(taskSchema)
-  .action(async ({ parsedInput: { taskTitle } }) => {
-    console.log(taskTitle);
+  .action(async ({ parsedInput: Schema }) => {
+    console.log(Schema);
   });

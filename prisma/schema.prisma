@@ -65,7 +65,7 @@ model VerificationToken {
 
 model Tasks {
   tasksId            Int           @id @default(autoincrement())
-  user               User          @relation(fields: [userId], references: [id])
+  user               User          @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId             String        
   taskTitle          String
   taskDescription    String
@@ -74,7 +74,7 @@ model Tasks {
   updatedAt          DateTime? 
   completionDate     DateTime 
   subTasks           SubTasks[]
-  tags               Tags[]
+  tags               Tags[]       
   iconBgColor        String
   icon               String
 }
@@ -86,7 +86,7 @@ model SubTasks {
   createdAt         DateTime        @default(now())
   updatedAt         DateTime
   isCompleted       Boolean?
-  task              Tasks           @relation(fields: [taskId], references: [tasksId])
+  task              Tasks           @relation(fields: [taskId], references: [tasksId], onDelete: Cascade)
   taskId            Int           
 }
 
@@ -94,6 +94,6 @@ model SubTasks {
 model Tags {
   id                Int             @id @default(autoincrement())
   taskTitle         String
-  task              Tasks           @relation(fields: [taskId], references: [tasksId])
+  task              Tasks           @relation(fields: [taskId], references: [tasksId], onDelete: Cascade)
   taskId            Int
 }

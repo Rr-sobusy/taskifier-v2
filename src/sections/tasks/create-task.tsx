@@ -24,7 +24,7 @@ import {
 } from "@/components/ui/select"
 import { format } from "date-fns"
 
-import { sampleAction } from '@/actions/tasks/sample-action'
+import { addNewTask } from '@/actions/tasks/add-task'
 import { useAction } from 'next-safe-action/hooks'
 import { Cat, Dog, Fish, Rabbit, Turtle, Trash2, Plus } from "lucide-react";
 import { MultiSelect } from '@/components/ui/multi-select'
@@ -36,8 +36,8 @@ import { zodResolver } from '@hookform/resolvers/zod'
 
 import { taskSchema, TaskSchema } from '@/interfaces/add-task-schema'
 
-type Props = {
-
+type CreateTaskProps = {
+    userId: string | undefined
 }
 
 type SubTaskProps = {
@@ -51,10 +51,10 @@ const frameworksList = [
     { value: "svelte", label: "Svelte", icon: Rabbit },
     { value: "ember", label: "Ember", icon: Fish },
 ];
-const CreateTask = ({ }: Props) => {
+const CreateTask = ({ userId }: CreateTaskProps) => {
     const [date, setDate] = React.useState<Date>()
     const [subTasks, setSubTasks] = React.useState<SubTaskProps[]>([{ id: uuidv4(), subTaskName: "" }])
-    const { execute, result, isExecuting } = useAction(sampleAction);
+
     const [selectedFrameworks, setSelectedFrameworks] = useState<string[]>(["react", "angular"]);
 
     const { register, handleSubmit, formState: { errors }, control } = useForm<TaskSchema>({
@@ -74,8 +74,8 @@ const CreateTask = ({ }: Props) => {
     }
 
     return (
-        <form onSubmit={handleSubmit((val) => {
-           console.log(val)
+        <form onSubmit={handleSubmit(async (val) => {
+            await addNewTask(userId ? userId : " ", val)
         })} >
             <FlexBox justifyContent="center" className="mt-8">
                 <FlexBox flexDirection="col" className="gap-4 md:w-2/3 lg:w-[40%] w-full">
@@ -211,7 +211,7 @@ const CreateTask = ({ }: Props) => {
                         <Button onClick={addSubTaskField} variant="outline"><Plus size={16} /></Button>
                     </FlexBox>
 
-                    <Button disabled={isExecuting} type="submit">Test</Button>
+                    <Button type="submit">Test</Button>
                 </FlexBox>
 
             </FlexBox>

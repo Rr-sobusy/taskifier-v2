@@ -1,36 +1,30 @@
+"use server";
 
 import { actionClient } from "@/lib/safe-action";
 import { prisma } from "@/app/layout";
 import { auth } from "@/auth";
-
+import { z } from "zod";
 import { TaskSchema, taskSchema } from "@/interfaces/add-task-schema";
+import { revalidatePath } from "next/cache";
 
-export const addNewTask = actionClient.schema(taskSchema).action(async ({ parsedInput : Shema}) => {
+export const addNewTask = actionClient
+  .schema(taskSchema)
+  .bindArgsSchemas<[userId: z.ZodString]>([z.string()])
+  .action(async ({ parsedInput: Schema, bindArgsParsedInputs: [userId] }) => {
+    try {
+      const res = await prisma.tasks.create({
+        data: {
+          taskTitle: Schema.taskTitle,
+          taskDescription: Schema.taskDescription,
+          icon: Schema.icon,
+          completionDate: new Date(Schema.completionDate),
+          iconBgColor: Schema.bgColor,
+          userId: userId,
+        },
+      });
+      revalidatePath("/tasks")
+    } catch (error) {
+      console.log({ message: error });
+    }
 
-
-    console.log(Shema)
-
-    // try {
-    //     const user = await auth();
-
-    //     if (!user || !user.user?.id) {
-    //         throw new Error('Unauthorized: User authentication failed.');
-    //     }
-
-    //     //   const res =   await prisma.tasks.create({
-    //     //         data: {
-    //     //             completionDate: new Date(completionDate),
-    //     //             iconBgColor: bgColor,
-    //     //             taskDescription: taskDescription,
-    //     //             taskTitle: taskTitle,
-    //     //             icon: icon,
-    //     //             userId: user.user?.id
-    //     //         }
-    //     //     })
-    //         console.log(parsedInput)
-       
-    // }
-    // catch (error) {
-    //     console.log({ message: error })
-    // }
-})
+  });

@@ -9,8 +9,8 @@ import { auth } from '@/auth'
 
 type Props = {}
 
-const page =  async (props: Props) => {
-
+const page = async (props: Props) => {
+    const user = await auth();
 
 
     return (
@@ -21,7 +21,7 @@ const page =  async (props: Props) => {
                         Create new task
                     </h1>
                 </FlexBox>
-                <CreateTask/>
+                <CreateTask userId={user?.user?.id} />
             </DashboardLayout>
         </AuthProvider>
     )
