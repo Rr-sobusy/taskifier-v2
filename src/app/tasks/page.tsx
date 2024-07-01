@@ -39,6 +39,7 @@ const page = async (props: Props) => {
                   subTasks={todo.subTasks}
                   key={todo.tasksId}
                   taskTitle={todo.taskTitle}
+                  taskDescription={todo.taskDescription}
                   completionDate={todo.completionDate}
                   createdAt={todo.createdAt}
                   tags={todo.tags}

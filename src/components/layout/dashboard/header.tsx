@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/breadcrumb"
 
 
-import { Sun, Moon, Menu } from 'lucide-react'
+import { Sun, Moon, Menu, GithubIcon } from 'lucide-react'
 import Image from 'next/image'
 
 
@@ -45,7 +45,7 @@ export const Header = ({ breadcrumbsPath, themeToggler, currentTheme }: { breadc
                 <Menu className="block md:hidden" size={20} />
 
 
-                <Image className="px-2 py-2 hover:bg-accent rounded-md" width={37} height={37} alt='' src="/github.svg" />
+                {/* <GithubIcon size={37} className="px-2 py-2 hover:bg-accent rounded-md" /> */}
                 <span className="cursor-pointer py-2 px-2 hover:bg-accent rounded-md" onClick={themeToggler}>{currentTheme === "dark" ? <Sun size={23} /> : <Moon size={23} />}</span>
             </div>
         </header>

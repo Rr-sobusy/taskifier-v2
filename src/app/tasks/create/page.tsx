@@ -4,10 +4,14 @@ import DashboardLayout from '@/components/layout/dashboard/layout'
 import { FlexBox } from '@/components/common/flex-box'
 import CreateTask from '@/sections/tasks/create-task'
 
+import { auth } from '@/auth'
+
 
 type Props = {}
 
-const page = (props: Props) => {
+const page =  async (props: Props) => {
+
+
 
     return (
         <AuthProvider>
@@ -17,7 +21,7 @@ const page = (props: Props) => {
                         Create new task
                     </h1>
                 </FlexBox>
-                <CreateTask />
+                <CreateTask/>
             </DashboardLayout>
         </AuthProvider>
     )
