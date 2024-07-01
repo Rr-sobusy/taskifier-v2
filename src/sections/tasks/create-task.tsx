@@ -75,8 +75,7 @@ const CreateTask = ({ }: Props) => {
 
     return (
         <form onSubmit={handleSubmit((val) => {
-            execute(val)
-            console.log(result)
+           console.log(val)
         })} >
             <FlexBox justifyContent="center" className="mt-8">
                 <FlexBox flexDirection="col" className="gap-4 md:w-2/3 lg:w-[40%] w-full">
