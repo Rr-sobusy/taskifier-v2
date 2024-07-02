@@ -2,8 +2,7 @@ import React from 'react'
 import DashboardLayout from '@/components/layout/dashboard/layout'
 import AuthProvider from '@/provider/AuthProviders'
 
-import { prisma } from '@/app/layout'
-
+import prisma from '@/lib/prisma'
 const page = async ({ params }: { params: { slug: string[] } }) => {
 
 
