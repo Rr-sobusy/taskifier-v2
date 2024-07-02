@@ -15,7 +15,7 @@ export type TaskCardType = {
     createdAt: Date,
     completionDate: Date,
     icCompleted?: boolean,
-    subTasks: SubTasks,
+    subTasks?: SubTasks,
     tags: {
         id: number
         taskTitle: string,

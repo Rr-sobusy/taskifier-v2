@@ -1,22 +1,17 @@
 import { prisma } from "@/app/layout";
 
-export async function fetchTasks(email: string) {
+export async function fetchTasks(userId: string) {
 
-    const user = await prisma.user.findFirst({
-        where: {
-            email: email
-        }
-    })
-    if (!user) {
-        return [];
-    }
+    //TODO - add paginagtion in queries
+    
     const tasks = await prisma.tasks.findMany({
         include: {
             tags: true,
             subTasks: true
         }, where: {
-            userId: user.id
+            userId: userId
         }
     })
     return tasks;
+    
 }   

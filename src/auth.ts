@@ -7,6 +7,14 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   session: {
     strategy: "jwt",
   },
+  callbacks: {
+    session({ session, token }) {
+      if (session.user) {
+        session.user.id = token.sub as string
+      }
+      return session;
+    },
+  },
   adapter: PrismaAdapter(prisma),
   providers: [GoogleProvider],
 });

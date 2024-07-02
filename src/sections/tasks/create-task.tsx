@@ -35,9 +35,11 @@ import { useForm, Controller } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 
 import { taskSchema, TaskSchema } from '@/interfaces/add-task-schema'
+import { redirect } from 'next/navigation'
+
 
 type CreateTaskProps = {
-    userId: string | undefined
+    userId: string
 }
 
 type SubTaskProps = {
@@ -75,7 +77,8 @@ const CreateTask = ({ userId }: CreateTaskProps) => {
 
     return (
         <form onSubmit={handleSubmit(async (val) => {
-            await addNewTask(userId ? userId : " ", val)
+            await addNewTask(userId, val)
+
         })} >
             <FlexBox justifyContent="center" className="mt-8">
                 <FlexBox flexDirection="col" className="gap-4 md:w-2/3 lg:w-[40%] w-full">
