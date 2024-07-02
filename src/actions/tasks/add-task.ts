@@ -1,9 +1,9 @@
 "use server";
 
 import { actionClient } from "@/lib/safe-action";
-import { prisma } from "@/app/layout";
+import prisma from "@/lib/prisma";
 import { z } from "zod";
-import { type TaskSchema, taskSchema } from "@/interfaces/add-task-schema";
+import { taskSchema } from "@/interfaces/add-task-schema";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 

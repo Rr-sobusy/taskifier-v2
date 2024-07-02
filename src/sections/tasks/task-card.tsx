@@ -6,22 +6,22 @@ import { Badge } from '@/components/ui/badge'
 import type { TaskCardType } from '@/interfaces/task-card-types'
 import { FlexBox } from '@/components/common/flex-box'
 import { Icons } from '@/constants/icons'
-import { CalendarCheck2, CalendarClock, type LucideIcon } from 'lucide-react'
+import { CalendarCheck2, CalendarClock } from 'lucide-react'
 
 
 const TaskCard = ({ taskTitle = "this is rex randy Hernandez", tags, createdAt = new Date("2024-06-26T16:25:06.726Z"), completionDate = new Date("2024-06-26T16:25:06.726Z"), icCompleted, icon, iconBgColor, subTasks, taskDescription }: TaskCardType) => {
 
 
-  const RenderIcon = ()=> {
+  const RenderIcon = () => {
     const iconIndex = Icons.findIndex((ctx) => ctx.iconName === icon)
     const Icon = Icons[iconIndex].icon
-    return <Icon /> 
+    return <Icon />
   }
 
   return (
     <Card className="shadow-sm relative cursor-pointer">
       <CardHeader className="flex flex-row items-center gap-2 pt-6 pb-3">
-        <div style={{ background: "rgb(239 68 68)" }} className={`h-14 w-14 flex text-background justify-center items-center shadow-sm rounded-lg`}>
+        <div style={{ background: iconBgColor }} className={`h-14 w-14 flex text-background justify-center items-center shadow-sm rounded-lg`}>
           {RenderIcon()}
         </div>
         <FlexBox flexDirection="col">
@@ -47,8 +47,8 @@ const TaskCard = ({ taskTitle = "this is rex randy Hernandez", tags, createdAt =
       <div className="px-6 mt-2">
         <div className="flex item-center gap-1">
           {
-            tags.map((tag) => (
-              <Badge className="rounded-sm bg-accent bg-green-600  text-background" variant="outline">
+            tags.map((tag, index) => (
+              <Badge key={index} className="rounded-sm bg-accent bg-green-600  text-background" variant="outline">
                 {tag.taskTitle}
               </Badge>))
           }

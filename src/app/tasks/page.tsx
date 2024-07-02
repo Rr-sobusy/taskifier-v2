@@ -38,7 +38,7 @@ const page = async (props: Props) => {
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5 my-7 ">
           {
             tasks.map((task) => (
-              <Link href={`tasks/management/${task.userId}/${task.tasksId}`}>
+              <Link key={task.tasksId} href={`tasks/management/${task.userId}/${task.tasksId}`}>
                 <TaskCard
                   key={task.tasksId}
                   taskTitle={task.taskTitle}

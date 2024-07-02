@@ -181,7 +181,7 @@ const CreateTask = ({ userId }: CreateTaskProps) => {
                                         <SelectGroup className="grid grid-cols-3 gap-1">
                                             {
                                                 Colors.map((color) => (
-                                                    <SelectItem className="border pl-6" value={color}>
+                                                    <SelectItem key={color} className="border pl-6" value={color}>
                                                         <div style={{ background: color }} className="h-7 w-7 rounded-md"></div>
                                                     </SelectItem>))
                                             }

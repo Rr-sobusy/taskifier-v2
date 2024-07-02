@@ -3,9 +3,6 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import ThemeProvider from "@/provider/ThemeProvider";
 import TopLoaderProvider from "@/provider/TopLoaderProvider";
-import { PrismaClient } from "@prisma/client";
-
-export const prisma = new PrismaClient();
 
 const inter = Inter({ subsets: ["latin"] });
 
