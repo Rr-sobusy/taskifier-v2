@@ -90,8 +90,7 @@ const CreateTask = ({ userId }: CreateTaskProps) => {
                 return;
 
             toast({
-                title: "Scheduled: Catch up",
-                description: "Friday, February 10, 2023 at 5:57 PM",
+                title : "New task added.",
             })
         })} >
             <FlexBox justifyContent="center" className="mt-8 pb-8">
@@ -228,7 +227,7 @@ const CreateTask = ({ userId }: CreateTaskProps) => {
                         <Button onClick={addSubTaskField} variant="outline"><Plus size={16} /></Button>
                     </FlexBox>
 
-                    <Button type="submit">Test</Button>
+                    <Button disabled={isExecuting} type="submit">Test</Button>
                 </FlexBox>
 
             </FlexBox>
