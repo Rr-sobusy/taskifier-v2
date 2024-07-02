@@ -4,23 +4,25 @@ import { Progress } from '@/components/ui/progress'
 import { CardHeader, CardContent, Card, CardTitle, CardDescription } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import type { TaskCardType } from '@/interfaces/task-card-types'
-import { FilePenLine, CalendarCheck2, CalendarClock } from 'lucide-react'
 import { FlexBox } from '@/components/common/flex-box'
+import { Icons } from '@/constants/icons'
+import { CalendarCheck2, CalendarClock, type LucideIcon } from 'lucide-react'
 
 
 const TaskCard = ({ taskTitle = "this is rex randy Hernandez", tags, createdAt = new Date("2024-06-26T16:25:06.726Z"), completionDate = new Date("2024-06-26T16:25:06.726Z"), icCompleted, icon, iconBgColor, subTasks, taskDescription }: TaskCardType) => {
-  const Icon = ()  => {
-      switch (icon) {
-        case "FilePenLine" :
-          return <FilePenLine />;
-      }
+
+
+  const RenderIcon = ()=> {
+    const iconIndex = Icons.findIndex((ctx) => ctx.iconName === icon)
+    const Icon = Icons[iconIndex].icon
+    return <Icon /> 
   }
 
   return (
     <Card className="shadow-sm relative cursor-pointer">
       <CardHeader className="flex flex-row items-center gap-2 pt-6 pb-3">
         <div style={{ background: "rgb(239 68 68)" }} className={`h-14 w-14 flex text-background justify-center items-center shadow-sm rounded-lg`}>
-          {Icon()}
+          {RenderIcon()}
         </div>
         <FlexBox flexDirection="col">
           <CardTitle className="text-[.925rem] tracking-normal font-extrabold leading-none">{taskTitle}</CardTitle>

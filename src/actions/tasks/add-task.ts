@@ -3,7 +3,7 @@
 import { actionClient } from "@/lib/safe-action";
 import { prisma } from "@/app/layout";
 import { z } from "zod";
-import { TaskSchema, taskSchema } from "@/interfaces/add-task-schema";
+import { type TaskSchema, taskSchema } from "@/interfaces/add-task-schema";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
@@ -28,7 +28,7 @@ export const addNewTask = actionClient
         },
       });
     } catch (error) {
-      console.log({ message: error });
+      throw new Error();
     }
     revalidatePath("/tasks")
     redirect("/tasks")

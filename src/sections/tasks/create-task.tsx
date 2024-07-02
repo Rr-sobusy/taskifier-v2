@@ -35,7 +35,7 @@ import { useForm, Controller } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 
 import { taskSchema, TaskSchema } from '@/interfaces/add-task-schema'
-import { redirect } from 'next/navigation'
+import { useToast } from '@/components/ui/use-toast'
 
 
 type CreateTaskProps = {
@@ -57,7 +57,11 @@ const CreateTask = ({ userId }: CreateTaskProps) => {
     const [date, setDate] = React.useState<Date>()
     const [subTasks, setSubTasks] = React.useState<SubTaskProps[]>([{ id: uuidv4(), subTaskName: "" }])
 
+    const { toast } = useToast()
+
     const [selectedFrameworks, setSelectedFrameworks] = useState<string[]>(["react", "angular"]);
+
+    const { execute, isExecuting, result } = useAction(addNewTask.bind(null, userId))
 
     const { register, handleSubmit, formState: { errors }, control } = useForm<TaskSchema>({
         resolver: zodResolver(taskSchema)
@@ -76,11 +80,21 @@ const CreateTask = ({ userId }: CreateTaskProps) => {
     }
 
     return (
-        <form onSubmit={handleSubmit(async (val) => {
-            await addNewTask(userId, val)
+        <form onSubmit={handleSubmit((val) => {
+            // execute action in server
+            execute(val);
 
+            const { serverError } = result;
+
+            if (serverError)
+                return;
+
+            toast({
+                title: "Scheduled: Catch up",
+                description: "Friday, February 10, 2023 at 5:57 PM",
+            })
         })} >
-            <FlexBox justifyContent="center" className="mt-8">
+            <FlexBox justifyContent="center" className="mt-8 pb-8">
                 <FlexBox flexDirection="col" className="gap-4 md:w-2/3 lg:w-[40%] w-full">
 
                     <FlexBox flexDirection="col">

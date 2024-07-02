@@ -4,6 +4,7 @@ import TaskCard from '@/sections/tasks/task-card'
 import AuthProvider from '@/provider/AuthProviders'
 import Link from 'next/link'
 import { ListFilter, Plus } from 'lucide-react'
+import { Toaster } from '@/components/ui/toaster'
 
 import { Button } from '@/components/ui/button'
 import { auth } from '@/auth'
@@ -22,6 +23,7 @@ const page = async (props: Props) => {
   return (
     <AuthProvider>
       <DashboardLayout>
+        <Toaster />
         <div className="flex justify-between">
           <div className="flex gap-8">
             <h1 className="scroll-m-20 text-foreground/90 font-extrabold tracking-tight text-2xl lg:text-2xl">
