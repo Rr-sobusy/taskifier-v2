@@ -13,7 +13,7 @@ import type { SidenavType } from '@/interfaces/sidenav-types'
 
 
 const TooltipHelper = ({ children, title, ...rest }: { children: React.ReactNode, title: SidenavType["href"] }) => {
-    return (<TooltipProvider>
+    return (<TooltipProvider delayDuration={250}>
         <Tooltip {...rest}>
             <TooltipTrigger>{children}</TooltipTrigger>
             <TooltipContent className="bg-foreground">

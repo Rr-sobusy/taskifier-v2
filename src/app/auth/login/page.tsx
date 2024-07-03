@@ -63,18 +63,18 @@ const page = () => {
       <FlexBox className="mt-10 md:mt-0 md:max-w-[63rem] mx-auto" display="flex" flexDirection="mdRow" justifyContent="evenly" alignItems="center">
         <FlexBox flexDirection="col">
           <h1 className="font-sans text-5xl text-foreground/80 md:text-[3rem] font-extrabold tracking-tighter self-center justify-center place-self-center justify-self-center">All your task at one place. With ease.</h1>
-          <h5 className="font-sans md:text-base font-medium text-sm text-slate-600 max-w-xl mt-5 md:mt-3">Keep all your tasks organized in one place, effortlessly. Taskifier offers a clean, intuitive interface to help you stay on top of your to-do list, whether it&apos;s for work, school, or personal projects.</h5>
-          <FlexBox flexDirection="row" className="mt-3 gap-3">
+          <h5 className="font-sans md:text-base font-medium text-sm text-foreground/65 max-w-xl mt-5 md:mt-3">Keep all your tasks organized in one place, effortlessly. Taskifier offers a clean, intuitive interface to help you stay on top of your to-do list, whether it&apos;s for work, school, or personal projects.</h5>
+          <FlexBox flexDirection="row" className="mt-5 gap-3">
             <form action={formAction}>
               <Button className="bg-indigo-500 hover:bg-indigo-600 hover:shadow-md rounded-xl flex gap-2"><span className="animate-bounce"><Play size={15} /></span>Try for free</Button>
             </form>
             <Button className="bg-indigo-500 rounded-xl bg-transparent hover:shadow-md hover:bg-transparent shadow-none text-indigo-500 border border-indigo-500"><a target='_blank' href="https://github.com/Rr-sobusy/taskifier-v2">View Github</a></Button>
           </FlexBox>
         </FlexBox>
-        <Image className="z-20 " alt='' src={HeroImage} height={400} width={400} />
+        <Image priority className="z-20 " alt='' src={HeroImage} height={400} width={400} />
       </FlexBox>
 
-      <h1 className="text-center font-sans text-2xl tracking-tighter font-extrabold text-slate-600 mt-5">Transform the way you manage tasks with us!</h1>
+      <h1 className="text-center font-sans text-2xl tracking-tighter font-extrabold text-foreground/75 mt-5">Transform the way you manage tasks with us!</h1>
       <FlexBox className="gap-16 md:gap-8 max-w-5xl relative mx-auto py-[5rem]" display="flex" flexDirection="mdRow">
         {
           subHeaders.map((card) => (
