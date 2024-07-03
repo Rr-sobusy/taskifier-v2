@@ -33,6 +33,7 @@ import { Icons } from '@/constants/icons'
 import { v4 as uuidv4 } from 'uuid'
 import { useForm, Controller } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useRouter } from 'next/navigation'
 
 import { taskSchema, TaskSchema } from '@/interfaces/add-task-schema'
 import { useToast } from '@/components/ui/use-toast'
@@ -67,6 +68,8 @@ const CreateTask = ({ userId }: CreateTaskProps) => {
         resolver: zodResolver(taskSchema)
     })
 
+    const router = useRouter();
+
     const addSubTaskField = () => {
         const newSubTasks: SubTaskProps = {
             id: uuidv4(),
@@ -90,8 +93,9 @@ const CreateTask = ({ userId }: CreateTaskProps) => {
                 return;
 
             toast({
-                title : "New task added.",
+                title: "New task added.",
             })
+            router.push("/tasks");
         })} >
             <FlexBox justifyContent="center" className="mt-8 pb-8">
                 <FlexBox flexDirection="col" className="gap-4 md:w-2/3 lg:w-[40%] w-full">

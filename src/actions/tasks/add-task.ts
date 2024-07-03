@@ -5,7 +5,7 @@ import prisma from "@/lib/prisma";
 import { z } from "zod";
 import { taskSchema } from "@/interfaces/add-task-schema";
 import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
+
 
 
 export const addNewTask = actionClient
@@ -31,5 +31,4 @@ export const addNewTask = actionClient
       throw new Error();
     }
     revalidatePath("/tasks")
-    redirect("/tasks")
   });
