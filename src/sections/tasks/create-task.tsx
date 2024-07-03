@@ -89,7 +89,7 @@ const CreateTask = ({ userId }: CreateTaskProps) => {
 
             const { serverError, data } = result;
 
-            if (data) {
+            if (!serverError) {
                 toast({
                     title: "New task added.",
                 })
