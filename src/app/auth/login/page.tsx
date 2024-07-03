@@ -8,6 +8,7 @@ import { Command, Divide } from 'lucide-react'
 
 import { signIn } from '@/auth'
 import { FlexBox } from '@/components/common/flex-box'
+import HeroImage from '../../../../public/blub(3).png'
 
 import { Button as MovingBUtton } from '@/components/ui/moving-border'
 
@@ -43,7 +44,7 @@ const page = () => {
   }
 
   return (
-    <section className="min-h-screen min-w-[calc(100vw-13px)] bg-gradient-to-tr from-blue-50 to-indigo-300 px-5 md:px-14">
+    <section className="min-h-screen min-w-[calc(100vw-13px)] px-5 md:px-14">
 
       <header className="h-[90px] flex justify-between items-center">
 
@@ -53,7 +54,7 @@ const page = () => {
         </FlexBox>
 
         <form action={formAction}>
-          <Button className="bg-gradient-to-r text-background/65 from-blue-500 to-indigo-400 hover:shadow-md brod"><Image className="mr-2" alt='' height={20} width={20} src="/google.svg" />
+          <Button className="text-background bg-indigo-500  hover:shadow-md brod"><Image className="mr-2" alt='' height={20} width={20} src="/google.svg" />
             Sign In with google
           </Button>
         </form>
@@ -61,11 +62,15 @@ const page = () => {
       </header>
 
       <FlexBox className="mt-10 md:mt-0" display="flex" flexDirection="mdRow" justifyContent="evenly" alignItems="center">
-        <div>
-          <h1 className="font-sans text-5xl md:text-[3rem] text-slate-700 font-extrabold tracking-tighter self-center justify-center place-self-center justify-self-center">All your task at one place. With ease.</h1>
+        <FlexBox flexDirection="col">
+          <h1 className="font-sans text-5xl text-foreground/85 md:text-[3rem] font-extrabold tracking-tighter self-center justify-center place-self-center justify-self-center">All your task at one place. With ease.</h1>
           <h5 className="font-sans md:text-base font-medium text-sm text-slate-600 max-w-xl mt-5 md:mt-3">Keep all your tasks organized in one place, effortlessly. Taskifier offers a clean, intuitive interface to help you stay on top of your to-do list, whether it&apos;s for work, school, or personal projects.</h5>
-        </div>
-        <Image className="z-20" alt='' src="/blub(3).png" height={400} width={400} />
+          <FlexBox flexDirection="row" className="mt-3 gap-3">
+            <Button className="bg-indigo-500 rounded-xl">Try for free</Button>
+            <Button className="bg-indigo-500 rounded-xl bg-transparent shadow-none text-indigo-500 border border-indigo-500">View Github</Button>
+          </FlexBox>
+        </FlexBox>
+        <Image className="z-20" alt='' src={HeroImage} height={400} width={400} />
       </FlexBox>
 
       <h1 className="text-center font-sans text-2xl tracking-tighter font-extrabold text-slate-600 mt-5">Transform the way you manage tasks with us!</h1>

@@ -30,7 +30,7 @@ const DashboardLayout = ({
       <Next13ProgressBar />
       <SidenavLg routerPaths={route} routes={SidenavData} />
       <main className="flex flex-col z-10 w-screen md:w-[calc(100vw-70px)] md:relative left-[58px] md:px-8 px-3 md:min-h-[calc(100vh+10px)]">
-        <Header currentTheme={theme} themeToggler={themeToggler} breadcrumbsPath={route} />
+        <Header routes={SidenavData} currentTheme={theme} themeToggler={themeToggler} breadcrumbsPath={route} />
         {children}
       </main>
     </>
