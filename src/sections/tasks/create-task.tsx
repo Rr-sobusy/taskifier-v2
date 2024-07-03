@@ -87,15 +87,15 @@ const CreateTask = ({ userId }: CreateTaskProps) => {
             // execute action in server
             execute(val);
 
-            const { serverError } = result;
+            const { serverError, data } = result;
 
-            if (serverError)
-                return;
-
-            toast({
-                title: "New task added.",
-            })
-            router.push("/tasks");
+            if (data) {
+                toast({
+                    title: "New task added.",
+                })
+                console.log(data)
+                router.push("/tasks");
+            }
         })} >
             <FlexBox justifyContent="center" className="mt-8 pb-8">
                 <FlexBox flexDirection="col" className="gap-4 md:w-2/3 lg:w-[40%] w-full">
