@@ -7,9 +7,10 @@ import type { TaskCardType } from '@/interfaces/task-card-types'
 import { FlexBox } from '@/components/common/flex-box'
 import { Icons } from '@/constants/icons'
 import { CalendarCheck2, CalendarClock } from 'lucide-react'
+import clsx from 'clsx'
 
 
-const TaskCard = ({ taskTitle = "this is rex randy Hernandez", tags, createdAt = new Date("2024-06-26T16:25:06.726Z"), completionDate = new Date("2024-06-26T16:25:06.726Z"), icCompleted, icon, iconBgColor, subTasks, taskDescription }: TaskCardType) => {
+const TaskCard = ({ taskTitle = "this is rex randy Hernandez", tags, createdAt = new Date("2024-06-26T16:25:06.726Z"), completionDate = new Date("2024-06-26T16:25:06.726Z"), progress, icon, subTasks, taskDescription }: TaskCardType) => {
 
 
   const RenderIcon = () => {
@@ -21,7 +22,10 @@ const TaskCard = ({ taskTitle = "this is rex randy Hernandez", tags, createdAt =
   return (
     <Card className="shadow-sm relative cursor-pointer">
       <CardHeader className="flex flex-row items-center gap-2 pt-6 pb-3">
-        <div style={{ background: iconBgColor }} className={`h-14 w-14 flex text-background justify-center items-center shadow-sm rounded-lg`}>
+        <div className={`h-14 w-14 flex text-background justify-center items-center shadow-sm rounded-lg ${clsx({
+            "bg-[#727279]" : progress === 0,
+            "bg-[#318CE7]" :  progress === 100
+        })}`}>
           {RenderIcon()}
         </div>
         <FlexBox flexDirection="col">
@@ -57,8 +61,8 @@ const TaskCard = ({ taskTitle = "this is rex randy Hernandez", tags, createdAt =
       <CardContent className="flex flex-col gap-1">
         <Separator className="my-4" />
         <div className="flex items-center gap-4">
-          <Progress className="h-[4px] basis-[90%]" value={80} />
-          <p className="text-[.75rem] font-semibold">90%</p>
+          <Progress className="h-[4px] basis-[90%]" value={progress} />
+          <p className="text-[.75rem] font-semibold">{progress + "%"}</p>
         </div>
         <p className="text-[.75rem] font-semibold">{tags.length.toString()}</p>
         <div className="flex flex-row items-center gap-2">

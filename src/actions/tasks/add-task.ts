@@ -5,6 +5,7 @@ import prisma from "@/lib/prisma";
 import { z } from "zod";
 import { taskSchema } from "@/interfaces/add-task-schema";
 import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 
 
 
@@ -17,18 +18,19 @@ export const addNewTask = actionClient
         data: {
           taskTitle: Schema.taskTitle,
           taskDescription: Schema.taskDescription,
-          isCompleted: false,
           icon: Schema.icon,
           completionDate: new Date(Schema.completionDate),
-          iconBgColor: Schema.bgColor,
+          progress: 0,
           userId: userId,
           tags: {
             create: Schema.tags.map((tag) => ({ taskTitle: tag }))
           }
         },
       });
+      
     } catch (error) {
       throw new Error();
     }
     revalidatePath("/tasks")
+    redirect("/tasks")
   });

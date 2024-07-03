@@ -44,10 +44,10 @@ const page = async (props: Props) => {
                   taskTitle={task.taskTitle}
                   taskDescription={task.taskDescription}
                   completionDate={task.completionDate}
+                  progress={task.progress}
                   createdAt={task.createdAt}
                   tags={task.tags}
                   icon={task.icon}
-                  iconBgColor={task.iconBgColor}
                 />
               </Link>
             ))

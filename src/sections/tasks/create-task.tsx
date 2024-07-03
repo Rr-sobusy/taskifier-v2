@@ -37,6 +37,7 @@ import { useRouter } from 'next/navigation'
 
 import { taskSchema, TaskSchema } from '@/interfaces/add-task-schema'
 import { useToast } from '@/components/ui/use-toast'
+import { tags } from '@/constants/tags'
 
 
 type CreateTaskProps = {
@@ -93,8 +94,6 @@ const CreateTask = ({ userId }: CreateTaskProps) => {
                 toast({
                     title: "New task added.",
                 })
-                console.log(data)
-                router.push("/tasks");
             }
         })} >
             <FlexBox justifyContent="center" className="mt-8 pb-8">
@@ -110,13 +109,37 @@ const CreateTask = ({ userId }: CreateTaskProps) => {
 
                     <FlexBox flexDirection="col">
                         <p className='font-sans text-foreground/80 text-base font-bold tracking-normal'>Task description</p>
-                        <Textarea {...register("taskDescription")} name="taskDescription" className="w-full min-h-24" />
+                        <Textarea {...register("taskDescription")} name="taskDescription" className="w-full min-h-24 text-sm font-sans font-medium" />
                         {
                             errors.taskDescription && <p className="font-sans text-sm text-red-500">{errors.taskDescription?.message}</p>
                         }
                     </FlexBox>
 
                     <FlexBox flexDirection="col">
+                        <p className='font-sans text-foreground/80 text-base font-bold tracking-normal'>Task tags</p>
+                        <div className="w-full">
+                            <Controller
+                                control={control}
+                                name="tags"
+                                render={({ field }) => (
+                                    <MultiSelect
+                                        options={tags}
+                                        onValueChange={field.onChange}
+                                        defaultValue={field.value}
+                                        placeholder="Select tag/s"
+                                        variant="inverted"
+                                        animation={2}
+                                        maxCount={3}
+                                    />)}
+                            />
+                            {
+                                errors.tags && <p className="font-sans text-sm text-red-500">{errors.tags.message}</p>
+                            }
+                        </div>
+                    </FlexBox>
+
+                    <FlexBox className="gap-2" flexDirection="row">
+                    <FlexBox className="flex-1" flexDirection="col">
                         <p className='font-sans text-foreground/80 text-base font-bold tracking-normal'>Completion Date</p>
                         <Popover>
                             <PopoverTrigger asChild>
@@ -146,75 +169,30 @@ const CreateTask = ({ userId }: CreateTaskProps) => {
                             errors.completionDate && <p className="font-sans text-sm text-red-500">{errors.completionDate.message}</p>
                         }
                     </FlexBox>
-
-                    <FlexBox flexDirection="col">
-                        <p className='font-sans text-foreground/80 text-base font-bold tracking-normal'>Select tag/s</p>
-                        <div className="w-full">
-                            <Controller
-                                control={control}
-                                name="tags"
-                                render={({ field }) => (
-                                    <MultiSelect
-                                        options={frameworksList}
-                                        onValueChange={field.onChange}
-                                        defaultValue={field.value}
-                                        placeholder="Select frameworks"
-                                        variant="inverted"
-                                        animation={2}
-                                        maxCount={3}
-                                    />)}
-                            />
-                            {
-                                errors.tags && <p className="font-sans text-sm text-red-500">{errors.tags.message}</p>
-                            }
-                        </div>
-                    </FlexBox>
-
-                    <FlexBox className="gap-2" justifyContent="between" flexDirection="row">
-                        <FlexBox flexDirection="col" className="flex-1">
-                            <p className='font-sans text-foreground/80 text-base font-bold tracking-normal'>Icon BgColor</p>
-                            <Controller
-                                control={control}
-                                name="bgColor"
-                                render={({ field }) => (<Select value={field.value} onValueChange={field.onChange}>
-                                    <SelectTrigger className="w-full border h-10 rounded-md text-sm font-medium flex items-center justify-center hover:bg-accent">
-                                        <SelectValue placeholder="Select a fruit" />
-                                    </SelectTrigger>
-                                    <SelectContent className="flex flex-col justify-center">
-                                        <SelectGroup className="grid grid-cols-3 gap-1">
-                                            {
-                                                Colors.map((color) => (
-                                                    <SelectItem key={color} className="border pl-6" value={color}>
-                                                        <div style={{ background: color }} className="h-7 w-7 rounded-md"></div>
-                                                    </SelectItem>))
-                                            }
-                                        </SelectGroup>
-                                    </SelectContent>
-                                </Select>)}
-                            />
-                        </FlexBox>
-                        <FlexBox flexDirection="col" className="flex-1">
+                    <FlexBox flexDirection="col" className="flex-1">
                             <p className='font-sans text-foreground/80 text-base font-bold tracking-normal'>Task Icon</p>
                             <Controller control={control}
                                 name="icon"
                                 render={({ field }) => (<Select value={field.value} onValueChange={field.onChange}>
                                     <SelectTrigger className="w-full border h-10 rounded-md text-sm font-medium flex items-center justify-center hover:bg-accent">
-                                        <SelectValue placeholder="Select a fruit" />
+                                        <SelectValue placeholder="Select icon" />
                                     </SelectTrigger>
                                     <SelectContent className="flex flex-col justify-center">
                                         <SelectGroup className="grid grid-cols-3 gap-1">
                                             {
                                                 Icons.map((Icon) => (
                                                     <SelectItem key={Icon.iconName} className="border pl-7" value={Icon.iconName}>
-                                                        <Icon.icon size={23} className="text-foreground" />
+                                                        <Icon.icon size={23} className="text-foreground/75" />
                                                     </SelectItem>))
                                             }
                                         </SelectGroup>
                                     </SelectContent>
                                 </Select>)}
                             />
+                            {
+                                errors.icon &&  <p className="font-sans text-sm text-red-500">{errors.icon.message}</p>
+                            }
                         </FlexBox>
-
                     </FlexBox>
 
                     <FlexBox flexDirection="col" className="gap-2">

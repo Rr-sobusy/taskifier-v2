@@ -69,13 +69,12 @@ model Tasks {
   userId             String        
   taskTitle          String
   taskDescription    String
-  isCompleted        Boolean?
+  progress           Int
   createdAt          DateTime      @default(now())
   updatedAt          DateTime? 
   completionDate     DateTime 
   subTasks           SubTasks[]
   tags               Tags[]       
-  iconBgColor        String
   icon               String
 }
 

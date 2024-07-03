@@ -7,7 +7,6 @@ export const taskSchema = z.object({
   taskDescription: z.string().min(1, { message: "Task description must not be empty." }),
   completionDate: z.date({message : "Pick a date"}),
   tags: z.string().array().max(2, {message : "out of choices"}),
-  bgColor: z.string(),
   icon: z.string()
 });
 

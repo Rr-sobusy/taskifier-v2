@@ -14,13 +14,12 @@ export type TaskCardType = {
     taskDescription: string,
     createdAt: Date,
     completionDate: Date,
-    icCompleted?: boolean,
+    progress: number,
     subTasks?: SubTasks,
     tags: {
         id: number
         taskTitle: string,
         taskId:number
     }[]
-    iconBgColor : string
     icon: LucideIcon | string
 }
