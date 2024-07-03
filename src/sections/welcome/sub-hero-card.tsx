@@ -22,7 +22,7 @@ const Card = ({ cardProps }: CardProps) => {
                 <Icon className="text-white" size={30} />
             </div>
             <h5 className="text-center text-lg md:text-base font-extrabold font-sans mt-7 text-slate-600">{cardProps.cardTitle}</h5>
-            <p className="text-center text-[15px] md:text-sm font-sans font-semibold text-foreground/65 tracking-tight"> {cardProps.content} </p>
+            <p className="text-center text-[15px] md:text-sm font-sans font-semibold text-slate-500 tracking-tight"> {cardProps.content} </p>
         </div>
     )
 }

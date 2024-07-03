@@ -57,7 +57,7 @@ const TaskCard = ({ taskTitle = "this is rex randy Hernandez", tags, createdAt =
       <CardContent className="flex flex-col gap-1">
         <Separator className="my-4" />
         <div className="flex items-center gap-4">
-          <Progress className="h-[5px] basis-[90%]" value={80} />
+          <Progress className="h-[4px] basis-[90%]" value={80} />
           <p className="text-[.75rem] font-semibold">90%</p>
         </div>
         <p className="text-[.75rem] font-semibold">{tags.length.toString()}</p>
