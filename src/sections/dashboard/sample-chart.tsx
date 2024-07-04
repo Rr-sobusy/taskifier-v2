@@ -78,7 +78,7 @@ export function CardsStats() {
                     r: 6,
                     style: { fill: "var(--theme-primary)", opacity: 0.25 },
                   }}
-                 
+
                 />
               </LineChart>
             </ResponsiveContainer>
@@ -98,6 +98,7 @@ export function CardsStats() {
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={data}>
                 <Bar
+                 fill="#2563EB"
                   dataKey="subscription"
                 />
               </BarChart>

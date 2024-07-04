@@ -24,7 +24,7 @@ export const SideNavSm = ({ routes = [], routerPaths, children, className, ...pr
                         routes.map((route) => {
                             const Icon = route.icon;
                             const activeRoute = "/" + routerPaths[0] === route.href ? 'text-background bg-primary' : 'text-foreground bg-accent';
-                            return (<Link className={`py-4 px-3 w-full text-start text-sm font-extrabold rounded-lg flex items-center gap-2 ${activeRoute}`} key={route.title} href={route.href} >
+                            return (<Link className={`py-2 px-3 w-full text-start text-sm font-extrabold rounded-lg flex items-center gap-2 ${activeRoute}`} key={route.title} href={route.href} >
                                 <span>{<Icon size={16} />}</span>
                                 {route.title}
                             </Link>)

@@ -10,6 +10,7 @@ import {
 
 import { Sun, Moon, Menu, GithubIcon } from 'lucide-react'
 import { SideNavSm } from './side-nav-sm'
+import { FlexBox } from '@/components/common/flex-box'
 
 
 const BreadCrumbsHelper = ({ path = [] }: { path: SidenavType["title"][] }) => {
@@ -35,15 +36,18 @@ const BreadCrumbsHelper = ({ path = [] }: { path: SidenavType["title"][] }) => {
 
 
 
-export const Header = ({ breadcrumbsPath, themeToggler, currentTheme, routes , routerPaths}: { breadcrumbsPath: any, themeToggler: () => void, currentTheme: string | undefined, routes: SidenavType[], routerPaths:SidenavType["href"][] }) => {
+export const Header = ({ breadcrumbsPath, themeToggler, currentTheme, routes, routerPaths }: { breadcrumbsPath: any, themeToggler: () => void, currentTheme: string | undefined, routes: SidenavType[], routerPaths: SidenavType["href"][] }) => {
     return (
         <header className="h-[75px] items-center flex justify-between">
-            <BreadCrumbsHelper path={breadcrumbsPath} />
-            <div className="flex justify-center items-center">
-
+            <FlexBox alignItems="center" flexDirection="row" className="gap-2" >
                 <SideNavSm routerPaths={routerPaths} routes={routes} className="block md:hidden px-2 py-2 cursor-pointer hover:bg-accent">
                     <Menu size={20} />
                 </SideNavSm>
+
+                <BreadCrumbsHelper path={breadcrumbsPath} />
+            </FlexBox>
+            <div className="flex justify-center items-center">
+
 
                 {/* <GithubIcon size={37} className="px-2 py-2 hover:bg-accent rounded-md" /> */}
                 <span className="cursor-pointer py-2 px-2 hover:bg-accent rounded-md" onClick={themeToggler}>{currentTheme === "dark" ? <Sun size={23} /> : <Moon size={23} />}</span>

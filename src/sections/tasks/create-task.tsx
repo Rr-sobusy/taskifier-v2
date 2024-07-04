@@ -98,6 +98,7 @@ const CreateTask = ({ userId }: CreateTaskProps) => {
             if (!serverError) {
                 toast({
                     title: "New task added.",
+                    description: val.taskTitle
                 })
             }
         })} >
@@ -151,7 +152,7 @@ const CreateTask = ({ userId }: CreateTaskProps) => {
                                     <Button
                                         variant={"outline"}
                                         className={cn(
-                                            "w-full justify-center text-sm text-center font-medium",
+                                            "w-full justify-center h-10 text-sm text-center font-medium",
                                             !date && "text-foreground/80 font-medium"
                                         )}
                                     >
