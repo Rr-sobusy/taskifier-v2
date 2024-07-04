@@ -11,8 +11,8 @@ import { redirect } from "next/navigation";
 
 export const addNewTask = actionClient
   .schema(taskSchema)
-  .bindArgsSchemas<[userId: z.ZodString]>([z.string()])
-  .action(async ({ parsedInput: Schema, bindArgsParsedInputs: [userId] }) => {
+  .bindArgsSchemas<[userId: z.ZodString, subTasks: z.ZodArray<z.ZodString>]>([z.string(), z.array(z.string())])
+  .action(async ({ parsedInput: Schema, bindArgsParsedInputs: [userId, subTasks] }) => {
     try {
       const res = await prisma.tasks.create({
         data: {
@@ -24,12 +24,15 @@ export const addNewTask = actionClient
           userId: userId,
           tags: {
             create: Schema.tags.map((tag) => ({ taskTitle: tag }))
+          },
+          subTasks: {
+            create: subTasks.map((task) => ({ subTaskTitle: task }))
           }
         },
       });
-      
+
     } catch (error) {
-      throw new Error();
+      console.log(error);
     }
     revalidatePath("/tasks")
     redirect("/tasks")

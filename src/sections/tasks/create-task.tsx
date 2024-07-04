@@ -26,15 +26,12 @@ import { format } from "date-fns"
 
 import { addNewTask } from '@/actions/tasks/add-task'
 import { useAction } from 'next-safe-action/hooks'
-import { Cat, Dog, Fish, Rabbit, Turtle, Trash2, Plus } from "lucide-react";
+import { Trash2, Plus } from "lucide-react";
 import { MultiSelect } from '@/components/ui/multi-select'
-import { Colors } from '@/constants/icon-colors'
 import { Icons } from '@/constants/icons'
 import { v4 as uuidv4 } from 'uuid'
 import { useForm, Controller } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useRouter } from 'next/navigation'
-
 import { taskSchema, TaskSchema } from '@/interfaces/add-task-schema'
 import { useToast } from '@/components/ui/use-toast'
 import { tags } from '@/constants/tags'
@@ -48,44 +45,52 @@ type SubTaskProps = {
     id: string
     subTaskName: string
 }
-const frameworksList = [
-    { value: "react", label: "React", icon: Turtle },
-    { value: "angular", label: "Angular", icon: Cat },
-    { value: "vue", label: "Vue", icon: Dog },
-    { value: "svelte", label: "Svelte", icon: Rabbit },
-    { value: "ember", label: "Ember", icon: Fish },
-];
+
 const CreateTask = ({ userId }: CreateTaskProps) => {
     const [date, setDate] = React.useState<Date>()
     const [subTasks, setSubTasks] = React.useState<SubTaskProps[]>([{ id: uuidv4(), subTaskName: "" }])
 
     const { toast } = useToast()
 
-    const [selectedFrameworks, setSelectedFrameworks] = useState<string[]>(["react", "angular"]);
-
-    const { execute, isExecuting, result } = useAction(addNewTask.bind(null, userId))
+    const { execute, isExecuting, result } = useAction(addNewTask.bind(null, userId, subTasks.map((task) => task.subTaskName)))
 
     const { register, handleSubmit, formState: { errors }, control } = useForm<TaskSchema>({
         resolver: zodResolver(taskSchema)
     })
 
-    const router = useRouter();
 
+    /**
+     * * From line 67 - 89. Perform dynamic changing of value by not implementing 
+     * * react-hook-form library to save time and prevent bugs.
+     */
     const addSubTaskField = () => {
-        const newSubTasks: SubTaskProps = {
-            id: uuidv4(),
-            subTaskName: ""
+        if (subTasks.length && subTasks[subTasks.length - 1].subTaskName !== "") {
+            const newSubTasks: SubTaskProps = {
+                id: uuidv4(),
+                subTaskName: ""
+            }
+            setSubTasks((prev) => [...prev, newSubTasks]);
         }
-        setSubTasks((prev) => [...prev, newSubTasks]);
+    }
+
+    const onValueChange = (id: string, newValue: string) => {
+        const origArray = [...subTasks];
+        const arrIndex = origArray.findIndex((subtask) => subtask.id === id);
+        origArray[arrIndex] = {
+            ...origArray[arrIndex],
+            subTaskName: newValue
+        }
+        setSubTasks(origArray)
     }
 
     const removeSubTaskField = (id: string) => {
-        setSubTasks((prev) => prev.filter((subT) => subT.id !== id))
+        if (subTasks.length !== 1)
+            setSubTasks((prev) => prev.filter((subT) => subT.id !== id));
     }
 
     return (
         <form onSubmit={handleSubmit((val) => {
-            // execute action in server
+            //execute action in server
             execute(val);
 
             const { serverError, data } = result;
@@ -199,8 +204,8 @@ const CreateTask = ({ userId }: CreateTaskProps) => {
                         <p className='font-sans text-foreground/80 text-base font-bold tracking-normal'>Sub Tasks <span className="text-md font-light">(Leave empty if none.)</span></p>
                         {
                             subTasks.map((subTask) => (<FlexBox className="gap-2" key={subTask.id}>
-                                <Input type='text' />
-                                <Button onClick={() => removeSubTaskField(subTask.id)} variant="outline"><Trash2 size={17} /></Button>
+                                <Input value={subTask.subTaskName} onChange={(e) => onValueChange(subTask.id, e.target.value)} type='text' />
+                                <Button type="button" onClick={() => removeSubTaskField(subTask.id)} variant="outline"><Trash2 size={17} /></Button>
                             </FlexBox>))
                         }
                     </FlexBox>

@@ -83,7 +83,7 @@ model SubTasks {
   id                Int             @id @default(autoincrement())
   subTaskTitle      String
   createdAt         DateTime        @default(now())
-  updatedAt         DateTime
+  updatedAt         DateTime?
   isCompleted       Boolean?
   task              Tasks           @relation(fields: [taskId], references: [tasksId], onDelete: Cascade)
   taskId            Int           
