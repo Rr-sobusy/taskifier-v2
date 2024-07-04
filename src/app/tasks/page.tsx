@@ -26,7 +26,7 @@ const page = async (props: Props) => {
         <Toaster />
         <div className="flex justify-between">
           <div className="flex gap-8">
-            <h1 className="scroll-m-20 text-foreground/90 font-extrabold tracking-tight text-2xl lg:text-2xl">
+            <h1 className="scroll-m-20 text-foreground/85 font-extrabold tracking-tight text-2xl lg:text-2xl">
               Task Lists
             </h1>
             <Button size="sm" className="rounded-3xl flex gap-2 border-primary h-8 text-primary hover:text-primary px-4 text-[.75rem]" variant="outline"><span><ListFilter size={20} /></span><span className="md:block md:rounded-full hidden">Filters</span></Button>
@@ -40,6 +40,10 @@ const page = async (props: Props) => {
             tasks.map((task) => (
               <Link key={task.tasksId} href={`tasks/management/${task.userId}/${task.tasksId}`}>
                 <TaskCard
+                  userId={task.userId}
+                  updatedAt={task.updatedAt}
+                  tasksId={task.tasksId}
+                  subTasks={task.subTasks}
                   key={task.tasksId}
                   taskTitle={task.taskTitle}
                   taskDescription={task.taskDescription}

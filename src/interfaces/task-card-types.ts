@@ -18,8 +18,11 @@ export type TaskCardType = {
     subTasks?: SubTasks,
     tags: {
         id: number
-        taskTitle: string,
-        taskId:number
+        subTaskTitle: string,
+        taskId:number,
+        createdAt:Date,
+        updatedAt?:Date | null,
+        isCompleted?: boolean
     }[]
     icon: LucideIcon | string
 }
