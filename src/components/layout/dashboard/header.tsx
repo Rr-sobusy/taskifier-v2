@@ -35,13 +35,13 @@ const BreadCrumbsHelper = ({ path = [] }: { path: SidenavType["title"][] }) => {
 
 
 
-export const Header = ({ breadcrumbsPath, themeToggler, currentTheme, routes }: { breadcrumbsPath: any, themeToggler: () => void, currentTheme: string | undefined, routes: SidenavType[] }) => {
+export const Header = ({ breadcrumbsPath, themeToggler, currentTheme, routes , routerPaths}: { breadcrumbsPath: any, themeToggler: () => void, currentTheme: string | undefined, routes: SidenavType[], routerPaths:SidenavType["href"][] }) => {
     return (
         <header className="h-[75px] items-center flex justify-between">
             <BreadCrumbsHelper path={breadcrumbsPath} />
             <div className="flex justify-center items-center">
 
-                <SideNavSm routes={routes} className="block md:hidden px-2 py-2 cursor-pointer hover:bg-accent">
+                <SideNavSm routerPaths={routerPaths} routes={routes} className="block md:hidden px-2 py-2 cursor-pointer hover:bg-accent">
                     <Menu size={20} />
                 </SideNavSm>
 

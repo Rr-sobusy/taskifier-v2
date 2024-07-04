@@ -22,12 +22,16 @@ const TaskCard = ({ taskTitle = "this is rex randy Hernandez", tags, createdAt =
   return (
     <Card className="shadow-sm relative cursor-pointer">
       <CardHeader className="flex flex-row items-center gap-2 pt-6 pb-3">
+
         <div className={`h-14 w-14 flex text-background justify-center items-center shadow-sm rounded-lg ${clsx({
-            "bg-[#727279]" : progress === 0,
-            "bg-[#318CE7]" :  progress === 100
+          // the bgColor depends on what status of current tasks is.
+          "bg-[#7F55DA]": progress === 0,
+          "bg-[#039856]": progress > 0 && progress < 100,
+          "bg-[#1570EE]": progress === 100
         })}`}>
           {RenderIcon()}
         </div>
+
         <FlexBox flexDirection="col">
           <CardTitle className="text-[.925rem] tracking-normal font-extrabold leading-none">{taskTitle}</CardTitle>
           <CardDescription className="text-[.850rem] text-foreground/80 font-medium tracking-tight">
@@ -64,7 +68,7 @@ const TaskCard = ({ taskTitle = "this is rex randy Hernandez", tags, createdAt =
           <Progress className="h-[4px] basis-[90%]" value={progress} />
           <p className="text-[.75rem] font-semibold">{progress + "%"}</p>
         </div>
-        <p className="text-[.75rem] font-semibold">{tags.length.toString()}</p>
+        <p className="text-[.75rem] font-medium">1/4 sub-tasks completed.</p>
         <div className="flex flex-row items-center gap-2">
           <p className="text-[.75rem] text-foreground/80">Last updated: </p>
           <p className="text-[.75rem] font-semibold text-foreground/85">27 May</p>

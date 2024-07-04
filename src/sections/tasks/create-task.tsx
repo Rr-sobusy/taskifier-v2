@@ -139,37 +139,37 @@ const CreateTask = ({ userId }: CreateTaskProps) => {
                     </FlexBox>
 
                     <FlexBox className="gap-2" flexDirection="row">
-                    <FlexBox className="flex-1" flexDirection="col">
-                        <p className='font-sans text-foreground/80 text-base font-bold tracking-normal'>Completion Date</p>
-                        <Popover>
-                            <PopoverTrigger asChild>
-                                <Button
-                                    variant={"outline"}
-                                    className={cn(
-                                        "w-full justify-center text-sm text-center font-medium",
-                                        !date && "text-foreground/80 font-medium"
-                                    )}
-                                >
-                                    <CalendarIcon className="mr-2 h-4 w-4" />
-                                    {date ? format(date, "PPP") : <span>Pick a date</span>}
-                                </Button>
-                            </PopoverTrigger>
-                            <PopoverContent className="w-auto p-0">
-                                <Controller name="completionDate" control={control}
-                                    render={({ field }) => (<Calendar
-                                        onSelect={field.onChange}
-                                        selected={field.value}
-                                        mode="single"
-                                        initialFocus
-                                    />)}
-                                />
-                            </PopoverContent>
-                        </Popover>
-                        {
-                            errors.completionDate && <p className="font-sans text-sm text-red-500">{errors.completionDate.message}</p>
-                        }
-                    </FlexBox>
-                    <FlexBox flexDirection="col" className="flex-1">
+                        <FlexBox className="flex-1" flexDirection="col">
+                            <p className='font-sans text-foreground/80 text-base font-bold tracking-normal'>Completion Date</p>
+                            <Popover>
+                                <PopoverTrigger asChild>
+                                    <Button
+                                        variant={"outline"}
+                                        className={cn(
+                                            "w-full justify-center text-sm text-center font-medium",
+                                            !date && "text-foreground/80 font-medium"
+                                        )}
+                                    >
+                                        <CalendarIcon className="mr-2 h-4 w-4" />
+                                        {date ? format(date, "PPP") : <span>Pick a date</span>}
+                                    </Button>
+                                </PopoverTrigger>
+                                <PopoverContent className="w-auto p-0">
+                                    <Controller name="completionDate" control={control}
+                                        render={({ field }) => (<Calendar
+                                            onSelect={field.onChange}
+                                            selected={field.value}
+                                            mode="single"
+                                            initialFocus
+                                        />)}
+                                    />
+                                </PopoverContent>
+                            </Popover>
+                            {
+                                errors.completionDate && <p className="font-sans text-sm text-red-500">{errors.completionDate.message}</p>
+                            }
+                        </FlexBox>
+                        <FlexBox flexDirection="col" className="flex-1">
                             <p className='font-sans text-foreground/80 text-base font-bold tracking-normal'>Task Icon</p>
                             <Controller control={control}
                                 name="icon"
@@ -190,7 +190,7 @@ const CreateTask = ({ userId }: CreateTaskProps) => {
                                 </Select>)}
                             />
                             {
-                                errors.icon &&  <p className="font-sans text-sm text-red-500">{errors.icon.message}</p>
+                                errors.icon && <p className="font-sans text-sm text-red-500">{errors.icon.message}</p>
                             }
                         </FlexBox>
                     </FlexBox>
@@ -206,7 +206,7 @@ const CreateTask = ({ userId }: CreateTaskProps) => {
                     </FlexBox>
 
                     <FlexBox justifyContent="end">
-                        <Button onClick={addSubTaskField} variant="outline"><Plus size={16} /></Button>
+                        <Button type="button" onClick={addSubTaskField} variant="outline"><Plus size={16} /></Button>
                     </FlexBox>
 
                     <Button disabled={isExecuting} type="submit">{isExecuting ? `Creating ...` : `Create Task`}</Button>
