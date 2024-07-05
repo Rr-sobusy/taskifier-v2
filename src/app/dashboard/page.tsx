@@ -5,6 +5,7 @@ import { CardsStats } from '@/sections/dashboard/sample-chart'
 import StatsCard from '@/sections/dashboard/stats-card'
 import { auth } from '@/auth'
 import { FlexBox } from '@/components/common/flex-box'
+import TestComp from '@/sections/dashboard/test-com'
 
 type Props = {}
 
@@ -22,7 +23,9 @@ const page = async (props: Props) => {
           <StatsCard />
           <StatsCard />
         </div>
-        <FlexBox className="mt-5" display="block"> <CardsStats /></FlexBox>
+        <FlexBox className="mt-5" display="block"> <CardsStats />
+          <TestComp />
+        </FlexBox>
       </DashboardLayout>
     </AuthProvider>
   )
