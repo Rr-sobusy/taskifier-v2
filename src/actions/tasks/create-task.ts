@@ -9,7 +9,7 @@ import { redirect } from "next/navigation";
 
 
 
-export const addNewTask = actionClient
+export const createNewTask = actionClient
   .schema(taskSchema)
   .bindArgsSchemas<[userId: z.ZodString, subTasks: z.ZodArray<z.ZodString>]>([z.string(), z.array(z.string())])
   .action(async ({ parsedInput: Schema, bindArgsParsedInputs: [userId, subTasks] }) => {

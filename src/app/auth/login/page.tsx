@@ -9,6 +9,7 @@ import { Command, Play, SquareKanban, FolderClock } from 'lucide-react'
 import { signIn } from '@/auth'
 import { FlexBox } from '@/components/common/flex-box'
 import HeroImage from '../../../../public/blub(3).png'
+import BackdropFilter from '@/app/samp/_page'
 
 
 const subHeaders: HeroCardProps[] = [
@@ -60,9 +61,9 @@ const page = () => {
 
       </header>
 
-      <FlexBox className="mt-10 md:mt-0 md:max-w-[63rem] mx-auto" display="flex" flexDirection="mdRow" justifyContent="evenly" alignItems="center">
+      <FlexBox className="mt-10 md:mt-0 md:max-w-[63rem] mx-auto relative" display="flex" flexDirection="mdRow" justifyContent="evenly" alignItems="center">
         <FlexBox flexDirection="col">
-          <h1 className="font-sans text-5xl text-foreground/80 md:text-[3rem] font-extrabold tracking-tighter self-center justify-center place-self-center justify-self-center">All your task at one place. With ease.</h1>
+          <h1 className="font-sans text-5xl z-50 text-foreground/80 md:text-[3rem] font-extrabold tracking-tighter self-center justify-center place-self-center justify-self-center">All your task at one place. With ease.</h1>
           <h5 className="font-sans md:text-base font-medium text-sm text-foreground/65 max-w-xl mt-5 md:mt-3">Keep all your tasks organized in one place, effortlessly. Taskifier offers a clean, intuitive interface to help you stay on top of your to-do list, whether it&apos;s for work, school, or personal projects.</h5>
           <FlexBox flexDirection="row" className="md:mt-5 mt-6 gap-3">
             <form action={formAction}>
@@ -72,7 +73,9 @@ const page = () => {
           </FlexBox>
         </FlexBox>
         <Image priority className="z-20 " alt='' src={HeroImage} height={400} width={400} />
+        <BackdropFilter />
       </FlexBox>
+
 
       <h1 className="text-center font-sans text-2xl tracking-tighter font-extrabold text-foreground/75 mt-5">Transform the way you manage tasks with us!</h1>
       <FlexBox className="gap-16 md:gap-8 max-w-5xl relative mx-auto py-[5rem]" display="flex" flexDirection="mdRow">
