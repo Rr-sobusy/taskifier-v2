@@ -15,7 +15,7 @@ const AuthProvider = async ({ children }: Props) => {
         }
     } catch (error) {
         console.error("Failed to authenticate user", error);
-        redirect("/auth/login");
+        redirect("/welcome");
         return null; // Prevent rendering children while redirecting
     }
     

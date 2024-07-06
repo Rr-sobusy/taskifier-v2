@@ -3,7 +3,6 @@
 import { z } from "zod";
 import { actionClient } from "@/lib/safe-action";
 import { taskSchema } from "@/interfaces/add-task-schema";
-import { z } from 'zod'
 
 // This schema is used to validate input from client.
 const schema = z.object({
