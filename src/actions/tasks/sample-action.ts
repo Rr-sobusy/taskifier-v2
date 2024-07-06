@@ -9,6 +9,6 @@ const schema = z.object({
 
 export const greetUser = actionClient
   .schema(schema)
-  .action(async ({ parsedInput : { name}}) => {
-    console.log(name)
+  .action(async ({ parsedInput: { name } }) => {
+    return { message: `Hello ${name.rex}!` };
   });
