@@ -24,7 +24,7 @@ import {
 } from "@/components/ui/select"
 import { format } from "date-fns"
 
-import { addNewTask } from '@/actions/tasks/add-task'
+import { createNewTask } from '@/actions/tasks/create-task'
 import { useAction } from 'next-safe-action/hooks'
 import { Trash2, Plus } from "lucide-react";
 import { MultiSelect } from '@/components/ui/multi-select'
@@ -48,11 +48,12 @@ type SubTaskProps = {
 
 const CreateTask = ({ userId }: CreateTaskProps) => {
     const [date, setDate] = React.useState<Date>()
+
     const [subTasks, setSubTasks] = React.useState<SubTaskProps[]>([{ id: uuidv4(), subTaskName: "" }])
 
     const { toast } = useToast()
 
-    const { execute, isExecuting, result } = useAction(addNewTask.bind(null, userId, subTasks.map((task) => task.subTaskName)))
+    const { execute, isExecuting, result } = useAction(createNewTask.bind(null, userId, subTasks.map((task) => task.subTaskName)))
 
     const { register, handleSubmit, formState: { errors }, control } = useForm<TaskSchema>({
         resolver: zodResolver(taskSchema)

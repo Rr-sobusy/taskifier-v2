@@ -8,7 +8,7 @@ type Props = {}
 const TestComp = (props: Props) => {
   return (
    <Button onClick={async()=>{
-       await greetUser({})
+    
    }}>
     test
    </Button>
