@@ -14,6 +14,7 @@ import {
     PopoverContent,
     PopoverTrigger,
 } from "@/components/ui/popover"
+import { PopoverClose } from '@radix-ui/react-popover'
 import {
     Select,
     SelectContent,
@@ -35,6 +36,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { taskSchema, TaskSchema } from '@/interfaces/add-task-schema'
 import { useToast } from '@/components/ui/use-toast'
 import { tags } from '@/constants/tags'
+import { Separator } from '@/components/ui/separator'
 
 
 type CreateTaskProps = {
@@ -170,6 +172,10 @@ const CreateTask = ({ userId }: CreateTaskProps) => {
                                             initialFocus
                                         />)}
                                     />
+                                    <Separator />
+                                    <PopoverClose className="w-full p-1">
+                                        <Button className="w-full" variant="outline">Close</Button>
+                                    </PopoverClose>
                                 </PopoverContent>
                             </Popover>
                             {

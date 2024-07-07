@@ -8,20 +8,22 @@ import {
     CardTitle,
   } from "@/components/ui/card"
 
-type Props = {}
+  import type { SampleType } from '@/interfaces/get-sample-type'
+  import { FlexBox } from '@/components/common/flex-box'
+import { Separator } from '@/components/ui/separator'
 
-const ManageTask = (props: Props) => {
+type Props = {
+  task : SampleType[0]
+}
+
+const ManageTask = ({task}: Props) => {
   return (
-    <Card className="w-[350px]">
-    <CardHeader>
-      <CardTitle>Create project</CardTitle>
-      <CardDescription>Deploy your new project in one-click.</CardDescription>
-    </CardHeader>
-  
-    <CardFooter className="flex justify-between">
-     rex
-    </CardFooter>
-  </Card>
+    <FlexBox className="md:min-w-[34rem] min-w-[90%]" flexDirection="col">
+      <h5 className="text-xl font-bold text-foreground/90">{task.taskTitle}</h5>
+      <p className="text-sm text-foreground/70 fons-sans font-medium">{task.taskDescription}</p>
+      <p>Tags:</p>
+      <Separator />
+    </FlexBox>
   )
 }
 

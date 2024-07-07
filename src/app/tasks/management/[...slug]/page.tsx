@@ -24,7 +24,9 @@ const page = async ({ params }: { params: { slug: string[] } }) => {
           <h1 className="scroll-m-20 text-foreground/85 font-extrabold tracking-tight text-2xl lg:text-2xl">
             Manage task
           </h1>
-          <ManageTask />
+        </FlexBox>
+        <FlexBox justifyContent="center">
+          <ManageTask task={task} />
         </FlexBox>
       </DashboardLayout>
     </AuthProvider>
