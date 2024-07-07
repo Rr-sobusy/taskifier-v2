@@ -25,7 +25,7 @@ const page = async ({ params }: { params: { slug: string[] } }) => {
             Manage task
           </h1>
         </FlexBox>
-        <FlexBox justifyContent="center">
+        <FlexBox className='mt-9' justifyContent="center">
           <ManageTask task={task} />
         </FlexBox>
       </DashboardLayout>

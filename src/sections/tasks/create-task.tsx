@@ -156,11 +156,11 @@ const CreateTask = ({ userId }: CreateTaskProps) => {
                                         variant={"outline"}
                                         className={cn(
                                             "w-full justify-center h-10 text-sm text-center font-medium",
-                                            !date && "text-foreground/80 font-medium"
+                                            "text-foreground/80 font-medium"
                                         )}
                                     >
                                         <CalendarIcon className="mr-2 h-4 w-4" />
-                                        {date ? format(date, "PPP") : <span>Pick a date</span>}
+                                        <span>Pick a date</span>
                                     </Button>
                                 </PopoverTrigger>
                                 <PopoverContent className="w-auto p-0">
