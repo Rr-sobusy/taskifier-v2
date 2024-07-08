@@ -21,7 +21,7 @@ const TaskCard = (Schema: SampleType[0]) => {
   }
 
   return (
-    <Card className="relative cursor-pointer shadow-md">
+    <Card className="relative cursor-pointer shadow-md overflow-x-hidden">
       <CardHeader className="flex flex-row items-center gap-2 pt-6 pb-3">
 
         <div className={`h-14 w-14 flex text-background justify-center items-center shadow-sm rounded-lg ${clsx({
