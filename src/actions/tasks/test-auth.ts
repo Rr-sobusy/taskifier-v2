@@ -1,2 +1,1 @@
-import { auth } from "@/auth";
 

@@ -8,9 +8,7 @@ import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
 import { Icons } from "@/constants/icons";
 import { Slider } from "@/components/ui/slider";
-import { SliderThumb } from "@radix-ui/react-slider";
 import { Button } from "@/components/ui/button";
-
 import { CalendarClock, CalendarCheck2 } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Progress } from "@/components/ui/progress";
@@ -31,7 +29,7 @@ const ManageTask = ( {task} : Props) => {
 
   return (
     <FlexBox
-      className="md:min-w-[36rem] gap-1 min-w-[90%] relative"
+      className="md:min-w-[36rem] pb-5 gap-1 min-w-[90%] relative"
       flexDirection="col"
     >
       <Badge variant="outline" className="absolute right-3">
@@ -79,7 +77,7 @@ const ManageTask = ( {task} : Props) => {
             {task.progress}%
           </p>
         </FlexBox>
-        <Progress className="bg-accent h-2" value={task.progress} />
+        <Progress className="bg-accent h-[5.5px]" value={task.progress} />
         <FlexBox justifyContent="between">
           <FlexBox className="gap-1" alignItems="center">
             <p className="text-[.825rem] flex gap-1 items-center font-medium text-foreground/65">
@@ -131,9 +129,10 @@ const ManageTask = ( {task} : Props) => {
         Slide to update progress <span>({`${sliderState}%`})</span>
       </p>
       <Slider
+        defaultValue={[sliderState]}
         onValueChange={(value) => setSliderState(Number(value))}
         className="bg-accent mt-5"
-      />
+       />
       <Button className="mt-5">Update</Button>
     </FlexBox>
   );
