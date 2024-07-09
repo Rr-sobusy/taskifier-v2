@@ -48,11 +48,8 @@ type SubTaskProps = {
 };
 
 const CreateTask = ({ userId }: CreateTaskProps) => {
-  const [date, setDate] = React.useState<Date>();
 
-  const [subTasks, setSubTasks] = React.useState<SubTaskProps[]>([
-    { id: uuidv4(), subTaskName: "" },
-  ]);
+  const [subTasks, setSubTasks] = React.useState<SubTaskProps[]>([]);
 
   const { toast } = useToast();
 
@@ -78,14 +75,12 @@ const CreateTask = ({ userId }: CreateTaskProps) => {
    * * react-hook-form library to save time and prevent bugs.
    */
   const addSubTaskField = () => {
-    if (subTasks.length && subTasks[subTasks.length - 1].subTaskName !== "") {
       const newSubTasks: SubTaskProps = {
         id: uuidv4(),
         subTaskName: "",
       };
       setSubTasks((prev) => [...prev, newSubTasks]);
     }
-  };
 
   const onValueChange = (id: string, newValue: string) => {
     const origArray = [...subTasks];

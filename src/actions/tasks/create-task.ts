@@ -26,7 +26,7 @@ export const createNewTask = actionClient
             create: Schema.tags.map((tag) => ({ taskTitle: tag }))
           },
           subTasks: {
-            create: subTasks.map((task) => ({ subTaskTitle: task }))
+            create: subTasks.length ? subTasks.map((task) => ({ subTaskTitle: task })) : []
           }
         },
       });

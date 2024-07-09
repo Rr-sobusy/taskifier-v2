@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import React from "react";
 import clsx from "clsx";
@@ -21,9 +21,7 @@ type Props = {
 };
 
 const ManageTask = ({ task }: Props) => {
-
-  const [sliderState, setSliderState] = React.useState<number>(task.progress)
-
+  const [sliderState, setSliderState] = React.useState<number>(task.progress);
 
   const RenderIcon = () => {
     const iconIndex = Icons.findIndex((ctx) => ctx.iconName === task.icon);
@@ -64,8 +62,8 @@ const ManageTask = ({ task }: Props) => {
       </FlexBox>
       <FlexBox className="mt-1" flexDirection="mdRow" justifyContent="between">
         <FlexBox className="gap-1">
-          {task.tags.map((tag) => (
-            <Badge className="bg-green-600 text-background">
+          {task.tags.map((tag, index) => (
+            <Badge key={index} className="bg-green-600 text-background">
               {tag.taskTitle}
             </Badge>
           ))}
@@ -90,7 +88,9 @@ const ManageTask = ({ task }: Props) => {
               </span>
               Added:
             </p>
-            <p className="text-[.850rem] font-medium text-foreground/85 tracking-tight">{format(task.createdAt, "dd MMM yyyy")}</p>
+            <p className="text-[.850rem] font-medium text-foreground/85 tracking-tight">
+              {format(task.createdAt, "dd MMM yyyy")}
+            </p>
           </FlexBox>
           <FlexBox className="gap-1" alignItems="center">
             <p className="text-[.825rem] flex gap-1 items-center font-medium text-foreground/65">
@@ -99,7 +99,9 @@ const ManageTask = ({ task }: Props) => {
               </span>
               Deadline:
             </p>
-            <p className="text-[.850rem] font-medium text-foreground/85 tracking-tight">{format(task.completionDate, "dd MMM yyyy")}</p>
+            <p className="text-[.850rem] font-medium text-foreground/85 tracking-tight">
+              {format(task.completionDate, "dd MMM yyyy")}
+            </p>
           </FlexBox>
         </FlexBox>
       </FlexBox>
@@ -114,8 +116,9 @@ const ManageTask = ({ task }: Props) => {
         </span>
       </h5>
       <FlexBox flexDirection="col" className="gap-3">
-        {task.subTasks.map((subtask) => (
+        {task.subTasks.map((subtask, index) => (
           <FlexBox
+            key={index}
             alignItems="center"
             className="flex gap-2 text-foreground/80 text-sm tracking-tight font-medium"
           >
@@ -124,8 +127,13 @@ const ManageTask = ({ task }: Props) => {
           </FlexBox>
         ))}
       </FlexBox>
-      <p className="text-[.850rem] -mb-4 mt-2 font-medium text-foreground/75 tracking-tight">Slide to update progress <span>({`${sliderState}%`})</span></p>
-      <Slider onValueChange={(value)=>setSliderState(Number(value))} className="bg-accent mt-5" />
+      <p className="text-[.850rem] -mb-4 mt-2 font-medium text-foreground/75 tracking-tight">
+        Slide to update progress <span>({`${sliderState}%`})</span>
+      </p>
+      <Slider
+        onValueChange={(value) => setSliderState(Number(value))}
+        className="bg-accent mt-5"
+      />
       <Button className="mt-5">Update</Button>
     </FlexBox>
   );
