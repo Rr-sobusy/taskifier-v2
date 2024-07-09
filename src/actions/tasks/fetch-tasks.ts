@@ -10,6 +10,9 @@ export async function fetchTasks(userId: string) {
     where: {
       userId: userId,
     },
+    orderBy : {
+      tasksId : "desc"
+    }
   });
   return tasks;
 }

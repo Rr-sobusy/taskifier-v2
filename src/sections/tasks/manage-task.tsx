@@ -13,13 +13,17 @@ import { CalendarClock, CalendarCheck2 } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Progress } from "@/components/ui/progress";
 import { format } from "date-fns";
+import { updateTask } from "@/actions/tasks/update-task";
+import { useAction } from "next-safe-action/hooks";
 
 type Props = {
   task: TaskProps;
 };
 
-const ManageTask = ( {task} : Props) => {
+const ManageTask = ({ task }: Props) => {
   const [sliderState, setSliderState] = React.useState<number>(task.progress);
+
+  const { execute, isExecuting } = useAction(updateTask);
 
   const RenderIcon = () => {
     const iconIndex = Icons.findIndex((ctx) => ctx.iconName === task.icon);
@@ -27,6 +31,9 @@ const ManageTask = ( {task} : Props) => {
     return <Icon />;
   };
 
+  const updateHandler = () => {
+    execute({ progress: sliderState, taskId: task.tasksId });
+  };
   return (
     <FlexBox
       className="md:min-w-[36rem] pb-5 gap-1 min-w-[90%] relative"
@@ -77,7 +84,7 @@ const ManageTask = ( {task} : Props) => {
             {task.progress}%
           </p>
         </FlexBox>
-        <Progress className="bg-accent h-[5.5px]" value={task.progress} />
+        <Progress className="bg-accent h-[5.40px]" value={task.progress} />
         <FlexBox justifyContent="between">
           <FlexBox className="gap-1" alignItems="center">
             <p className="text-[.825rem] flex gap-1 items-center font-medium text-foreground/65">
@@ -129,11 +136,15 @@ const ManageTask = ( {task} : Props) => {
         Slide to update progress <span>({`${sliderState}%`})</span>
       </p>
       <Slider
-        defaultValue={[sliderState]}
-        onValueChange={(value) => setSliderState(Number(value))}
+        value={[sliderState]}
+        onValueChange={(value) => {
+          if (sliderState !== 100) setSliderState(Number(value));
+        }}
         className="bg-accent mt-5"
-       />
-      <Button className="mt-5">Update</Button>
+      />
+      <Button onClick={updateHandler} className="mt-5">
+        Update
+      </Button>
     </FlexBox>
   );
 };

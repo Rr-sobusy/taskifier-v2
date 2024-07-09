@@ -17,7 +17,14 @@ import { format } from "date-fns";
 import type { SampleType } from "@/interfaces/get-sample-type";
 
 const TaskCard = (Schema: SampleType[0]) => {
-  const RenderIcon = () => {
+
+  const iconColor = clsx({
+          "bg-[#5C6C7A]": Schema.progress === 0,
+          "bg-[#039856]": Schema.progress > 0 && Schema.progress < 100,
+          "bg-[#1570EE]": Schema.progress === 100,
+  })
+
+  const renderIcon = () => {
     const iconIndex = Icons.findIndex((ctx) => ctx.iconName === Schema.icon);
     const Icon = Icons[iconIndex].icon;
     return <Icon />;
@@ -27,16 +34,9 @@ const TaskCard = (Schema: SampleType[0]) => {
     <Card className="relative cursor-pointer shadow-sm overflow-x-hidden">
       <CardHeader className="flex flex-row items-center gap-2 pt-6 pb-3">
         <div
-          className={`h-14 w-14 flex text-background justify-center items-center shadow-sm rounded-lg ${clsx(
-            {
-              // the bgColor depends on what status of current tasks is.
-              "bg-[#7F55DA]": Schema.progress === 0,
-              "bg-[#039856]": Schema.progress > 0 && Schema.progress < 100,
-              "bg-[#1570EE]": Schema.progress === 100,
-            }
-          )}`}
+          className={`h-14 w-14 flex text-background justify-center items-center shadow-sm rounded-lg ${iconColor}`}
         >
-          {RenderIcon()}
+          {renderIcon()}
         </div>
 
         <FlexBox flexDirection="col">
