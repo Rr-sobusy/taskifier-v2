@@ -17,12 +17,11 @@ import { format } from "date-fns";
 import type { SampleType } from "@/interfaces/get-sample-type";
 
 const TaskCard = (Schema: SampleType[0]) => {
-
   const iconColor = clsx({
-          "bg-[#5C6C7A]": Schema.progress === 0,
-          "bg-[#039856]": Schema.progress > 0 && Schema.progress < 100,
-          "bg-[#1570EE]": Schema.progress === 100,
-  })
+    "bg-[#5C6C7A]": Schema.progress === 0,
+    "bg-[#039856]": Schema.progress > 0 && Schema.progress < 100,
+    "bg-[#1570EE]": Schema.progress === 100,
+  });
 
   const renderIcon = () => {
     const iconIndex = Icons.findIndex((ctx) => ctx.iconName === Schema.icon);
@@ -31,7 +30,7 @@ const TaskCard = (Schema: SampleType[0]) => {
   };
 
   return (
-    <Card className="relative cursor-pointer shadow-sm overflow-x-hidden">
+    <Card className="relative cursor-pointer shadow-md overflow-x-hidden">
       <CardHeader className="flex flex-row items-center gap-2 pt-6 pb-3">
         <div
           className={`h-14 w-14 flex text-background justify-center items-center shadow-sm rounded-lg ${iconColor}`}
@@ -43,7 +42,7 @@ const TaskCard = (Schema: SampleType[0]) => {
           <CardTitle className="text-[.925rem] tracking-normal font-extrabold leading-none">
             {Schema.taskTitle}
           </CardTitle>
-          <CardDescription className="text-[.850rem] text-foreground/80 font-medium tracking-tight">
+          <CardDescription className="text-[.850rem] text-foreground/80 font-medium tracking-tight leading-tight">
             {Schema.taskDescription}
           </CardDescription>
         </FlexBox>

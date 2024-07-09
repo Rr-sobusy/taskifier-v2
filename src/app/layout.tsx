@@ -9,6 +9,9 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Taskifier",
   description: "Manage your tasks at ease.",
+  icons : {
+    icon : { url : "/icon.svg"}
+  }
 };
 
 export default function RootLayout({
@@ -18,7 +21,6 @@ export default function RootLayout({
 }>) {
   return (
     <html suppressHydrationWarning lang="en">
-      <link href="icon.svg" sizes="any" rel="icon" />
       <body className={inter.className}>
         <ThemeProvider attribute="class"
           defaultTheme="light"

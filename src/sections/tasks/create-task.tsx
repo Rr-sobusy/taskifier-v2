@@ -42,7 +42,7 @@ type CreateTaskProps = {
   userId: string;
 };
 
-type SubTaskProps = {
+export type SubTaskProps = {
   id: string;
   subTaskName: string;
 };
