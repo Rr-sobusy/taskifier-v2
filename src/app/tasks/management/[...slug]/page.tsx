@@ -1,21 +1,11 @@
-import React from 'react'
-import DashboardLayout from '@/components/layout/dashboard/layout'
-import AuthProvider from '@/provider/AuthProviders'
-
-import prisma from '@/lib/prisma'
-import { FlexBox } from '@/components/common/flex-box'
-import ManageTask from '@/sections/tasks/manage-task'
+import React from "react";
+import DashboardLayout from "@/components/layout/dashboard/layout";
+import AuthProvider from "@/provider/AuthProviders";
+import { FlexBox } from "@/components/common/flex-box";
+import ManageTask from "@/sections/tasks/manage-task";
+import { selectSingleTask } from "@/actions/tasks/fetch-tasks";
 const page = async ({ params }: { params: { slug: string[] } }) => {
-
-
-  const task = await prisma.tasks.findFirst({
-    where: {
-      tasksId: Number(params.slug[1])
-    }, include: {
-      subTasks: true,
-      tags: true
-    }
-  })
+  const task = await selectSingleTask(Number(params.slug[1]));
 
   return (
     <AuthProvider>
@@ -25,12 +15,12 @@ const page = async ({ params }: { params: { slug: string[] } }) => {
             Manage task
           </h1>
         </FlexBox>
-        <FlexBox className='mt-9' justifyContent="center">
+        <FlexBox className="mt-9" justifyContent="center">
           <ManageTask task={task} />
         </FlexBox>
       </DashboardLayout>
     </AuthProvider>
-  )
-}
+  );
+};
 
-export default page
+export default page;

@@ -2,7 +2,7 @@
 
 import React from "react";
 import clsx from "clsx";
-import type { SampleType } from "@/interfaces/get-sample-type";
+import type { TaskProps } from "@/interfaces/get-sample-type";
 import { FlexBox } from "@/components/common/flex-box";
 import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
@@ -17,10 +17,10 @@ import { Progress } from "@/components/ui/progress";
 import { format } from "date-fns";
 
 type Props = {
-  task: SampleType[0];
+  task: TaskProps;
 };
 
-const ManageTask = ({ task }: Props) => {
+const ManageTask = ( {task} : Props) => {
   const [sliderState, setSliderState] = React.useState<number>(task.progress);
 
   const RenderIcon = () => {
