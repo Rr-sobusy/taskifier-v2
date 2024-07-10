@@ -25,7 +25,7 @@ type Props = {
 const ManageTask = ({ task }: Props) => {
   const [sliderState, setSliderState] = React.useState<number>(task.progress);
 
-  const [addedSubTask, setAddedSubTask] = React.useState<SubTaskProps[]>([])
+  const [addedSubTask, setAddedSubTask] = React.useState<SubTaskProps[]>([]);
 
   const { execute, isExecuting } = useAction(updateTask);
 
@@ -39,7 +39,7 @@ const ManageTask = ({ task }: Props) => {
     "bg-[#5C6C7A]": task.progress === 0,
     "bg-[#039856]": task.progress > 0 && task.progress < 100,
     "bg-[#1570EE]": task.progress === 100,
-  })
+  });
 
   const updateHandler = () => {
     execute({ progress: sliderState, taskId: task.tasksId });
@@ -72,7 +72,11 @@ const ManageTask = ({ task }: Props) => {
             </p>
           </FlexBox>
         </FlexBox>
-        <FlexBox className="mt-1" flexDirection="mdRow" justifyContent="between">
+        <FlexBox
+          className="mt-1"
+          flexDirection="mdRow"
+          justifyContent="between"
+        >
           <FlexBox className="gap-1">
             {task.tags.map((tag, index) => (
               <Badge key={index} className="bg-green-600 text-background">
@@ -149,8 +153,8 @@ const ManageTask = ({ task }: Props) => {
           }}
           className="bg-accent mt-5"
         />
-        <Button onClick={updateHandler} className="mt-5">
-          Update
+        <Button onClick={updateHandler} disabled={isExecuting} className="mt-5">
+          {isExecuting ? "Updating task. . ." : "Update"}
         </Button>
       </FlexBox>
     </>
