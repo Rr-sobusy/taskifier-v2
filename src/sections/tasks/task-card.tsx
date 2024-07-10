@@ -91,7 +91,7 @@ const TaskCard = (Schema: SampleType[0]) => {
           {Schema.subTasks.length
             ? `${
                 Schema.subTasks.filter((subTask) => subTask.isCompleted).length
-              } of ${Schema.subTasks.length} subtask done`
+              } of ${Schema.subTasks.length} subtask completed`
             : "0 subtask"}
         </p>
         <div className="flex flex-row items-center gap-2">

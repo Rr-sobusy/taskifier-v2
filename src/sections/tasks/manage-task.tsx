@@ -19,14 +19,15 @@ import {
 } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Progress } from "@/components/ui/progress";
-import { format, formatISO } from "date-fns";
+import { format } from "date-fns";
 import { updateTask } from "@/actions/tasks/update-task";
 import { v4 as uuidv4 } from "uuid";
 import { useAction } from "next-safe-action/hooks";
 import { SubTaskProps } from "./create-task";
-import Head from "next/head";
+import { useToast } from "@/components/ui/use-toast";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
+
 
 type Props = {
   task: TaskProps;
@@ -43,6 +44,8 @@ const ManageTask = ({ task }: Props) => {
       addedSubTasks.map((ctx) => ctx.subTaskName)
     )
   );
+
+  const { toast } = useToast()
 
   const RenderIcon = () => {
     const iconIndex = Icons.findIndex((ctx) => ctx.iconName === task.icon);
@@ -61,6 +64,10 @@ const ManageTask = ({ task }: Props) => {
 
     const { serverError } = result;
     if (!serverError) {
+      toast({
+        title: "Task updated.",
+        description: task.taskTitle
+      })
     }
   };
 
@@ -82,7 +89,13 @@ const ManageTask = ({ task }: Props) => {
     setAddedSubTask((state) => state.filter((ctx) => ctx.id !== id));
   };
 
-  const isSame = Object.is(task.progress, sliderState);
+  const isSame = Object.is(JSON.stringify({
+    progress: task.progress,
+    subTaskLenght: task.subTasks.length
+  }), JSON.stringify({
+    progress: sliderState,
+    subTaskLenght: addedSubTasks.length
+  }));
 
   return (
     <>
@@ -91,7 +104,7 @@ const ManageTask = ({ task }: Props) => {
         flexDirection="col"
       >
         <Badge variant="outline" className="absolute right-3">
-          completed
+          {isSame.toString()}
           <span className="h-3 w-3 absolute -top-[6px] right-[4px] rounded-full bg-green-500"></span>
         </Badge>
         <FlexBox className="gap-2">
@@ -220,7 +233,7 @@ const ManageTask = ({ task }: Props) => {
         <FlexBox className="gap-2 mt-5" flexDirection="mdRow">
           <Button
             onClick={updateHandler}
-            disabled={isSame || isExecuting}
+            disabled={!addedSubTasks.length || isExecuting }
             className="flex-1 flex gap-2"
           >
             <span>
@@ -228,14 +241,17 @@ const ManageTask = ({ task }: Props) => {
             </span>
             {isExecuting ? "Updating" : "Update"}
           </Button>
-          <Button className="w-full md:w-1/3" variant="outline">
-            <Link className="flex gap-2 items-center" href="/tasks">
+          <Link
+            className="flex justify-center gap-2 items-center"
+            href="/tasks"
+          >
+            <Button className="w-full flex gap-2" variant="outline">
               <span>
                 <Undo size={14} />
               </span>
               Back to tasks
-            </Link>
-          </Button>
+            </Button>
+          </Link>
         </FlexBox>
       </FlexBox>
     </>
