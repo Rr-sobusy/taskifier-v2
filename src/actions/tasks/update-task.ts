@@ -5,6 +5,7 @@ import { z } from "zod";
 import prisma from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import { formatISO } from "date-fns";
 
 const toUpdate = z.object({
   taskId: z.number(),
@@ -13,19 +14,32 @@ const toUpdate = z.object({
 
 export const updateTask = actionClient
   .schema(toUpdate)
-  .action(async ({ parsedInput: { taskId, progress } }) => {
-    try {
-      const updatedTask = await prisma.tasks.update({
-        data: {
-          progress: progress,
-        },
-        where: {
-          tasksId: taskId,
-        },
-      });
-    } catch (err) {
-      console.error(err);
+  .bindArgsSchemas<
+    [addedSubTasks: z.ZodArray<z.ZodString>]
+  >([z.array(z.string())])
+  .action(
+    async ({
+      parsedInput: { taskId, progress },
+      bindArgsParsedInputs: [addedSubTasks],
+    }) => {
+      try {
+        await prisma.$transaction([
+          prisma.tasks.update({
+            where: {
+              tasksId: taskId,
+            },
+            data: {
+              progress: progress,
+            },
+          }),
+          prisma.subTasks.createMany({
+            data: addedSubTasks.map((ctx)=> ({taskId: taskId, subTaskTitle: ctx}))
+          }),
+        ]);
+      } catch (err) {
+        console.error(err);
+      }
+      revalidatePath("/tasks");
+      redirect("/tasks");
     }
-    revalidatePath("/tasks");
-    redirect("/tasks")
-  });
+  );

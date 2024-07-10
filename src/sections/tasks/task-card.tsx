@@ -88,12 +88,16 @@ const TaskCard = (Schema: SampleType[0]) => {
           <p className="text-[.75rem] font-semibold">{Schema.progress + "%"}</p>
         </div>
         <p className="text-[.75rem] text-foreground/70 font-medium">
-          1/4 sub-tasks completed.
+          {Schema.subTasks.length
+            ? `${
+                Schema.subTasks.filter((subTask) => subTask.isCompleted).length
+              } of ${Schema.subTasks.length} subtask done`
+            : "0 subtask"}
         </p>
         <div className="flex flex-row items-center gap-2">
           <p className="text-[.75rem] text-foreground/80">Last updated: </p>
           <p className="text-[.75rem] font-semibold text-foreground/85">
-            27 May
+            {Schema.updatedAt ? format(Schema.updatedAt, "dd MMM yyyy"): "Date not available"}
           </p>
         </div>
       </CardContent>

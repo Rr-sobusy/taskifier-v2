@@ -71,7 +71,7 @@ model Tasks {
   taskDescription    String
   progress           Int
   createdAt          DateTime      @default(now())
-  updatedAt          DateTime? 
+  updatedAt          DateTime?     @default(now())
   completionDate     DateTime 
   subTasks           SubTasks[]
   tags               Tags[]       
@@ -84,7 +84,7 @@ model SubTasks {
   subTaskTitle      String
   createdAt         DateTime        @default(now())
   updatedAt         DateTime?       @default(now())
-  isCompleted       Boolean?        @default(false)
+  isCompleted       Boolean         @default(false)
   task              Tasks           @relation(fields: [taskId], references: [tasksId], onDelete: Cascade)
   taskId            Int           
 }

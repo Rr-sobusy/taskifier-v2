@@ -9,14 +9,24 @@ import { Badge } from "@/components/ui/badge";
 import { Icons } from "@/constants/icons";
 import { Slider } from "@/components/ui/slider";
 import { Button } from "@/components/ui/button";
-import { CalendarClock, CalendarCheck2 } from "lucide-react";
+import {
+  CalendarClock,
+  CalendarCheck2,
+  Trash2,
+  Pencil,
+  FilePlus2,
+  Undo,
+} from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Progress } from "@/components/ui/progress";
-import { format } from "date-fns";
+import { format, formatISO } from "date-fns";
 import { updateTask } from "@/actions/tasks/update-task";
+import { v4 as uuidv4 } from "uuid";
 import { useAction } from "next-safe-action/hooks";
 import { SubTaskProps } from "./create-task";
 import Head from "next/head";
+import { Input } from "@/components/ui/input";
+import Link from "next/link";
 
 type Props = {
   task: TaskProps;
@@ -25,9 +35,14 @@ type Props = {
 const ManageTask = ({ task }: Props) => {
   const [sliderState, setSliderState] = React.useState<number>(task.progress);
 
-  const [addedSubTask, setAddedSubTask] = React.useState<SubTaskProps[]>([]);
+  const [addedSubTasks, setAddedSubTask] = React.useState<SubTaskProps[]>([]);
 
-  const { execute, isExecuting } = useAction(updateTask);
+  const { execute, isExecuting, result } = useAction(
+    updateTask.bind(
+      null,
+      addedSubTasks.map((ctx) => ctx.subTaskName)
+    )
+  );
 
   const RenderIcon = () => {
     const iconIndex = Icons.findIndex((ctx) => ctx.iconName === task.icon);
@@ -43,12 +58,34 @@ const ManageTask = ({ task }: Props) => {
 
   const updateHandler = () => {
     execute({ progress: sliderState, taskId: task.tasksId });
+
+    const { serverError } = result;
+    if (!serverError) {
+    }
   };
+
+  const addNewSubTaskHandler = () => {
+    setAddedSubTask((state) => [...state, { id: uuidv4(), subTaskName: "" }]);
+  };
+
+  const addedSubTasksChangeHandler = (id: string, inputValue: string) => {
+    const origArr = [...addedSubTasks];
+    const arrIndex = origArr.findIndex((v) => v.id === id);
+    origArr[arrIndex] = {
+      ...origArr[arrIndex],
+      subTaskName: inputValue,
+    };
+    setAddedSubTask(origArr);
+  };
+
+  const deleteAddedSubTaskHandler = (id: string) => {
+    setAddedSubTask((state) => state.filter((ctx) => ctx.id !== id));
+  };
+
+  const isSame = Object.is(task.progress, sliderState);
+
   return (
     <>
-      <Head>
-        <link rel="icon" title="Taskifier | Manage Task" href="icon.svg" />
-      </Head>
       <FlexBox
         className="md:min-w-[36rem] pb-5 gap-1 min-w-[90%] relative"
         flexDirection="col"
@@ -122,8 +159,15 @@ const ManageTask = ({ task }: Props) => {
           </FlexBox>
         </FlexBox>
         <Separator className="my-3" />
-        <Button className="text-start" variant="outline">
-          New Subtasks
+        <Button
+          onClick={addNewSubTaskHandler}
+          className="text-start flex gap-2"
+          variant="outline"
+        >
+          <span>
+            <FilePlus2 size={14} />
+          </span>
+          New Subtask
         </Button>
         <h5 className="my-1 flex items-center gap-2 text-sm tracking-tight text-foreground/85 font-semibold">
           Subtasks
@@ -138,8 +182,27 @@ const ManageTask = ({ task }: Props) => {
               alignItems="center"
               className="flex gap-2 text-foreground/80 text-sm tracking-tight font-medium"
             >
-              <Checkbox />
+              <Checkbox defaultChecked={subtask.isCompleted} />
               <p>{subtask.subTaskTitle}</p>
+            </FlexBox>
+          ))}
+          {addedSubTasks.map((addedSubTask, index) => (
+            <FlexBox key={index} className="gap-2">
+              <Input
+                value={addedSubTask.subTaskName}
+                onChange={(e) =>
+                  addedSubTasksChangeHandler(addedSubTask.id, e.target.value)
+                }
+                type="text"
+                className=""
+              />
+              <Button
+                onClick={() => deleteAddedSubTaskHandler(addedSubTask.id)}
+                className=""
+                variant="outline"
+              >
+                <Trash2 size={17} />
+              </Button>
             </FlexBox>
           ))}
         </FlexBox>
@@ -149,13 +212,31 @@ const ManageTask = ({ task }: Props) => {
         <Slider
           value={[sliderState]}
           onValueChange={(value) => {
-            if (sliderState !== 100) setSliderState(Number(value));
+            if (Number(value.toString()) > sliderState)
+              setSliderState(Number(value));
           }}
           className="bg-accent mt-5"
         />
-        <Button onClick={updateHandler} disabled={isExecuting} className="mt-5">
-          {isExecuting ? "Updating task. . ." : "Update"}
-        </Button>
+        <FlexBox className="gap-2 mt-5" flexDirection="mdRow">
+          <Button
+            onClick={updateHandler}
+            disabled={isSame || isExecuting}
+            className="flex-1 flex gap-2"
+          >
+            <span>
+              <Pencil size={13} />
+            </span>
+            {isExecuting ? "Updating" : "Update"}
+          </Button>
+          <Button className="w-full md:w-1/3" variant="outline">
+            <Link className="flex gap-2 items-center" href="/tasks">
+              <span>
+                <Undo size={14} />
+              </span>
+              Back to tasks
+            </Link>
+          </Button>
+        </FlexBox>
       </FlexBox>
     </>
   );
