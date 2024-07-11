@@ -28,15 +28,18 @@ import { useToast } from "@/components/ui/use-toast";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
 
-
 type Props = {
   task: TaskProps;
 };
+
+type TaskProgres = "starting" | "on-going" | "completed" | "failed";
 
 const ManageTask = ({ task }: Props) => {
   const [sliderState, setSliderState] = React.useState<number>(task.progress);
 
   const [addedSubTasks, setAddedSubTask] = React.useState<SubTaskProps[]>([]);
+
+  const [currentSubTask, setCurrentSubTask] = React.useState(task.subTasks)
 
   const { execute, isExecuting, result } = useAction(
     updateTask.bind(
@@ -45,12 +48,23 @@ const ManageTask = ({ task }: Props) => {
     )
   );
 
-  const { toast } = useToast()
+  React.useEffect(()=>{
+      console.log(currentSubTask)
+  }, [currentSubTask])
+
+  const { toast } = useToast();
 
   const RenderIcon = () => {
     const iconIndex = Icons.findIndex((ctx) => ctx.iconName === task.icon);
     const Icon = Icons[iconIndex].icon;
     return <Icon />;
+  };
+
+  const taskProgress = (): TaskProgres => {
+    if (task.progress === 0) return "starting";
+    if (task.progress > 0 && task.progress < 100) return "on-going";
+    if (task.progress === 100) return "completed";
+    return "failed";
   };
 
   const iconColor = clsx({
@@ -66,8 +80,8 @@ const ManageTask = ({ task }: Props) => {
     if (!serverError) {
       toast({
         title: "Task updated.",
-        description: task.taskTitle
-      })
+        description: task.taskTitle,
+      });
     }
   };
 
@@ -89,13 +103,21 @@ const ManageTask = ({ task }: Props) => {
     setAddedSubTask((state) => state.filter((ctx) => ctx.id !== id));
   };
 
-  const isSame = Object.is(JSON.stringify({
-    progress: task.progress,
-    subTaskLenght: task.subTasks.length
-  }), JSON.stringify({
-    progress: sliderState,
-    subTaskLenght: addedSubTasks.length
-  }));
+  /**
+   * * Ensure that update button will be disabled unless changes in states made
+   */
+  const isSame = Object.is(
+    JSON.stringify({
+      progress: task.progress,
+      subTaskSTate: task.subTasks,
+      addedSubTaskLength: 0
+    }),
+    JSON.stringify({
+      progress: sliderState,
+      subTaskSTate: currentSubTask,
+      addedSubTaskLength: addedSubTasks.length
+    })
+  );
 
   return (
     <>
@@ -104,8 +126,9 @@ const ManageTask = ({ task }: Props) => {
         flexDirection="col"
       >
         <Badge variant="outline" className="absolute right-3">
-          {isSame.toString()}
-          <span className="h-3 w-3 absolute -top-[6px] right-[4px] rounded-full bg-green-500"></span>
+          {taskProgress()}
+          <span className="h-3 w-3 absolute -top-[6px] right-[4px] rounded-full bg-green-500">
+          </span>
         </Badge>
         <FlexBox className="gap-2">
           <div
@@ -189,13 +212,21 @@ const ManageTask = ({ task }: Props) => {
           </span>
         </h5>
         <FlexBox flexDirection="col" className="gap-3">
-          {task.subTasks.map((subtask, index) => (
+          {currentSubTask.map((subtask, index) => (
             <FlexBox
               key={index}
               alignItems="center"
               className="flex gap-2 text-foreground/80 text-sm tracking-tight font-medium"
             >
-              <Checkbox defaultChecked={subtask.isCompleted} />
+              <Checkbox onCheckedChange={(e:boolean) => setCurrentSubTask((prev) => {
+                const test = [...prev];
+                const index = test.findIndex((ctx) => ctx.id === subtask.id);
+                test[index] = {
+                  ...test[index],
+                  isCompleted:e
+                }
+                return test
+              })} value={subtask.id} defaultChecked={subtask.isCompleted} />
               <p>{subtask.subTaskTitle}</p>
             </FlexBox>
           ))}
@@ -233,7 +264,7 @@ const ManageTask = ({ task }: Props) => {
         <FlexBox className="gap-2 mt-5" flexDirection="mdRow">
           <Button
             onClick={updateHandler}
-            disabled={!addedSubTasks.length || isExecuting }
+            disabled={isSame || isExecuting }
             className="flex-1 flex gap-2"
           >
             <span>
