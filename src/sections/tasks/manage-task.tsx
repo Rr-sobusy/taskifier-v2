@@ -19,7 +19,7 @@ import {
 } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Progress } from "@/components/ui/progress";
-import { format } from "date-fns";
+import { format, isAfter, parseISO } from "date-fns";
 import { updateTask } from "@/actions/tasks/update-task";
 import { v4 as uuidv4 } from "uuid";
 import { useAction } from "next-safe-action/hooks";
@@ -68,6 +68,8 @@ const ManageTask = ({ task }: Props) => {
   };
 
   const taskProgress = (): TaskProgres => {
+    if (isAfter(new Date(), task.completionDate) && task.progress !== 100)
+      return "failed";
     if (task.progress === 0) return "starting";
     if (task.progress > 0 && task.progress < 100) return "on-going";
     if (task.progress === 100) return "completed";
@@ -261,7 +263,10 @@ const ManageTask = ({ task }: Props) => {
         <Slider
           value={[sliderState]}
           onValueChange={(value) => {
-            if (Number(value.toString()) > task.progress)
+            /**
+             * * Prevent updating the slider value when completionDate > currentDate
+             */
+            if (Number(value.toString()) > task.progress && !isAfter(new Date(), task.completionDate))
               setSliderState(Number(value));
           }}
           className="bg-accent mt-5"

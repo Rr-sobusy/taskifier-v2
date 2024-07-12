@@ -13,11 +13,12 @@ import { FlexBox } from "@/components/common/flex-box";
 import { Icons } from "@/constants/icons";
 import { CalendarCheck2, CalendarClock, Loader } from "lucide-react";
 import clsx from "clsx";
-import { format } from "date-fns";
+import { format, isAfter } from "date-fns";
 import type { SampleType } from "@/interfaces/get-sample-type";
 
 const TaskCard = (Schema: SampleType[0]) => {
   const iconColor = clsx({
+    "bg-[#F52C2C]": isAfter(new Date(), Schema.completionDate) && Schema.progress !== 100,
     "bg-[#5C6C7A]": Schema.progress === 0,
     "bg-[#039856]": Schema.progress > 0 && Schema.progress < 100,
     "bg-[#1570EE]": Schema.progress === 100,
@@ -39,7 +40,7 @@ const TaskCard = (Schema: SampleType[0]) => {
         </div>
 
         <FlexBox flexDirection="col">
-          <CardTitle className="text-[.925rem] tracking-normal font-extrabold leading-none">
+          <CardTitle className="text-[.925rem] text-foreground/85 tracking-normal font-extrabold leading-none">
             {Schema.taskTitle}
           </CardTitle>
           <CardDescription className="text-[.850rem] text-foreground/80 font-medium tracking-tight leading-tight">

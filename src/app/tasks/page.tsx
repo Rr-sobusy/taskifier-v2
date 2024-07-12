@@ -9,7 +9,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Button } from "@/components/ui/button";
 import { auth } from "@/auth";
 import { fetchTasks } from "@/actions/tasks/fetch-tasks";
-
+import NullTask from "@/sections/tasks/null-task-screen";
 type Props = {};
 
 const page = async (props: Props) => {
@@ -50,7 +50,7 @@ const page = async (props: Props) => {
           </Link>
         </div>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5 my-7 ">
-          {tasks.map((task) => (
+          { tasks.length ? tasks.map((task) => (
             <Link
               key={task.tasksId}
               href={`tasks/management/${task.userId}/${task.tasksId}`}
@@ -71,7 +71,8 @@ const page = async (props: Props) => {
                 icon={task.icon}
               />
             </Link>
-          ))}
+          )) : <Link href="/tasks/create">
+            <NullTask /></Link>}
         </div>
       </DashboardLayout>
     </AuthProvider>
