@@ -23,7 +23,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { format } from "date-fns";
 
 import { createNewTask } from "@/actions/tasks/create-task";
 import { useAction } from "next-safe-action/hooks";
@@ -40,9 +39,8 @@ import { Separator } from "@/components/ui/separator";
 
 type CreateTaskProps = {
   userId: string;
-  userEmail:string;
+  userEmail: string;
 };
-
 
 export type SubTaskProps = {
   id: string;
@@ -50,7 +48,6 @@ export type SubTaskProps = {
 };
 
 const CreateTask = ({ userId, userEmail }: CreateTaskProps) => {
-
   const [subTasks, setSubTasks] = React.useState<SubTaskProps[]>([]);
 
   const { toast } = useToast();
@@ -74,25 +71,24 @@ const CreateTask = ({ userId, userEmail }: CreateTaskProps) => {
   });
 
   /**
-   * * From line 80 - 103. Perform dynamic changing of value by not implementing
+   * * From line 77 - 98. Perform dynamic changing of value by not implementing
    * * react-hook-form library to save time and prevent bugs.
    */
   const addSubTaskField = () => {
-      const newSubTasks: SubTaskProps = {
-        id: uuidv4(),
-        subTaskName: "",
-      };
-      setSubTasks((prev) => [...prev, newSubTasks]);
-    }
-
-  const onValueChange = (id: string, newValue: string) => {
-    const origArray = [...subTasks];
-    const arrIndex = origArray.findIndex((subtask) => subtask.id === id);
-    origArray[arrIndex] = {
-      ...origArray[arrIndex],
-      subTaskName: newValue,
+    const newSubTasks: SubTaskProps = {
+      id: uuidv4(),
+      subTaskName: "",
     };
-    setSubTasks(origArray);
+    setSubTasks((prev) => [...prev, newSubTasks]);
+  };
+
+  //* dynamically change the value of subTaskName per index. Depends on what input element was changed.
+  const onValueChange = (id: string, inputValue: string) => {
+    setSubTasks((prevState) => {
+      return prevState.map((ctx) =>
+        ctx.id === id ? { ...ctx, subTaskname: inputValue } : ctx
+      );
+    });
   };
 
   const removeSubTaskField = (id: string) => {
