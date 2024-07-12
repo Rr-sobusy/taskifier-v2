@@ -1,6 +1,6 @@
 import prisma from "@/lib/prisma";
 
-export async function fetchTasks(userId: string) {
+export async function fetchTasks(userEmail: string) {
   //TODO - add paginagtion in queries
   const tasks = await prisma.tasks.findMany({
     include: {
@@ -8,7 +8,7 @@ export async function fetchTasks(userId: string) {
       subTasks: true,
     },
     where: {
-      userId: userId,
+      userEmail: userEmail,
     },
     orderBy : {
       tasksId : "desc"

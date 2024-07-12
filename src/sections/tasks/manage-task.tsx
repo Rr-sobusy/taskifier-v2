@@ -39,7 +39,7 @@ const ManageTask = ({ task }: Props) => {
 
   const [addedSubTasks, setAddedSubTask] = React.useState<SubTaskProps[]>([]);
 
-  const [currentSubTask, setCurrentSubTask] = React.useState(task.subTasks)
+  const [currentSubTask, setCurrentSubTask] = React.useState(task.subTasks);
 
   const { execute, isExecuting, result } = useAction(
     updateTask.bind(
@@ -48,9 +48,9 @@ const ManageTask = ({ task }: Props) => {
     )
   );
 
-  React.useEffect(()=>{
-      console.log(currentSubTask)
-  }, [currentSubTask])
+  React.useEffect(() => {
+    console.log(currentSubTask);
+  }, [currentSubTask]);
 
   const { toast } = useToast();
 
@@ -90,13 +90,11 @@ const ManageTask = ({ task }: Props) => {
   };
 
   const addedSubTasksChangeHandler = (id: string, inputValue: string) => {
-    const origArr = [...addedSubTasks];
-    const arrIndex = origArr.findIndex((v) => v.id === id);
-    origArr[arrIndex] = {
-      ...origArr[arrIndex],
-      subTaskName: inputValue,
-    };
-    setAddedSubTask(origArr);
+    setAddedSubTask((prevState) =>
+      prevState.map((ctx) =>
+        ctx.id === id ? { ...ctx, subTaskName: inputValue } : ctx
+      )
+    );
   };
 
   const deleteAddedSubTaskHandler = (id: string) => {
@@ -110,12 +108,12 @@ const ManageTask = ({ task }: Props) => {
     JSON.stringify({
       progress: task.progress,
       subTaskSTate: task.subTasks,
-      addedSubTaskLength: 0
+      addedSubTaskLength: 0,
     }),
     JSON.stringify({
       progress: sliderState,
       subTaskSTate: currentSubTask,
-      addedSubTaskLength: addedSubTasks.length
+      addedSubTaskLength: addedSubTasks.length,
     })
   );
 
@@ -127,8 +125,6 @@ const ManageTask = ({ task }: Props) => {
       >
         <Badge variant="outline" className="absolute right-3">
           {taskProgress()}
-          <span className="h-3 w-3 absolute -top-[6px] right-[4px] rounded-full bg-green-500">
-          </span>
         </Badge>
         <FlexBox className="gap-2">
           <div
@@ -218,15 +214,17 @@ const ManageTask = ({ task }: Props) => {
               alignItems="center"
               className="flex gap-2 text-foreground/80 text-sm tracking-tight font-medium"
             >
-              <Checkbox onCheckedChange={(e:boolean) => setCurrentSubTask((prev) => {
-                const test = [...prev];
-                const index = test.findIndex((ctx) => ctx.id === subtask.id);
-                test[index] = {
-                  ...test[index],
-                  isCompleted:e
+              <Checkbox
+                onCheckedChange={(e: boolean) =>
+                  setCurrentSubTask((prevState) => {
+                    return prevState.map((ctx) =>
+                      ctx.id === subtask.id ? { ...ctx, isCompleted: e } : ctx
+                    );
+                  })
                 }
-                return test
-              })} value={subtask.id} defaultChecked={subtask.isCompleted} />
+                value={subtask.id}
+                defaultChecked={subtask.isCompleted}
+              />
               <p>{subtask.subTaskTitle}</p>
             </FlexBox>
           ))}
@@ -264,7 +262,7 @@ const ManageTask = ({ task }: Props) => {
         <FlexBox className="gap-2 mt-5" flexDirection="mdRow">
           <Button
             onClick={updateHandler}
-            disabled={isSame || isExecuting }
+            disabled={isSame || isExecuting}
             className="flex-1 flex gap-2"
           >
             <span>

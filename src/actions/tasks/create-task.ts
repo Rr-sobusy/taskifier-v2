@@ -9,14 +9,15 @@ import { redirect } from "next/navigation";
 
 export const createNewTask = actionClient
   .schema(taskSchema)
-  .bindArgsSchemas<[userId: z.ZodString, subTasks: z.ZodArray<z.ZodString>]>([
+  .bindArgsSchemas<[userId: z.ZodString,userEmail:z.ZodString,subTasks: z.ZodArray<z.ZodString>]>([
+    z.string(),
     z.string(),
     z.array(z.string()),
   ])
   .action(
     async ({
       parsedInput: Schema,
-      bindArgsParsedInputs: [userId, subTasks],
+      bindArgsParsedInputs: [userId,userEmail, subTasks],
     }) => {
       try {
         const res = await prisma.tasks.create({
@@ -27,6 +28,7 @@ export const createNewTask = actionClient
             completionDate: new Date(Schema.completionDate),
             progress: 0,
             userId: userId,
+            userEmail: userEmail,
             tags: {
               create: Schema.tags.map((tag) => ({ taskTitle: tag })),
             },

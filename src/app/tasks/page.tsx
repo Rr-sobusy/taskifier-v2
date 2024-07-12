@@ -15,7 +15,7 @@ type Props = {};
 const page = async (props: Props) => {
   const user = await auth();
 
-  const tasks = await fetchTasks(user?.user?.id as string);
+  const tasks = await fetchTasks(user?.user?.email as string);
 
   return (
     <AuthProvider>
@@ -56,6 +56,7 @@ const page = async (props: Props) => {
               href={`tasks/management/${task.userId}/${task.tasksId}`}
             >
               <TaskCard
+                userEmail={task.userEmail}
                 userId={task.userId}
                 updatedAt={task.updatedAt}
                 tasksId={task.tasksId}

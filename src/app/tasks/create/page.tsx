@@ -20,7 +20,7 @@ const page = async (props: Props) => {
                         Create new task
                     </h1>
                 </FlexBox>
-                <CreateTask userId={user?.user?.id as string} />
+                <CreateTask userEmail={user?.user?.email as string} userId={user?.user?.id as string} />
             </DashboardLayout>
         </AuthProvider>
     )

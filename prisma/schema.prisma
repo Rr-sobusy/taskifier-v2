@@ -65,8 +65,9 @@ model VerificationToken {
 
 model Tasks {
   tasksId            Int           @id @default(autoincrement())
-  user               User          @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId             String        
+  user               User          @relation(fields: [userEmail], references: [email], onDelete: Cascade)
+  userId             String
+  userEmail          String     
   taskTitle          String
   taskDescription    String
   progress           Int

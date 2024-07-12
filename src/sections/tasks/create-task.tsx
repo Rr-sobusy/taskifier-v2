@@ -40,14 +40,16 @@ import { Separator } from "@/components/ui/separator";
 
 type CreateTaskProps = {
   userId: string;
+  userEmail:string;
 };
+
 
 export type SubTaskProps = {
   id: string;
   subTaskName: string;
 };
 
-const CreateTask = ({ userId }: CreateTaskProps) => {
+const CreateTask = ({ userId, userEmail }: CreateTaskProps) => {
 
   const [subTasks, setSubTasks] = React.useState<SubTaskProps[]>([]);
 
@@ -57,6 +59,7 @@ const CreateTask = ({ userId }: CreateTaskProps) => {
     createNewTask.bind(
       null,
       userId,
+      userEmail,
       subTasks.map((task) => task.subTaskName)
     )
   );
