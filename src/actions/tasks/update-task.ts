@@ -5,7 +5,6 @@ import { z } from "zod";
 import prisma from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { formatISO } from "date-fns";
 
 const toUpdate = z.object({
   taskId: z.number(),
@@ -14,13 +13,16 @@ const toUpdate = z.object({
 
 export const updateTask = actionClient
   .schema(toUpdate)
-  .bindArgsSchemas<[addedSubTasks: z.ZodArray<z.ZodString>]>([
-    z.array(z.string()),
-  ])
+  .bindArgsSchemas<
+    [
+      addedSubTasks: z.ZodArray<z.ZodString>,
+      modifiedSubTasks: z.ZodArray<z.ZodNumber>
+    ]
+  >([z.array(z.string()), z.array(z.number())])
   .action(
     async ({
       parsedInput: { taskId, progress },
-      bindArgsParsedInputs: [addedSubTasks],
+      bindArgsParsedInputs: [addedSubTasks, modifiedSubTasks],
     }) => {
       try {
         // await prisma.$transaction([
@@ -57,6 +59,22 @@ export const updateTask = actionClient
               taskId: taskId,
               subTaskTitle: ctx,
             })),
+          });
+        }
+
+        /**
+         * * modify the isCompleted to true if modifiedSubTasks array is not null
+         */
+        if (modifiedSubTasks.length) {
+          await prisma.subTasks.updateMany({
+            where: {
+              id: {
+                in: [...modifiedSubTasks],
+              },
+            },
+            data: {
+              isCompleted: true,
+            },
           });
         }
       } catch (err) {

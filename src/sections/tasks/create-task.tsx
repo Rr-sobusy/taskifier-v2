@@ -86,7 +86,7 @@ const CreateTask = ({ userId, userEmail }: CreateTaskProps) => {
   const onValueChange = (id: string, inputValue: string) => {
     setSubTasks((prevState) => {
       return prevState.map((ctx) =>
-        ctx.id === id ? { ...ctx, subTaskname: inputValue } : ctx
+        ctx.id === id ? { ...ctx, subTaskName: inputValue } : ctx
       );
     });
   };

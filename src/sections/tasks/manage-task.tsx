@@ -38,15 +38,22 @@ const ManageTask = ({ task }: Props) => {
   const [sliderState, setSliderState] = React.useState<number>(task.progress);
 
   const [addedSubTasks, setAddedSubTask] = React.useState<SubTaskProps[]>([]);
-
+  
   const [currentSubTask, setCurrentSubTask] = React.useState(task.subTasks);
 
   const { execute, isExecuting, result } = useAction(
     updateTask.bind(
       null,
-      addedSubTasks.map((ctx) => ctx.subTaskName)
+      addedSubTasks.map((ctx) => ctx.subTaskName),
+      currentSubTask.filter((ctx, index) => {
+           if(ctx.isCompleted !== task.subTasks[index].isCompleted){
+            return ctx
+           }
+      }).map((content)=> content.id)
     )
   );
+
+
 
   React.useEffect(() => {
     console.log(currentSubTask);
@@ -254,7 +261,7 @@ const ManageTask = ({ task }: Props) => {
         <Slider
           value={[sliderState]}
           onValueChange={(value) => {
-            if (Number(value.toString()) > sliderState)
+            if (Number(value.toString()) > task.progress)
               setSliderState(Number(value));
           }}
           className="bg-accent mt-5"
