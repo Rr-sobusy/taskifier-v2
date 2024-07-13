@@ -157,7 +157,7 @@ const ManageTask = ({ task }: Props) => {
         >
           <FlexBox className="gap-1">
             {task.tags.map((tag, index) => (
-              <Badge key={index} className="bg-green-600 text-background">
+              <Badge key={index} className="bg-green-600 hover:bg-green-600 text-background">
                 {tag.taskTitle}
               </Badge>
             ))}

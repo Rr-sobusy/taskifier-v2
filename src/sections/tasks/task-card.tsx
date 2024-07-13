@@ -40,31 +40,32 @@ const TaskCard = (Schema: SampleType[0]) => {
         </div>
 
         <FlexBox flexDirection="col">
-          <CardTitle className="text-[.925rem] text-foreground/85 tracking-normal font-extrabold leading-none">
+          <CardTitle className="text-[.925rem] text-foreground/85 tracking-normal font-extrabold leading-tight">
             {Schema.taskTitle}
           </CardTitle>
-          <CardDescription className="text-[.850rem] text-foreground/80 font-medium tracking-tight leading-tight">
+          <CardDescription className="text-[.850rem] text-foreground/80 font-medium tracking-tight leading-none">
             {Schema.taskDescription}
           </CardDescription>
         </FlexBox>
       </CardHeader>
 
-      <div className="px-6 flex gap-2">
-        <div className="flex items-center gap-1">
-          <CalendarCheck2 className="text-foreground/80" size={14} />
-          <p className="text-[.75rem] text-foreground/80">Added:</p>
-          <p className="text-[.75rem] font-semibold text-foreground/85">
-            {format(Schema.createdAt, "dd MMM yyyy")}
-          </p>
-        </div>
-        <div className="flex items-center gap-1">
-          <CalendarClock className="text-foreground/80" size={14} />
-          <p className="text-[.75rem] text-foreground/80">Deadline:</p>
-          <p className="text-[.75rem] font-semibold text-foreground/85">
-            {format(Schema.completionDate, "dd MMM yyyy")}
-          </p>
-        </div>
-      </div>
+        <FlexBox className="px-6 flex" justifyContent="between">
+          <div className="flex items-center gap-1">
+            <CalendarCheck2 className="text-foreground/80" size={14} />
+            <p className="text-[.75rem] text-foreground/80">Added:</p>
+            <p className="text-[.75rem] font-semibold text-foreground/85">
+              {format(Schema.createdAt, "dd MMM yyyy")}
+            </p>
+          </div>
+          <div className="flex items-center gap-1">
+            <CalendarClock className="text-foreground/80" size={14} />
+            <p className="text-[.75rem] text-foreground/80">Deadline:</p>
+            <p className="text-[.75rem] font-semibold text-foreground/85">
+              {format(Schema.completionDate, "dd MMM yyyy")}
+            </p>
+          </div>
+        </FlexBox>
+
       <div className="px-6 mt-2">
         <div className="flex item-center gap-1">
           {Schema.tags.map((tag, index) => (
