@@ -65,3 +65,14 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* 
+* Create a dashline in middle in h* or p tag whenever this class called
+*/
+.__completed-task::after {
+  @apply absolute content-[''] left-0 top-[50%] right-0 border-foreground/80 border-[.3px]
+}
+
+.__completed-task {
+  @apply relative
+}

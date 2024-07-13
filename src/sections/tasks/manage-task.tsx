@@ -234,7 +234,7 @@ const ManageTask = ({ task }: Props) => {
                 value={subtask.id}
                 defaultChecked={subtask.isCompleted}
               />
-              <p>{subtask.subTaskTitle}</p>
+              <p className={`${subtask.isCompleted && '__completed-task'} text-foreground/80`}>{subtask.subTaskTitle}</p>
             </FlexBox>
           ))}
           {addedSubTasks.map((addedSubTask, index) => (
