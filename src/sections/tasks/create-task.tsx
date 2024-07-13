@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { Calendar as CalendarIcon } from "lucide-react";
+import { Calendar as CalendarIcon , FolderPlus} from "lucide-react";
 
 import { Calendar } from "@/components/ui/calendar";
 import {
@@ -26,7 +26,7 @@ import {
 
 import { createNewTask } from "@/actions/tasks/create-task";
 import { useAction } from "next-safe-action/hooks";
-import { Trash2, Plus } from "lucide-react";
+import { Trash2, Plus , Undo} from "lucide-react";
 import { MultiSelect } from "@/components/ui/multi-select";
 import { Icons } from "@/constants/icons";
 import { v4 as uuidv4 } from "uuid";
@@ -36,6 +36,7 @@ import { taskSchema, TaskSchema } from "@/interfaces/add-task-schema";
 import { useToast } from "@/components/ui/use-toast";
 import { tags } from "@/constants/tags";
 import { Separator } from "@/components/ui/separator";
+import Link from "next/link";
 
 type CreateTaskProps = {
   userId: string;
@@ -92,8 +93,7 @@ const CreateTask = ({ userId, userEmail }: CreateTaskProps) => {
   };
 
   const removeSubTaskField = (id: string) => {
-    if (subTasks.length !== 1)
-      setSubTasks((prev) => prev.filter((subT) => subT.id !== id));
+    setSubTasks((prev) => prev.filter((subT) => subT.id !== id));
   };
 
   return (
@@ -291,9 +291,30 @@ const CreateTask = ({ userId, userEmail }: CreateTaskProps) => {
             </Button>
           </FlexBox>
 
-          <Button disabled={isExecuting} type="submit">
-            {isExecuting ? `Creating ...` : `Create Task`}
-          </Button>
+          <FlexBox className="gap-2" flexDirection="mdRow">
+            <Button
+              className="flex items-center gap-2 w-3/4"
+              disabled={isExecuting}
+              type="submit"
+            >
+              <span>
+                <FolderPlus size={16} />
+              </span>
+              {isExecuting ? `Creating ...` : `Create Task`}
+            </Button>
+            <Link href="/tasks">
+              <Button
+                className="flex items-center w-full gap-2"
+                type="button"
+                variant="outline"
+              >
+                <span>
+                  <Undo size={16} />
+                </span>
+                Back to tasks
+              </Button>
+            </Link>
+          </FlexBox>
         </FlexBox>
       </FlexBox>
     </form>
