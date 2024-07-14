@@ -6,16 +6,19 @@ import StatsCard from '@/sections/dashboard/stats-card'
 import { auth } from '@/auth'
 import { FlexBox } from '@/components/common/flex-box'
 import TestComp from '@/sections/dashboard/test-com'
-import { LayoutDashboard } from 'lucide-react'
+import { LayoutDashboard, ListChecks, LayoutList } from 'lucide-react'
 import { fetchTasks } from '@/actions/tasks/fetch-tasks'
+import { isAfter } from 'date-fns'
 
 type Props = {}
 
 const page = async (props: Props) => {
   const user = await auth();
-  const tasks = await fetchTasks(user?.user?.email as string);
 
+  const tasks = await fetchTasks(user?.user?.email as string);
   const completedTask = tasks.filter((task) => task.progress === 100)
+  const pendingTask = tasks.filter((task) => !isAfter(new Date(), task.completionDate) && task.progress !== 100)
+  const failedTask = tasks.filter((task) => isAfter(new Date(), task.completionDate) && task.progress === 100)
 
   return (
     <AuthProvider>
@@ -24,10 +27,10 @@ const page = async (props: Props) => {
           Hi, {user?.user?.name}
         </h1>
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-3 mt-6">
-          <StatsCard title='Total task listed' description='this is task description' icon={LayoutDashboard} value={tasks.length} />
-          <StatsCard title='Task Completed' description='this is task description' icon={LayoutDashboard} value={completedTask.length} />
-          <StatsCard title='Total task listed' description='this is task description' icon={LayoutDashboard} value={5} />
-          <StatsCard title='Total task listed' description='this is task description' icon={LayoutDashboard} value={5} />
+          <StatsCard title='Tasks' description='Total tasks listed' icon={LayoutDashboard} value={tasks.length} />
+          <StatsCard title='Completed Tasks' description='Total tasks accomplished on time' icon={ListChecks} value={completedTask.length} />
+          <StatsCard title='Pending Tasks' description='Total tasks that need to accompish' icon={LayoutList} value={pendingTask.length} />
+          <StatsCard title='Failed Tasks' description='Total tasks that not finished on time' icon={LayoutDashboard} value={failedTask.length} />
         </div>
         <FlexBox className="mt-5" display="block"> <CardsStats />
           <TestComp />
