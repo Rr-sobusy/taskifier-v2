@@ -66,13 +66,33 @@
   }
 }
 
-/* 
-* Create a dashline in middle in h* or p tag whenever this class called
-*/
-.__completed-task::after {
-  @apply absolute content-[''] left-0 top-[50%] right-0 border-foreground/65 border-[.3px]
+
+.custom-dashline {
+  position: relative;
 }
 
-.__completed-task {
-  @apply relative
+.custom-dashline::before,
+.custom-dashline::after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 50%;
+  width: 100%;
+  border-bottom: 1px dashed #000;
 }
+
+.custom-dashline::before {
+  left: 0;
+  transform: translateY(-50%);
+}
+
+.custom-dashline::after {
+  right: 0;
+  transform: translateY(-50%);
+}
+
+.custom-dashline::after {
+  right: 0;
+  transform: translateY(-50%);
+}
+

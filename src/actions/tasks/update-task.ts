@@ -25,19 +25,7 @@ export const updateTask = actionClient
       bindArgsParsedInputs: [addedSubTasks, modifiedSubTasks],
     }) => {
       try {
-        // await prisma.$transaction([
-        //   prisma.tasks.update({
-        //     where: {
-        //       tasksId: taskId,
-        //     },
-        //     data: {
-        //       progress: progress,
-        //     },
-        //   }),
-        //   prisma.subTasks.createMany({
-        //     data: addedSubTasks.map((ctx)=> ({taskId: taskId, subTaskTitle: ctx}))
-        //   }),
-        // ]);
+
         /**
          * * Update the progress depends on what the slider value on manage-task component
          */
@@ -63,19 +51,31 @@ export const updateTask = actionClient
         }
 
         /**
-         * * modify the isCompleted to true if modifiedSubTasks array is not null
+         * * alter the isCompleted value in db when state changes in the frontend
          */
         if (modifiedSubTasks.length) {
-          await prisma.subTasks.updateMany({
+          const currentItem = await prisma.subTasks.findMany({
             where: {
               id: {
                 in: [...modifiedSubTasks],
               },
             },
-            data: {
-              isCompleted: true,
-            },
           });
+
+          /**
+           * * Loop the updates for each array
+           */
+          currentItem.forEach(async (value) => {
+            await prisma.subTasks.update({
+              where: {
+                id: value.id,
+              },
+              data: {
+                isCompleted: !value.isCompleted,
+              },
+            });
+          });
+
         }
       } catch (err) {
         console.error(err);

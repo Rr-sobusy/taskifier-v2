@@ -293,7 +293,7 @@ const CreateTask = ({ userId, userEmail }: CreateTaskProps) => {
 
           <FlexBox className="gap-2" flexDirection="mdRow">
             <Button
-              className="flex items-center gap-2 w-3/4"
+              className="flex items-center gap-2 md:w-3/4"
               disabled={isExecuting}
               type="submit"
             >

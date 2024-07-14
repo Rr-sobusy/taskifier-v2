@@ -77,6 +77,7 @@ const ManageTask = ({ task }: Props) => {
   };
 
   const iconColor = clsx({
+    "bg-[#F52C2C]": isAfter(new Date(), task.completionDate) && task.progress !== 100,
     "bg-[#5C6C7A]": task.progress === 0,
     "bg-[#039856]": task.progress > 0 && task.progress < 100,
     "bg-[#1570EE]": task.progress === 100,
@@ -234,7 +235,7 @@ const ManageTask = ({ task }: Props) => {
                 value={subtask.id}
                 defaultChecked={subtask.isCompleted}
               />
-              <p className={`${subtask.isCompleted && '__completed-task'} text-foreground/80`}>{subtask.subTaskTitle}</p>
+              <p className={`${!subtask.isCompleted ? 'text-foreground/80' : 'text-foreground/45'} overflow-x-hidden`}>{subtask.subTaskTitle}</p>
             </FlexBox>
           ))}
           {addedSubTasks.map((addedSubTask, index) => (
