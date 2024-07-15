@@ -28,6 +28,7 @@ const UpcomingTask = ({tasks}: UpcomingTaskProps) => {
       <CardContent className="flex flex-col gap-4">
         {tasks.map((task) => (
           <FlexBox
+            key={task.tasksId}
             flexDirection="col"
             className="rounded-lg py-6 px-4 bg-accent/65"
           >
