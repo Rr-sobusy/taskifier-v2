@@ -35,6 +35,7 @@ export const updateTask = actionClient
           },
           data: {
             progress: progress,
+            updatedAt: new Date()
           },
         });
 
@@ -72,6 +73,7 @@ export const updateTask = actionClient
               },
               data: {
                 isCompleted: !value.isCompleted,
+                updatedAt: new Date()
               },
             });
           });

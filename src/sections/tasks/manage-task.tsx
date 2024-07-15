@@ -27,12 +27,12 @@ import { SubTaskProps } from "./create-task";
 import { useToast } from "@/components/ui/use-toast";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
+import type { TaskProgress } from "@/interfaces/task-progress";
 
 type Props = {
   task: TaskProps;
 };
 
-type TaskProgres = "starting" | "on-going" | "completed" | "failed";
 
 const ManageTask = ({ task }: Props) => {
   const [sliderState, setSliderState] = React.useState<number>(task.progress);
@@ -67,7 +67,7 @@ const ManageTask = ({ task }: Props) => {
     return <Icon />;
   };
 
-  const taskProgress = (): TaskProgres => {
+  const taskProgress = (): TaskProgress => {
     if (isAfter(new Date(), task.completionDate) && task.progress !== 100)
       return "failed";
     if (task.progress === 0) return "starting";

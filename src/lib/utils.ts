@@ -1,5 +1,8 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
+import type { TaskProgress } from "@/interfaces/task-progress";
+import type { SampleType } from "@/interfaces/get-sample-type";
+import { isAfter } from "date-fns";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -17,4 +20,26 @@ export function formatAndLimitString(encodedString: string) {
 
   // Return the original string if it's 15 characters or less
   return decodedString;
+}
+
+export function filterTask({
+  taskType,
+  tasks,
+}: {
+  taskType: TaskProgress;
+  tasks: SampleType;
+}): SampleType {
+  if (taskType === "on-going")
+    return tasks.filter(
+      (task) =>
+        !isAfter(new Date(), task.completionDate) && task.progress !== 100
+    );
+  if (taskType === "completed")
+    return tasks.filter((task) => task.progress === 100);
+  if (taskType === "failed")
+    return tasks.filter(
+      (task) =>
+        isAfter(new Date(), task.completionDate) && task.progress !== 100
+    );
+  return tasks;
 }
