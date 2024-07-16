@@ -3,14 +3,14 @@ import DashboardLayout from "@/components/layout/dashboard/layout";
 import TaskCard from "@/sections/tasks/task-card";
 import AuthProvider from "@/provider/AuthProviders";
 import Link from "next/link";
-import { ListFilter, Plus } from "lucide-react";
+import {  Plus } from "lucide-react";
 import { Toaster } from "@/components/ui/toaster";
 
 import { Button } from "@/components/ui/button";
 import { auth } from "@/auth";
 import { fetchTasks } from "@/actions/tasks/fetch-tasks";
-import NullTask from "@/sections/tasks/null-task-screen";
 import FilterTasks from "@/sections/tasks/filter-tasks";
+import TaskLists from "@/sections/tasks/task-list";
 type Props = {};
 
 const page = async (props: Props) => {
@@ -27,7 +27,7 @@ const page = async (props: Props) => {
             <h1 className="scroll-m-20 text-foreground/85 font-extrabold tracking-tight text-2xl lg:text-2xl">
               Task Lists
             </h1>
-            <FilterTasks />
+            <FilterTasks taskTypes={["starting","on-going","completed","failed"]} />
           </div>
           <Link href={`/tasks/create`}>
             <Button
@@ -41,36 +41,7 @@ const page = async (props: Props) => {
             </Button>
           </Link>
         </div>
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5 my-7 ">
-          {tasks.length ? (
-            tasks.map((task) => (
-              <Link
-                key={task.tasksId}
-                href={`tasks/management/${task.userId}/${task.tasksId}`}
-              >
-                <TaskCard
-                  userEmail={task.userEmail}
-                  userId={task.userId}
-                  updatedAt={task.updatedAt}
-                  tasksId={task.tasksId}
-                  subTasks={task.subTasks}
-                  key={task.tasksId}
-                  taskTitle={task.taskTitle}
-                  taskDescription={task.taskDescription}
-                  completionDate={task.completionDate}
-                  progress={task.progress}
-                  createdAt={task.createdAt}
-                  tags={task.tags}
-                  icon={task.icon}
-                />
-              </Link>
-            ))
-          ) : (
-            <Link href="/tasks/create">
-              <NullTask />
-            </Link>
-          )}
-        </div>
+       <TaskLists tasks={tasks} />
       </DashboardLayout>
     </AuthProvider>
   );

@@ -13,13 +13,16 @@ import {
 import { Button } from "@/components/ui/button";
 import { ListFilter } from "lucide-react";
 import { useRouter } from "next/navigation";
+import type { TaskProgress } from "@/interfaces/task-progress";
 
-type Props = {};
+type Props = {
+  taskTypes: TaskProgress[]
+};
 
-const FilterTasks = (props: Props) => {
+const FilterTasks = ({taskTypes}: Props) => {
   const router = useRouter();
   return (
-    <Select onValueChange={(url)=>router.push('/qu')}>
+    <Select onValueChange={(url) => router.push(`/tasks?filter=${url}`)}>
       <SelectTrigger>
         <Button
           size="sm"
@@ -34,8 +37,9 @@ const FilterTasks = (props: Props) => {
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>
-          <SelectItem value="completed">Completed</SelectItem>
-          <SelectItem value="/">randy</SelectItem>
+          {taskTypes.map((type) => (
+            <SelectItem key={type} className="capitalize text-[.85rem]" value={type}>{type}</SelectItem>
+          ))}
         </SelectGroup>
       </SelectContent>
     </Select>
