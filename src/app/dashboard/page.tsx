@@ -55,7 +55,7 @@ const page = async (props: Props) => {
           />
         </div>
         <div className="mt-4 grid grid-cols-1 md:grid-cols-3 gap-3">
-          <div className="col-span-2">
+          <div className="col-span-2 row-span-2">
             <TaskChart />
           </div>
           <UpcomingTask tasks={filterTask({tasks: tasks, taskType:"on-going"})}  />

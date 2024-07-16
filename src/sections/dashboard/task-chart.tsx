@@ -8,7 +8,7 @@ import {
   CardTitle,
   CardDescription,
 } from "@/components/ui/card";
-import { type ChartConfig, ChartContainer } from "@/components/ui/chart";
+import { type ChartConfig, ChartContainer , ChartTooltip, ChartTooltipContent} from "@/components/ui/chart";
 import { BarChart, Bar } from "recharts";
 
 const chartConfig = {
@@ -42,7 +42,7 @@ const TaskChart = (props: Props) => {
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <ChartContainer config={chartConfig} className="max-h-[400px] w-full">
+        <ChartContainer config={chartConfig} className="max-h-[350px] w-full">
           <BarChart accessibilityLayer data={chartData}>
             <Bar dataKey="desktop" fill="var(--color-desktop)" radius={4} />
             <Bar dataKey="mobile" fill="var(--color-mobile)" radius={4} />

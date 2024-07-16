@@ -22,7 +22,7 @@ type UpcomingTaskProps = {
 
 const UpcomingTask = ({ tasks }: UpcomingTaskProps) => {
   return (
-    <Card>
+    <Card className="row-span-1">
       <CardHeader>
         <CardTitle className="text-foreground/80 flex items-center gap-2 font-bold tracking-tight">
           <span className="px-3 py-3 rounded-full bg-accent/60 shadow-md">
