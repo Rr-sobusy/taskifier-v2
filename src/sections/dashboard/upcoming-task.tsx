@@ -25,7 +25,7 @@ const UpcomingTask = ({ tasks }: UpcomingTaskProps) => {
     <Card className="row-span-1">
       <CardHeader>
         <CardTitle className="text-foreground/80 flex items-center gap-2 font-bold tracking-tight">
-          <span className="px-3 py-3 rounded-full bg-accent/60 shadow-md">
+          <span className="px-3 py-3 rounded-full bg-accent/40 shadow-md">
             <Calendar size={17} />
           </span>
           Upcoming Tasks
@@ -48,7 +48,7 @@ const UpcomingTask = ({ tasks }: UpcomingTaskProps) => {
               </p>
               <div className=" bg-accent/90 flex gap-1 px-2 py-2 items-center  rounded-md">
                 <p className="text-[.75rem]">
-                  {differenceInDays(new Date(), task.completionDate) + 1}
+                  {differenceInDays( task.completionDate, new Date()) + 1}
                 </p>
                 <Calendar className="text-foreground/80" size={18} />
               </div>

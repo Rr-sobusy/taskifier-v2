@@ -54,7 +54,7 @@ const page = async (props: Props) => {
             value={filterTask({ tasks: tasks, taskType: "failed" }).length}
           />
         </div>
-        <div className="mt-4 grid grid-cols-1 md:grid-cols-3 gap-3">
+        <div className="mt-4 grid grid-cols-1 md:grid-cols-3 gap-3 pb-4">
           <div className="col-span-2 row-span-2">
             <TaskChart />
           </div>
