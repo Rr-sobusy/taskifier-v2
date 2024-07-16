@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { auth } from "@/auth";
 import { fetchTasks } from "@/actions/tasks/fetch-tasks";
 import NullTask from "@/sections/tasks/null-task-screen";
+import FilterTasks from "@/sections/tasks/filter-tasks";
 type Props = {};
 
 const page = async (props: Props) => {
@@ -26,16 +27,7 @@ const page = async (props: Props) => {
             <h1 className="scroll-m-20 text-foreground/85 font-extrabold tracking-tight text-2xl lg:text-2xl">
               Task Lists
             </h1>
-            <Button
-              size="sm"
-              className="rounded-3xl flex gap-2 border-primary h-8 text-primary hover:text-primary px-4 text-[.75rem]"
-              variant="outline"
-            >
-              <span>
-                <ListFilter size={20} />
-              </span>
-              <span className="md:block md:rounded-full hidden">Filters</span>
-            </Button>
+            <FilterTasks />
           </div>
           <Link href={`/tasks/create`}>
             <Button
@@ -50,29 +42,34 @@ const page = async (props: Props) => {
           </Link>
         </div>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5 my-7 ">
-          { tasks.length ? tasks.map((task) => (
-            <Link
-              key={task.tasksId}
-              href={`tasks/management/${task.userId}/${task.tasksId}`}
-            >
-              <TaskCard
-                userEmail={task.userEmail}
-                userId={task.userId}
-                updatedAt={task.updatedAt}
-                tasksId={task.tasksId}
-                subTasks={task.subTasks}
+          {tasks.length ? (
+            tasks.map((task) => (
+              <Link
                 key={task.tasksId}
-                taskTitle={task.taskTitle}
-                taskDescription={task.taskDescription}
-                completionDate={task.completionDate}
-                progress={task.progress}
-                createdAt={task.createdAt}
-                tags={task.tags}
-                icon={task.icon}
-              />
+                href={`tasks/management/${task.userId}/${task.tasksId}`}
+              >
+                <TaskCard
+                  userEmail={task.userEmail}
+                  userId={task.userId}
+                  updatedAt={task.updatedAt}
+                  tasksId={task.tasksId}
+                  subTasks={task.subTasks}
+                  key={task.tasksId}
+                  taskTitle={task.taskTitle}
+                  taskDescription={task.taskDescription}
+                  completionDate={task.completionDate}
+                  progress={task.progress}
+                  createdAt={task.createdAt}
+                  tags={task.tags}
+                  icon={task.icon}
+                />
+              </Link>
+            ))
+          ) : (
+            <Link href="/tasks/create">
+              <NullTask />
             </Link>
-          )) : <Link href="/tasks/create">
-            <NullTask /></Link>}
+          )}
         </div>
       </DashboardLayout>
     </AuthProvider>

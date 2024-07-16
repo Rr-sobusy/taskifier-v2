@@ -58,7 +58,7 @@ const UpcomingTask = ({ tasks }: UpcomingTaskProps) => {
       </CardContent>
       <CardFooter className="flex flex-col gap-2 items-start">
         <Separator />
-        <Link href="/tasks">
+        <Link href="/tasks?taskId=15">
           <p className="text-[.825rem] flex gap-1 items-center font-medium ml-1">
             View all
             <span className="text-foreground/75">

@@ -58,7 +58,7 @@ const page = async (props: Props) => {
           <div className="col-span-2 row-span-2">
             <TaskChart />
           </div>
-          <UpcomingTask tasks={filterTask({tasks: tasks, taskType:"on-going"})}  />
+          <UpcomingTask tasks={filterTask({tasks: tasks, taskType:"on-going"}).slice(0,6)}  />
         </div>
       </DashboardLayout>
     </AuthProvider>
