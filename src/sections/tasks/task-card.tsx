@@ -24,7 +24,7 @@ const TaskCard = (Schema: SampleType[0]) => {
     "bg-[#1570EE]": Schema.progress === 100,
   });
 
-  const renderIcon = () => {
+   const renderIcon = () => {
     const iconIndex = Icons.findIndex((ctx) => ctx.iconName === Schema.icon);
     const Icon = Icons[iconIndex].icon;
     return <Icon />;
