@@ -133,9 +133,10 @@ const ManageTask = ({ task }: Props) => {
         className="md:min-w-[36rem] pb-5 gap-1 min-w-[90%] relative"
         flexDirection="col"
       >
-        <Badge variant="outline" className="absolute right-3">
-          {taskProgress()}
-        </Badge>
+        <FlexBox className="absolute right-0 -top-6 h-7" justifyContent="between" display="flex">
+          <Badge variant="outline">{taskProgress()}</Badge>
+          <Badge variant="destructive"><Trash2 size={15} /></Badge>
+        </FlexBox>
         <FlexBox className="gap-2">
           <div
             className={`h-14 w-14 flex justify-center text-background/90 items-center rounded-md ${iconColor}`}
@@ -158,7 +159,10 @@ const ManageTask = ({ task }: Props) => {
         >
           <FlexBox className="gap-1">
             {task.tags.map((tag, index) => (
-              <Badge key={index} className="bg-green-600 hover:bg-green-600 text-background">
+              <Badge
+                key={index}
+                className="bg-green-600 hover:bg-green-600 text-background"
+              >
                 {tag.taskTitle}
               </Badge>
             ))}
@@ -235,7 +239,15 @@ const ManageTask = ({ task }: Props) => {
                 value={subtask.id}
                 defaultChecked={subtask.isCompleted}
               />
-              <p className={`${!subtask.isCompleted ? 'text-foreground/80' : 'text-foreground/45'} overflow-x-hidden`}>{subtask.subTaskTitle}</p>
+              <p
+                className={`${
+                  !subtask.isCompleted
+                    ? "text-foreground/80"
+                    : "text-foreground/45"
+                } overflow-x-hidden`}
+              >
+                {subtask.subTaskTitle}
+              </p>
             </FlexBox>
           ))}
           {addedSubTasks.map((addedSubTask, index) => (
@@ -267,7 +279,10 @@ const ManageTask = ({ task }: Props) => {
             /**
              * * Prevent updating the slider value when completionDate > currentDate
              */
-            if (Number(value.toString()) > task.progress && !isAfter(new Date(), task.completionDate))
+            if (
+              Number(value.toString()) > task.progress &&
+              !isAfter(new Date(), task.completionDate)
+            )
               setSliderState(Number(value));
           }}
           className="bg-accent mt-5"
