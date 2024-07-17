@@ -28,36 +28,53 @@ import { useToast } from "@/components/ui/use-toast";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
 import type { TaskProgress } from "@/interfaces/task-progress";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { removeTask } from "@/actions/tasks/remove-task";
 
 type Props = {
   task: TaskProps;
 };
 
-
 const ManageTask = ({ task }: Props) => {
   const [sliderState, setSliderState] = React.useState<number>(task.progress);
 
   const [addedSubTasks, setAddedSubTask] = React.useState<SubTaskProps[]>([]);
-  
+
   const [currentSubTask, setCurrentSubTask] = React.useState(task.subTasks);
 
-  const { execute, isExecuting, result } = useAction(
+  const {
+    execute: removeTaskAction,
+    isExecuting: isRemoveExecuting,
+    result: removeActionResult,
+  } = useAction(removeTask);
+
+  const {
+    execute: updateTaskAction,
+    isExecuting,
+    result,
+  } = useAction(
     updateTask.bind(
       null,
       addedSubTasks.map((ctx) => ctx.subTaskName),
-      currentSubTask.filter((ctx, index) => {
-           if(ctx.isCompleted !== task.subTasks[index].isCompleted){
-            return ctx
-           }
-      }).map((content)=> content.id)
+      currentSubTask
+        .filter((ctx, index) => {
+          if (ctx.isCompleted !== task.subTasks[index].isCompleted) {
+            return ctx;
+          }
+        })
+        .map((content) => content.id)
     )
   );
-
-
-
-  React.useEffect(() => {
-    console.log(currentSubTask);
-  }, [currentSubTask]);
 
   const { toast } = useToast();
 
@@ -77,14 +94,15 @@ const ManageTask = ({ task }: Props) => {
   };
 
   const iconColor = clsx({
-    "bg-[#F52C2C]": isAfter(new Date(), task.completionDate) && task.progress !== 100,
+    "bg-[#F52C2C]":
+      isAfter(new Date(), task.completionDate) && task.progress !== 100,
     "bg-[#5C6C7A]": task.progress === 0,
     "bg-[#039856]": task.progress > 0 && task.progress < 100,
     "bg-[#1570EE]": task.progress === 100,
   });
 
   const updateHandler = () => {
-    execute({ progress: sliderState, taskId: task.tasksId });
+    updateTaskAction({ progress: sliderState, taskId: task.tasksId });
 
     const { serverError } = result;
     if (!serverError) {
@@ -111,6 +129,19 @@ const ManageTask = ({ task }: Props) => {
     setAddedSubTask((state) => state.filter((ctx) => ctx.id !== id));
   };
 
+  const deleteTaskHandler = () => {
+    removeTaskAction({ taskId: task.tasksId });
+
+    const { serverError } = removeActionResult;
+
+    if (!serverError) {
+      toast({
+        title: "Task Removed",
+        description: task.taskTitle,
+      });
+    }
+  };
+
   /**
    * * Ensure that update button will be disabled unless changes in states made
    */
@@ -133,10 +164,9 @@ const ManageTask = ({ task }: Props) => {
         className="md:min-w-[36rem] pb-5 gap-1 min-w-[90%] relative"
         flexDirection="col"
       >
-        <FlexBox className="absolute right-0 -top-6 h-7" justifyContent="between" display="flex">
-          <Badge variant="outline">{taskProgress()}</Badge>
-          <Badge variant="destructive"><Trash2 size={15} /></Badge>
-        </FlexBox>
+        <Badge className="absolute right-0 -top-6 h-7" variant="outline">
+          {taskProgress()}
+        </Badge>
         <FlexBox className="gap-2">
           <div
             className={`h-14 w-14 flex justify-center text-background/90 items-center rounded-md ${iconColor}`}
@@ -157,18 +187,51 @@ const ManageTask = ({ task }: Props) => {
           flexDirection="mdRow"
           justifyContent="between"
         >
-          <FlexBox className="gap-1">
-            {task.tags.map((tag, index) => (
-              <Badge
-                key={index}
-                className="bg-green-600 hover:bg-green-600 text-background"
-              >
-                {tag.taskTitle}
-              </Badge>
-            ))}
+          <FlexBox
+            className="w-full"
+            alignItems="center"
+            justifyContent="between"
+          >
+            <FlexBox className="gap-1">
+              {task.tags.map((tag, index) => (
+                <Badge
+                  key={index}
+                  className="bg-green-600 hover:bg-green-600 text-background"
+                >
+                  {tag.taskTitle}
+                </Badge>
+              ))}
+            </FlexBox>
+            <AlertDialog>
+              <AlertDialogTrigger>
+                <Button title="Remove task" size="sm" variant="destructive">
+                  <Trash2 className="text-background/80" size={14} />
+                </Button>
+              </AlertDialogTrigger>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>
+                    Are you sure to delete task?
+                  </AlertDialogTitle>
+                  <AlertDialogDescription>
+                    This action cannot be undone. This will permanently delete
+                    the listed task to server.
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>Cancel</AlertDialogCancel>
+                  <AlertDialogAction
+                    onClick={deleteTaskHandler}
+                    className="bg-red-600 hover:bg-red-700"
+                  >
+                    Delete
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
           </FlexBox>
         </FlexBox>
-        <Separator className="mt-2" />
+        <Separator className="mt-1" />
         <FlexBox flexDirection="col" className="gap-2">
           <FlexBox justifyContent="between">
             <p className="flex items-center gap-2 text-sm tracking-tight text-foreground/85 font-semibold">

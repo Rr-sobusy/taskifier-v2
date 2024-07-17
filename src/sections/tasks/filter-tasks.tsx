@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import React from "react";
 import {
@@ -16,10 +16,10 @@ import { useRouter } from "next/navigation";
 import type { TaskProgress } from "@/interfaces/task-progress";
 
 type Props = {
-  taskTypes: TaskProgress[]
+  taskTypes: TaskProgress[];
 };
 
-const FilterTasks = ({taskTypes}: Props) => {
+const FilterTasks = ({ taskTypes }: Props) => {
   const router = useRouter();
   return (
     <Select onValueChange={(url) => router.push(`/tasks?filter=${url}`)}>
@@ -35,10 +35,23 @@ const FilterTasks = ({taskTypes}: Props) => {
           <span className="md:block md:rounded-full hidden">Filters</span>
         </Button>
       </SelectTrigger>
-      <SelectContent>
+      <SelectContent
+        ref={(ref) => {
+          if (!ref) return;
+          ref.ontouchstart = (e) => {
+            e.preventDefault();
+          };
+        }}
+      >
         <SelectGroup>
           {taskTypes.map((type) => (
-            <SelectItem key={type} className="capitalize text-[.85rem]" value={type}>{type}</SelectItem>
+            <SelectItem
+              key={type}
+              className="capitalize text-[.85rem]"
+              value={type}
+            >
+              {type}
+            </SelectItem>
           ))}
         </SelectGroup>
       </SelectContent>
