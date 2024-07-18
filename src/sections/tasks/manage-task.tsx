@@ -54,7 +54,7 @@ const ManageTask = ({ task }: Props) => {
 
   const {
     execute: removeTaskAction,
-    isExecuting: isRemoveExecuting,
+    isExecuting: isRemoveTaskExecuting,
     result: removeActionResult,
   } = useAction(removeTask);
 
@@ -215,12 +215,13 @@ const ManageTask = ({ task }: Props) => {
                   </AlertDialogTitle>
                   <AlertDialogDescription>
                     This action cannot be undone. This will permanently delete
-                    the listed task to server.
+                    the listed task to the server.
                   </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
                   <AlertDialogCancel>Cancel</AlertDialogCancel>
                   <AlertDialogAction
+                    disabled={isRemoveTaskExecuting}
                     onClick={deleteTaskHandler}
                     className="bg-red-600 hover:bg-red-700"
                   >
