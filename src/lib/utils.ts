@@ -1,7 +1,7 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import type { TaskProgress } from "@/interfaces/task-progress";
-import type { SampleType } from "@/interfaces/get-sample-type";
+import type { BulkTasksProps } from "@/interfaces/fetched-task-types";
 import { isAfter } from "date-fns";
 
 export function cn(...inputs: ClassValue[]) {
@@ -27,8 +27,8 @@ export function filterTask({
   tasks,
 }: {
   taskType: TaskProgress;
-  tasks: SampleType;
-}): SampleType {
+  tasks: BulkTasksProps;
+}): BulkTasksProps {
   if (taskType === "on-going")
     return tasks.filter(
       (task) =>

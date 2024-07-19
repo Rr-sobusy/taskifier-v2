@@ -4,12 +4,11 @@ import {
   CardContent,
   Card,
   CardTitle,
-  CardDescription,
   CardFooter,
 } from "@/components/ui/card";
 import { Calendar, MoveRight } from "lucide-react";
 import { FlexBox } from "@/components/common/flex-box";
-import { SampleType } from "@/interfaces/get-sample-type";
+import { BulkTasksProps } from "@/interfaces/fetched-task-types";
 import { Progress } from "@/components/ui/progress";
 import { format, differenceInDays } from "date-fns";
 import { Icons } from "@/constants/icons";
@@ -17,7 +16,7 @@ import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
 
 type UpcomingTaskProps = {
-  tasks: SampleType;
+  tasks: BulkTasksProps;
 };
 
 const UpcomingTask = ({ tasks }: UpcomingTaskProps) => {

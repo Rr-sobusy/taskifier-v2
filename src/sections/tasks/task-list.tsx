@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { SampleType } from "@/interfaces/get-sample-type";
+import { SampleType } from "@/interfaces/fetched-task-types";
 import Link from "next/link";
 import TaskCard from "./task-card";
 import NullTask from "./null-task-screen";

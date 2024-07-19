@@ -5,10 +5,9 @@ import StatsCard from "@/sections/dashboard/stats-card";
 import { auth } from "@/auth";
 import { FlexBox } from "@/components/common/flex-box";
 import UpcomingTask from "@/sections/dashboard/upcoming-task";
-import TaskChart from "@/sections/dashboard/task-chart";
+import { TaskChart } from "@/sections/dashboard/task-chart";
 import { LayoutDashboard, ListChecks, LayoutList, ShieldX } from "lucide-react";
 import { fetchTasks } from "@/actions/tasks/fetch-tasks";
-
 
 //* utils for filtering task types
 import { filterTask } from "@/lib/utils";
@@ -19,8 +18,6 @@ const page = async (props: Props) => {
   const user = await auth();
 
   const tasks = await fetchTasks(user?.user?.email as string);
-  
-
 
   return (
     <AuthProvider>
@@ -56,9 +53,14 @@ const page = async (props: Props) => {
         </div>
         <div className="mt-4 grid grid-cols-1 md:grid-cols-3 gap-3 pb-4">
           <div className="col-span-2 row-span-2">
-            <TaskChart />
+            <TaskChart tasks={tasks} />
           </div>
-          <UpcomingTask tasks={filterTask({tasks: tasks, taskType:"on-going"}).slice(0,6)}  />
+          <UpcomingTask
+            tasks={filterTask({ tasks: tasks, taskType: "on-going" }).slice(
+              0,
+              6
+            )}
+          />
         </div>
       </DashboardLayout>
     </AuthProvider>

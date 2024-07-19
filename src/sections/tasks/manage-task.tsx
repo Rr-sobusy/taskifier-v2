@@ -2,7 +2,7 @@
 
 import React from "react";
 import clsx from "clsx";
-import type { TaskProps } from "@/interfaces/get-sample-type";
+import type { TaskProps } from "@/interfaces/fetched-task-types";
 import { FlexBox } from "@/components/common/flex-box";
 import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
