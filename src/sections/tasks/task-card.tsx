@@ -18,13 +18,14 @@ import type { SampleType } from "@/interfaces/fetched-task-types";
 
 const TaskCard = (Schema: SampleType[0]) => {
   const iconColor = clsx({
-    "bg-[#F52C2C]": isAfter(new Date(), Schema.completionDate) && Schema.progress !== 100,
+    "bg-[#F52C2C]":
+      isAfter(new Date(), Schema.completionDate) && Schema.progress !== 100,
     "bg-[#5C6C7A]": Schema.progress === 0,
     "bg-[#039856]": Schema.progress > 0 && Schema.progress < 100,
     "bg-[#1570EE]": Schema.progress === 100,
   });
 
-   const renderIcon = () => {
+  const renderIcon = () => {
     const iconIndex = Icons.findIndex((ctx) => ctx.iconName === Schema.icon);
     const Icon = Icons[iconIndex].icon;
     return <Icon />;
@@ -49,22 +50,22 @@ const TaskCard = (Schema: SampleType[0]) => {
         </FlexBox>
       </CardHeader>
 
-        <FlexBox className="px-6 flex" justifyContent="between">
-          <div className="flex items-center gap-1">
-            <CalendarCheck2 className="text-foreground/80" size={14} />
-            <p className="text-[.75rem] text-foreground/80">Added:</p>
-            <p className="text-[.75rem] font-semibold text-foreground/85">
-              {format(Schema.createdAt, "dd MMM yyyy")}
-            </p>
-          </div>
-          <div className="flex items-center gap-1">
-            <CalendarClock className="text-foreground/80" size={14} />
-            <p className="text-[.75rem] text-foreground/80">Deadline:</p>
-            <p className="text-[.75rem] font-semibold text-foreground/85">
-              {format(Schema.completionDate, "dd MMM yyyy")}
-            </p>
-          </div>
-        </FlexBox>
+      <FlexBox className="px-6 flex" justifyContent="between">
+        <div className="flex items-center gap-1">
+          <CalendarCheck2 className="text-foreground/80" size={14} />
+          <p className="text-[.75rem] text-foreground/80">Added:</p>
+          <p className="text-[.75rem] font-semibold text-foreground/85">
+            {format(Schema.createdAt, "dd MMM yyyy")}
+          </p>
+        </div>
+        <div className="flex items-center gap-1">
+          <CalendarClock className="text-foreground/80" size={14} />
+          <p className="text-[.75rem] text-foreground/80">Deadline:</p>
+          <p className="text-[.75rem] font-semibold text-foreground/85">
+            {format(Schema.completionDate, "dd MMM yyyy")}
+          </p>
+        </div>
+      </FlexBox>
 
       <div className="px-6 mt-2">
         <div className="flex item-center gap-1">
@@ -99,7 +100,9 @@ const TaskCard = (Schema: SampleType[0]) => {
         <div className="flex flex-row items-center gap-2">
           <p className="text-[.75rem] text-foreground/80">Last updated: </p>
           <p className="text-[.75rem] font-semibold text-foreground/85">
-            {Schema.updatedAt ? format(Schema.updatedAt, "dd MMM yyyy"): "Date not available"}
+            {Schema.updatedAt
+              ? format(Schema.updatedAt, "dd MMM yyyy")
+              : "Date not available"}
           </p>
         </div>
       </CardContent>
