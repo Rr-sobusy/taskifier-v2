@@ -14,9 +14,9 @@ import { Icons } from "@/constants/icons";
 import { CalendarCheck2, CalendarClock, Loader } from "lucide-react";
 import clsx from "clsx";
 import { format, isAfter } from "date-fns";
-import type { SampleType } from "@/interfaces/fetched-task-types";
+import type { BulkTasksProps } from "@/interfaces/fetched-task-types";
 
-const TaskCard = (Schema: SampleType[0]) => {
+const TaskCard = (Schema: BulkTasksProps[0]) => {
   const iconColor = clsx({
     "bg-[#F52C2C]":
       isAfter(new Date(), Schema.completionDate) && Schema.progress !== 100,

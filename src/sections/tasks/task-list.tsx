@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { SampleType } from "@/interfaces/fetched-task-types";
+import { type BulkTasksProps } from "@/interfaces/fetched-task-types";
 import Link from "next/link";
 import TaskCard from "./task-card";
 import NullTask from "./null-task-screen";
@@ -10,7 +10,7 @@ import { isAfter } from "date-fns";
 import type { TaskProgress } from "@/interfaces/task-progress";
 
 type TaskListsProps = {
-  tasks: SampleType;
+  tasks: BulkTasksProps;
 };
 
 const TaskLists = ({ tasks }: TaskListsProps) => {
@@ -20,7 +20,7 @@ const TaskLists = ({ tasks }: TaskListsProps) => {
   /**
    * * Filter the task lists depends to url query params supplied
    */
-  const filteredTasks = (): SampleType => {
+  const filteredTasks = (): BulkTasksProps => {
     if (search === "on-going")
       return tasks.filter(
         (task) =>
