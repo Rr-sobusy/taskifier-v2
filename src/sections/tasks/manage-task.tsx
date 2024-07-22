@@ -164,7 +164,7 @@ const ManageTask = ({ task }: Props) => {
         className="md:min-w-[36rem] pb-5 gap-1 min-w-[90%] relative"
         flexDirection="col"
       >
-        <Badge className="absolute right-0 -top-6 h-7" variant="outline">
+        <Badge className="absolute right-0 -top-7 h-7" variant="outline">
           {taskProgress()}
         </Badge>
         <FlexBox className="gap-2">
