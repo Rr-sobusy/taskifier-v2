@@ -9,7 +9,7 @@ const techUsed = [
   "tailwindcss for styling",
   "authjs for authentication",
   "zod for schema validation",
-  "react-hook-form for form handling and validations",
+  "react-hook-form for form handling and form validations",
   "next-safe-action for type-safe server actions",
   "shadcn/ui for ui component library",
   "prisma for db migration and ORM",

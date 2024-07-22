@@ -113,14 +113,23 @@ const TaskCard = (Schema: BulkTasksProps[0]) => {
                 : "Date not available"}
             </p>
           </FlexBox>
-          {differenceInDays(Schema.completionDate, new Date()) <=
-            toggleAlertDays && (
-            <p className="text-[.75rem] text-red-500">
-              {differenceInDays(Schema.completionDate, new Date()) +
-                " " +
-                "days remaining.Hurry up!"}
-            </p>
-          )}
+
+          {
+            /**
+             * Render if less than 3 days before completionDate and progress is below 100
+             */
+            differenceInDays(Schema.completionDate, new Date()) <=
+              toggleAlertDays &&
+              Schema.progress < 100 &&
+              !isAfter(new Date(), Schema.completionDate) && (
+                <p className="text-[.75rem] text-red-500">
+                  {differenceInDays(Schema.completionDate, new Date()) +
+                    1 +
+                    " " +
+                    "days remaining.Hurry up!"}
+                </p>
+              )
+          }
         </FlexBox>
       </CardContent>
     </Card>

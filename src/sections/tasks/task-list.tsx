@@ -18,7 +18,7 @@ const TaskLists = ({ tasks }: TaskListsProps) => {
   const search = searchParams.get("filter") as TaskProgress;
 
   /**
-   * * Filter the task lists depends to url query params supplied
+   * * Filter the task lists depends to url query params supplied. Returns original array if not supplied by query params.
    */
   const filteredTasks = (): BulkTasksProps => {
     if (search === "on-going")
