@@ -13,8 +13,10 @@ import { FlexBox } from "@/components/common/flex-box";
 import { Icons } from "@/constants/icons";
 import { CalendarCheck2, CalendarClock, Loader } from "lucide-react";
 import clsx from "clsx";
-import { format, isAfter } from "date-fns";
+import { format, isAfter, differenceInDays } from "date-fns";
 import type { BulkTasksProps } from "@/interfaces/fetched-task-types";
+
+const toggleAlertDays = 3;
 
 const TaskCard = (Schema: BulkTasksProps[0]) => {
   const iconColor = clsx({
@@ -83,13 +85,13 @@ const TaskCard = (Schema: BulkTasksProps[0]) => {
       <CardContent className="flex flex-col gap-1">
         <Separator className="my-2" />
         <p className="text-[.75rem] text-foreground/85">Progress:</p>
-        <div className="flex items-center gap-4">
+        <FlexBox alignItems="center" className="gap-4">
           <Progress
             className="h-[4px] bg-accent basis-[90%]"
             value={Schema.progress}
           />
           <p className="text-[.75rem] font-semibold">{Schema.progress + "%"}</p>
-        </div>
+        </FlexBox>
         <p className="text-[.75rem] text-foreground/70 font-medium">
           {Schema.subTasks.length
             ? `${
@@ -97,14 +99,29 @@ const TaskCard = (Schema: BulkTasksProps[0]) => {
               } of ${Schema.subTasks.length} subtask completed`
             : "0 subtask"}
         </p>
-        <div className="flex flex-row items-center gap-2">
-          <p className="text-[.75rem] text-foreground/80">Last updated: </p>
-          <p className="text-[.75rem] font-semibold text-foreground/85">
-            {Schema.updatedAt
-              ? format(Schema.updatedAt, "dd MMM yyyy")
-              : "Date not available"}
-          </p>
-        </div>
+        <FlexBox
+          className=""
+          justifyContent="between"
+          flexDirection="row"
+          alignItems="center"
+        >
+          <FlexBox alignItems="center" className="gap-2">
+            <p className="text-[.75rem] text-foreground/80">Last updated: </p>
+            <p className="text-[.75rem] font-semibold text-foreground/85">
+              {Schema.updatedAt
+                ? format(Schema.updatedAt, "dd MMM yyyy")
+                : "Date not available"}
+            </p>
+          </FlexBox>
+          {differenceInDays(Schema.completionDate, new Date()) <=
+            toggleAlertDays && (
+            <p className="text-[.75rem] text-red-500">
+              {differenceInDays(Schema.completionDate, new Date()) +
+                " " +
+                "days remaining.Hurry up!"}
+            </p>
+          )}
+        </FlexBox>
       </CardContent>
     </Card>
   );

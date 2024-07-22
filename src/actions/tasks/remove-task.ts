@@ -19,7 +19,9 @@ export const removeTask = actionClient
           tasksId: taskId,
         },
       });
-    } catch (error) {}
+    } catch (error) {
+      console.error(error);
+    }
 
     revalidatePath("/tasks");
     redirect("/tasks");

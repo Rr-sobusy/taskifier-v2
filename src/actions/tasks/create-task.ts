@@ -38,7 +38,7 @@ export const createNewTask = actionClient
           },
         });
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
       revalidatePath("/tasks");
       redirect("/tasks");
