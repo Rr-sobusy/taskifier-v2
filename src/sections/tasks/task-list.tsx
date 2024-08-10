@@ -6,8 +6,8 @@ import Link from "next/link";
 import TaskCard from "./task-card";
 import NullTask from "./null-task-screen";
 import { useSearchParams } from "next/navigation";
-import { isAfter } from "date-fns";
 import type { TaskProgress } from "@/interfaces/task-progress";
+import { filterTask } from "@/lib/utils";
 
 type TaskListsProps = {
   tasks: BulkTasksProps;
@@ -20,33 +20,12 @@ const TaskLists = ({ tasks }: TaskListsProps) => {
   /**
    * * Filter the task lists depends to url query params supplied. Returns original array if not supplied by query params.
    */
-  const filteredTasks = (): BulkTasksProps => {
-    if (search === "on-going")
-      return tasks.filter(
-        (task) =>
-          task.progress < 100 &&
-          task.progress !== 0 &&
-          !isAfter(new Date(), task.completionDate)
-      );
-    if (search === "failed")
-      return tasks.filter(
-        (task) =>
-          task.progress !== 100 && isAfter(new Date(), task.completionDate)
-      );
-    if (search === "completed")
-      return tasks.filter((task) => task.progress === 100);
-    if (search === "starting")
-      return tasks.filter(
-        (task) =>
-          task.progress === 0 && !isAfter(new Date(), task.completionDate)
-      );
-    return tasks;
-  };
+  const filteredTasks = filterTask({ tasks: tasks, taskType: search });
 
   return (
     <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5 my-7 ">
-      {filteredTasks().length ? (
-        filteredTasks().map((task) => (
+      {filteredTasks.length ? (
+        filteredTasks.map((task) => (
           <Link
             key={task.tasksId}
             href={`tasks/management/${task.userId}/${task.tasksId}`}

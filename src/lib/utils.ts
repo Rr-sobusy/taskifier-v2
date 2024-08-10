@@ -29,17 +29,20 @@ export function filterTask({
   taskType: TaskProgress;
   tasks: BulkTasksProps;
 }): BulkTasksProps {
-  if (taskType === "on-going")
-    return tasks.filter(
-      (task) =>
-        !isAfter(new Date(), task.completionDate) && task.progress !== 100
-    );
-  if (taskType === "completed")
-    return tasks.filter((task) => task.progress === 100);
-  if (taskType === "failed")
-    return tasks.filter(
-      (task) =>
-        isAfter(new Date(), task.completionDate) && task.progress !== 100
-    );
-  return tasks;
+  switch (taskType) {
+    case "on-going":
+      return tasks.filter(
+        (task) =>
+          !isAfter(new Date(), task.completionDate) && task.progress !== 100
+      );
+    case "completed":
+      return tasks.filter((task) => task.progress === 100);
+    case "failed":
+      return tasks.filter(
+        (task) =>
+          isAfter(new Date(), task.completionDate) && task.progress !== 100
+      );
+    default:
+      return tasks;
+  }
 }
