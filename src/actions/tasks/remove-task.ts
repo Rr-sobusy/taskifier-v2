@@ -20,7 +20,7 @@ export const removeTask = actionClient
         },
       });
     } catch (error) {
-      console.error(error);
+      console.error({ message: "Error occured in server. " + error });
     }
 
     revalidatePath("/tasks");

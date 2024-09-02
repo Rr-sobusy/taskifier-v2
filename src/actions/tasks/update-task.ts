@@ -25,7 +25,6 @@ export const updateTask = actionClient
       bindArgsParsedInputs: [addedSubTasks, modifiedSubTasks],
     }) => {
       try {
-
         /**
          * * Update the progress depends on what the slider value on manage-task component
          */
@@ -35,7 +34,7 @@ export const updateTask = actionClient
           },
           data: {
             progress: progress,
-            updatedAt: new Date()
+            updatedAt: new Date(),
           },
         });
 
@@ -73,14 +72,13 @@ export const updateTask = actionClient
               },
               data: {
                 isCompleted: !value.isCompleted,
-                updatedAt: new Date()
+                updatedAt: new Date(),
               },
             });
           });
-
         }
       } catch (err) {
-        console.error(err);
+        return console.error({ message: "Error occured in server. " + err });
       }
       revalidatePath("/tasks");
       redirect("/tasks");

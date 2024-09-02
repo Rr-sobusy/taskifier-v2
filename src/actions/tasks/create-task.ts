@@ -9,28 +9,30 @@ import { redirect } from "next/navigation";
 
 export const createNewTask = actionClient
   .schema(taskSchema)
-  .bindArgsSchemas<[userId: z.ZodString,userEmail:z.ZodString,subTasks: z.ZodArray<z.ZodString>]>([
-    z.string(),
-    z.string(),
-    z.array(z.string()),
-  ])
+  .bindArgsSchemas<
+    [
+      userId: z.ZodString,
+      userEmail: z.ZodString,
+      subTasks: z.ZodArray<z.ZodString>
+    ]
+  >([z.string(), z.string(), z.array(z.string())])
   .action(
     async ({
-      parsedInput: Schema,
-      bindArgsParsedInputs: [userId,userEmail, subTasks],
+      parsedInput: taskData,
+      bindArgsParsedInputs: [userId, userEmail, subTasks],
     }) => {
       try {
-        const res = await prisma.tasks.create({
+        await prisma.tasks.create({
           data: {
-            taskTitle: Schema.taskTitle,
-            taskDescription: Schema.taskDescription,
-            icon: Schema.icon,
-            completionDate: new Date(Schema.completionDate),
+            taskTitle: taskData.taskTitle,
+            taskDescription: taskData.taskDescription,
+            icon: taskData.icon,
+            completionDate: new Date(taskData.completionDate),
             progress: 0,
             userId: userId,
             userEmail: userEmail,
             tags: {
-              create: Schema.tags.map((tag) => ({ taskTitle: tag })),
+              create: taskData.tags.map((tag) => ({ taskTitle: tag })),
             },
             subTasks: {
               create: subTasks.map((task) => ({ subTaskTitle: task })),
@@ -38,7 +40,7 @@ export const createNewTask = actionClient
           },
         });
       } catch (error) {
-        console.error(error);
+        console.error({ message: "Error occured in server. " + error });
       }
       revalidatePath("/tasks");
       redirect("/tasks");
