@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { Calendar as CalendarIcon , FolderPlus} from "lucide-react";
+import { Calendar as CalendarIcon, FolderPlus } from "lucide-react";
 
 import { Calendar } from "@/components/ui/calendar";
 import {
@@ -26,7 +26,7 @@ import {
 
 import { createNewTask } from "@/actions/tasks/create-task";
 import { useAction } from "next-safe-action/hooks";
-import { Trash2, Plus , Undo} from "lucide-react";
+import { Trash2, Plus, Undo } from "lucide-react";
 import { MultiSelect } from "@/components/ui/multi-select";
 import { Icons } from "@/constants/icons";
 import { v4 as uuidv4 } from "uuid";
@@ -67,34 +67,64 @@ const CreateTask = ({ userId, userEmail }: CreateTaskProps) => {
     handleSubmit,
     formState: { errors },
     control,
+    watch,
+    getValues,
+    setValue,
   } = useForm<TaskSchema>({
     resolver: zodResolver(taskSchema),
+    defaultValues: {
+      subTask: [],
+    },
   });
+
+  const subTasksNew = watch("subTask");
 
   /**
    * * From line 77 - 98. Perform dynamic changing of value by not implementing
    * * react-hook-form library to save time and prevent bugs.
    */
-  const addSubTaskField = () => {
-    const newSubTasks: SubTaskProps = {
-      id: uuidv4(),
-      subTaskName: "",
-    };
-    setSubTasks((prev) => [...prev, newSubTasks]);
-  };
+  // const addSubTaskField = () => {
+  //   const newSubTasks: SubTaskProps = {
+  //     id: uuidv4(),
+  //     subTaskName: "",
+  //   };
+  //   setSubTasks((prev) => [...prev, newSubTasks]);
+  // };
+  const addSubTaskField = React.useCallback(() => {
+    const subTaskValue = getValues("subTask");
+
+    setValue("subTask", [
+      ...subTaskValue,
+      {
+        id: uuidv4(),
+        subTaskName: "",
+      },
+    ]);
+  }, [getValues, setValue]);
 
   //* dynamically change the value of subTaskName per index. Depends on what input element was changed.
-  const onValueChange = (id: string, inputValue: string) => {
-    setSubTasks((prevState) => {
-      return prevState.map((ctx) =>
-        ctx.id === id ? { ...ctx, subTaskName: inputValue } : ctx
-      );
-    });
-  };
+  // const onValueChange = (id: string, inputValue: string) => {
+  //   setSubTasks((prevState) => {
+  //     return prevState.map((ctx) =>
+  //       ctx.id === id ? { ...ctx, subTaskName: inputValue } : ctx
+  //     );
+  //   });
+  // };
 
-  const removeSubTaskField = (id: string) => {
-    setSubTasks((prev) => prev.filter((subT) => subT.id !== id));
-  };
+  // const removeSubTaskField = (id: string) => {
+  //   setSubTasks((prev) => prev.filter((subT) => subT.id !== id));
+  // };
+  const removeSubTaskField = React.useCallback(
+    (id: string) => {
+      const subTaskValue = getValues("subTask");
+
+      setValue(
+        "subTask",
+        subTaskValue.filter((subTask) => subTask.id !== id)
+      );
+    },
+    [setValue, getValues]
+  );
 
   return (
     <form
@@ -110,6 +140,7 @@ const CreateTask = ({ userId, userEmail }: CreateTaskProps) => {
             description: val.taskTitle,
           });
         }
+     
       })}
     >
       <FlexBox justifyContent="center" className="mt-8 pb-8">
@@ -267,7 +298,7 @@ const CreateTask = ({ userId, userEmail }: CreateTaskProps) => {
               Sub Tasks{" "}
               <span className="text-md font-light">(Leave empty if none.)</span>
             </p>
-            {subTasks.map((subTask) => (
+            {/* {subTasks.map((subTask) => (
               <FlexBox className="gap-2" key={subTask.id}>
                 <Input
                   value={subTask.subTaskName}
@@ -282,6 +313,39 @@ const CreateTask = ({ userId, userEmail }: CreateTaskProps) => {
                   <Trash2 size={17} />
                 </Button>
               </FlexBox>
+            ))} */}
+            {subTasksNew.map((subTask, index) => (
+              <Controller
+                control={control}
+                name={`subTask.${index}.subTaskName`}
+                render={({ field }) => (
+                  <FlexBox className="gap-2" key={subTask.id}>
+                    <div className="w-full">
+                      <Input
+                        {...field}
+                        value={field.value}
+                        onChange={(event) => {
+                          const value = event.target.value;
+                          field.onChange(value);
+                        }}
+                        type="text"
+                      />
+                      {errors.subTask && (
+                        <p className="font-sans text-sm text-red-500">
+                          {errors.subTask.message}
+                        </p>
+                      )}
+                    </div>
+                    <Button
+                      type="button"
+                      onClick={() => removeSubTaskField(subTask.id)}
+                      variant="outline"
+                    >
+                      <Trash2 size={17} />
+                    </Button>
+                  </FlexBox>
+                )}
+              />
             ))}
           </FlexBox>
 

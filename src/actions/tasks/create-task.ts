@@ -35,7 +35,9 @@ export const createNewTask = actionClient
               create: taskData.tags.map((tag) => ({ taskTitle: tag })),
             },
             subTasks: {
-              create: subTasks.map((task) => ({ subTaskTitle: task })),
+              create: taskData.subTask.map((subTask) => ({
+                subTaskTitle: subTask.subTaskName,
+              })),
             },
           },
         });
