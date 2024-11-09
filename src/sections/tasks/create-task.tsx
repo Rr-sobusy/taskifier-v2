@@ -140,7 +140,6 @@ const CreateTask = ({ userId, userEmail }: CreateTaskProps) => {
             description: val.taskTitle,
           });
         }
-     
       })}
     >
       <FlexBox justifyContent="center" className="mt-8 pb-8">
@@ -316,6 +315,7 @@ const CreateTask = ({ userId, userEmail }: CreateTaskProps) => {
             ))} */}
             {subTasksNew.map((subTask, index) => (
               <Controller
+                key={index}
                 control={control}
                 name={`subTask.${index}.subTaskName`}
                 render={({ field }) => (
